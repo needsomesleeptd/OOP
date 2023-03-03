@@ -50,3 +50,28 @@ void clear_line_array(line_array_t &arr)
 }
 
 
+error_category_t fscanf_lines(FILE *f,line_array_t &lines)
+{
+	error_category_t rc = OK;
+	if (f == NULL)
+		rc =  INVALID_FILENAME;
+	int lines_count;
+	if (fscanf(f,"%d",&lines_count) != 1)
+		rc =  INVALID_INPUT;
+	if (rc == OK)
+	{
+		for (int i = 0; i < lines_count &&  rc == OK; i++)
+		{
+			line_t line;
+			rc = fscanf_line(f, line);
+			if (rc != OK)
+			{
+				clear_line_array(lines);
+				break;
+			}
+			else
+				rc = push_line_back(lines, line);
+		}
+	}
+	return rc;
+}

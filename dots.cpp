@@ -61,15 +61,20 @@ error_category_t fscanf_dots(FILE *f,dot_array_t &dots)
 	int dots_count;
 	if (fscanf(f,"%d",&dots_count) != 1)
 		rc =  INVALID_INPUT;
-	for (int i = 0; i < dots_count; i++)
+	if (rc == OK)
 	{
-		dot_t dot;
-		if ((rc = fscanf_dot(f,dot)) != OK)
+		for (int i = 0; i < dots_count &&  rc == OK; i++)
 		{
-			clear_dot_array(dots);
-			break;
+			dot_t dot;
+			rc = fscanf_dot(f, dot);
+			if (rc != OK)
+			{
+				clear_dot_array(dots);
+				break;
+			}
+			else
+				rc = push_dot_back(dots, dot);
 		}
-
 	}
 	return rc;
 }

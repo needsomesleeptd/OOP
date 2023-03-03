@@ -15,5 +15,6 @@ struct line
 
 typedef line line_t;
 
+error_category fscanf_line(FILE *f_in, line_t &line);
 
 #endif //INC_1_LAB_LINE_H

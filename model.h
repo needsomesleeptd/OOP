@@ -17,5 +17,11 @@ struct model
 typedef model model_t;
 
 
+void init_model(model_t &model);
+error_category_t fscanf_model(FILE *f_in,model_t &model);
+void center_model(model_t &model);
+void rotate_model(model_t &model, rotator_t &rotator);
+void scale_model(model_t &model, scaler_t &scaler);
+
 
 #endif //INC_1_LAB_MODEL_H
