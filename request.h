@@ -15,7 +15,8 @@ struct request
 		rotate,
 		scale,
 		move,
-		load_model
+		load_model,
+		draw_model
 	} type;
 
 	union
@@ -23,11 +24,14 @@ struct request
 		rotator_t rotator;
 		dot_t center;
 		scaler_t scaler;
-		FILE *f;
+		FILE *f_pointer;
+		QGraphicsScene canvas;
 	} action;
 
 };
 
 typedef request request_t;
+
+void handle_request(request_t request);
 
 #endif //INC_1_LAB_REQUEST_H

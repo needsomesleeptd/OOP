@@ -1,7 +1,8 @@
 #include "request.h"
 
-void handle_request(request_t request, model_t &model)
+void handle_request(request_t request)
 {
+	static model_t  model = init_model();
 	switch (request.type)
 	{
 		case request::rotate:
@@ -18,7 +19,11 @@ void handle_request(request_t request, model_t &model)
 			break;
 
 		case request::load_model:
-			fscanf_model(request.action.f,model); //TOdO:: add error handling
+			fscanf_model(request.action.f_pointer, model); //TOdO:: add error handling
 			break;
+		case request::draw_model:
+			draw_model(model,request.action.canvas);
+			break;
+
 	}
 }
