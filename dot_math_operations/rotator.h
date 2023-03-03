@@ -17,6 +17,10 @@ struct rotator
 typedef rotator rotator_t;
 
 
+void rotate_dot(dot_t &dot, rotator_t &rotator);
+void rotate_dots(dot_array_t array, rotator_t &rotator);
+double to_radians(double angle_degrees);
+
 
 
 

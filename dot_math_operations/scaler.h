@@ -17,5 +17,8 @@ struct scaler
 
 typedef scaler scaler_t;
 
+void scale_dot(dot_t &dot, scaler_t &scaler);
+void scale_dots(dot_array &array, scaler_t &scaler);
+
 
 #endif //INC_1_LAB_SCALER_H

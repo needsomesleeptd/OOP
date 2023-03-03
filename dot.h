@@ -5,6 +5,7 @@
 #ifndef INC_1_LAB_DOT_H
 #define INC_1_LAB_DOT_H
 
+#include "error_handling.h"
 
 struct dot
 {
@@ -14,5 +15,7 @@ struct dot
 };
 
 typedef dot dot_t;
+
+error_category fscanf_dot(FILE *f_in, dot_t &dot);
 
 #endif //INC_1_LAB_DOT_H
