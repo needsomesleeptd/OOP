@@ -33,13 +33,13 @@ void scale_model(model_t &model, scaler_t &scaler)
 	scale_dots(model.dots,scaler);
 }
 
-void draw_model(model_t &model, QGraphicsScene &canvas)
+void draw_model(model_t &model, QGraphicsScene *canvas)
 {
 	for (int i = 0; i < model.lines.len; i++)
 	{
 		int from_index = model.lines.lines[i].index_from;
 		int to_index = model.lines.lines[i].index_to;
-		canvas.addLine(model.dots.dots[from_index].x,model.dots.dots[from_index].y,model.dots.dots[to_index].x,model.dots.dots[to_index].y);
+		canvas->addLine(model.dots.dots[from_index].x,model.dots.dots[from_index].y,model.dots.dots[to_index].x,model.dots.dots[to_index].y);
 	}
 }
 

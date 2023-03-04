@@ -26,7 +26,7 @@ error_category_t fscanf_model(FILE *f_in,model_t &model);
 void center_model(model_t &model);
 void rotate_model(model_t &model, rotator_t &rotator);
 void scale_model(model_t &model, scaler_t &scaler);
-void draw_model(model_t &model, QGraphicsScene &canvas);
+void draw_model(model_t &model, QGraphicsScene *canvas);
 
 
 #endif //INC_1_LAB_MODEL_H

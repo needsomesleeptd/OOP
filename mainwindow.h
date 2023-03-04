@@ -19,6 +19,12 @@ public:
     ~MainWindow();
 
 
+
+private slots:
+    void on_apply_rotate_clicked();
+
+	void on_load_model_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

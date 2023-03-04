@@ -25,7 +25,7 @@ struct request
 		dot_t center;
 		scaler_t scaler;
 		FILE *f_pointer;
-		QGraphicsScene canvas;
+		QGraphicsScene *canvas;
 	} action;
 
 };
