@@ -5,7 +5,7 @@
 void init_dot_dyn_array(dot_array &arr)
 {
 	arr.len = 0;
-	arr.cap = 0;
+	arr.cap = 2;
 	arr.dots = NULL;
 	arr.start_val = 2;
 	arr.step = 2;

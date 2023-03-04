@@ -25,10 +25,14 @@ private slots:
 
 	void on_load_model_clicked();
 
+	void on_apply_scale_clicked();
+
+	void on_apply_move_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;
-    QGraphicsEllipseItem *ellipse;
+	void redraw_figure();
 
 };
 #endif // MAINWINDOW_H

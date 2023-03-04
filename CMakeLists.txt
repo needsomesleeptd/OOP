@@ -38,17 +38,24 @@ else()
   add_executable(1_lab
           error_handling.cpp
           error_handling.h
-          file_input.cpp
-          file_input.h
           dots.cpp
           dots.h
           dot.cpp
           dot.h
-          model_operations/scaler.cpp
-          model_operations/scaler.h
-          model_operations/rotator.cpp
-          model_operations/rotator.h
-
+          dot_math_operations/scaler.cpp
+          dot_math_operations/scaler.h
+          dot_math_operations/rotator.cpp
+          dot_math_operations/rotator.h
+          dot_math_operations/center.cpp
+          dot_math_operations/center.h
+          line.cpp
+          line.h
+          lines.cpp
+          lines.h
+          model.cpp
+          model.h
+          request.cpp
+          request.h
     main.cpp
     mainwindow.cpp
     mainwindow.h

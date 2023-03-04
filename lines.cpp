@@ -3,7 +3,7 @@
 void init_line_dyn_array(line_array &arr)
 {
 	arr.len = 0;
-	arr.cap = 0;
+	arr.cap = 2;
 	arr.lines = NULL;
 	arr.start_val = 2;
 	arr.step = 2;

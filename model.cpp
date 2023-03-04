@@ -3,10 +3,11 @@
 
 model_t init_model()
 {
-	model_t temp_model;
+	static model_t temp_model;
 	init_center(temp_model.center);
 	init_dot_dyn_array(temp_model.dots);
 	init_line_dyn_array(temp_model.lines);
+	return temp_model;
 }
 
 error_category_t fscanf_model(FILE *f_in,model_t &model)
