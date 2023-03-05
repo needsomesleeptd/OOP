@@ -73,4 +73,11 @@ void draw_model(model_t &model, QGraphicsScene *canvas)
 	}
 }
 
+void clear_model(model_t &model)
+{
+	clear_dot_array(model.dots);
+	clear_line_array(model.lines);
+	model = init_model();
+}
+
 

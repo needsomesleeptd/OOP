@@ -11,9 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
-
-
-	model_t model;
 }
 
 
@@ -112,6 +109,7 @@ void MainWindow::on_save_model_clicked()
         "All files (*.*);;Model File (*.txt)"
     );
 
+
     FILE *f_out = fopen(filename.toUtf8(),"w");
 
     request_t request;
@@ -119,5 +117,6 @@ void MainWindow::on_save_model_clicked()
     request.action.f_pointer = f_out;
     handle_request(request);
     fclose(f_out);
-
 }
+
+

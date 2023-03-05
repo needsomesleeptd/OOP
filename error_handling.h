@@ -5,7 +5,7 @@
 #ifndef INC_1_LAB_ERROR_HANDLING_H
 #define INC_1_LAB_ERROR_HANDLING_H
 
-#include "QMessageBox"
+#include <QMessageBox>
 
 enum error_category
 {
@@ -16,6 +16,8 @@ enum error_category
 };
 
 typedef error_category error_category_t;
+
+void handle_error(error_category_t error);
 
 
 #endif //INC_1_LAB_ERROR_HANDLING_H
