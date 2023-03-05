@@ -22,7 +22,7 @@ struct request
 	union
 	{
 		rotator_t rotator;
-		dot_t center;
+		dot_t vector;
 		scaler_t scaler;
 		FILE *f_pointer;
 		QGraphicsScene *canvas;

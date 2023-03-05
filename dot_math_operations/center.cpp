@@ -7,16 +7,31 @@ void init_center(dot_t &center)
 	center.z = 0;
 }
 
-void center_dot(dot_t &dot,dot_t &center)
+void move_dot(dot_t &dot,dot_t &vector)
 {
-	dot.x -= center.x;
-	dot.y -= center.y;
-	dot.z -= center.z;
+	dot.x += vector.x;
+	dot.y += vector.y;
+	dot.z += vector.z;
 }
 
-void center_dots(dot_array_t &array, dot_t &center)
+void move_dots(dot_array_t &array, dot_t &vector)
 {
 	for (int i = 0; i < array.len; i++)
-		center_dot(array.dots[i],center);
+		move_dot(array.dots[i],vector);
+}
+
+dot_t find_center(dot_array_t &array)
+{
+	dot_t center = {0.0, 0.0, 0.0};
+	for (int i = 0; i < array.len; i++)
+	{
+		center.x += array.dots[i].x;
+		center.y += array.dots[i].y;
+		center.z += array.dots[i].z;
+	}
+	center.x /= array.len;
+	center.y /= array.len;
+	center.z /= array.len;
+	return center;
 }
 

@@ -9,8 +9,10 @@
 #include "dots.h"
 
 void init_center(dot_t &center);
-void center_dot(dot_t &dot,dot_t &center);
-void center_dots(dot_array_t &array, dot_t &center);
+void move_dot(dot_t &dot,dot_t &vector);
+void move_dots(dot_array_t &array, dot_t &vector);
+dot_t find_center(dot_array_t &array);
+
 
 
 #endif //INC_1_LAB_CENTER_H

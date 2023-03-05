@@ -60,7 +60,7 @@ void MainWindow::on_apply_move_clicked()
     dot_t center = {ui->move_x->value(), ui->move_y->value(),ui->move_z->value()};
     request_t request;
     request.type = request::move;
-    request.action.center = center;
+    request.action.vector = center;
     handle_request(request);
 
 
@@ -87,6 +87,7 @@ void MainWindow::redraw_figure()
 	scene->clear();
 	scene->update();
 	scene = new QGraphicsScene(this);
+	scene->setSceneRect(0,0,ui->graphicsView->width(),ui->graphicsView->height());
 	ui->graphicsView->setScene(scene);
 
 	request_t request;

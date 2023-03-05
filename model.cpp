@@ -19,19 +19,28 @@ error_category_t fscanf_model(FILE *f_in,model_t &model)
 	return rc;
 }
 
-void center_model(model_t &model)
-{
-	center_dots(model.dots,model.center);
-}
+
 
 void rotate_model(model_t &model, rotator_t &rotator)
 {
-	rotate_dots(model.dots,rotator);
+	rotate_dots(model.dots,model.center,rotator);
 }
 
 void scale_model(model_t &model, scaler_t &scaler)
 {
 	scale_dots(model.dots,scaler);
+}
+
+
+dot_t calculate_center_model(model_t &model)
+{
+	return find_center(model.dots);
+}
+
+void move_model(model_t &model, dot_t &vector)
+{
+	move_dot(model.center,vector);
+	move_dots(model.dots,vector);
 }
 
 void draw_model(model_t &model, QGraphicsScene *canvas)
@@ -40,7 +49,15 @@ void draw_model(model_t &model, QGraphicsScene *canvas)
 	{
 		int from_index = model.lines.lines[i].index_from;
 		int to_index = model.lines.lines[i].index_to;
-		canvas->addLine(model.dots.dots[from_index].x,model.dots.dots[from_index].y,model.dots.dots[to_index].x,model.dots.dots[to_index].y);
+		dot_t dot_from = model.dots.dots[from_index];
+		dot_t dot_to = model.dots.dots[to_index];
+		dot_from.x += canvas->width() / 2;
+		dot_to.x += canvas->width() / 2;
+		dot_from.y += canvas->height() / 2;
+		dot_to.y += canvas->height() / 2;
+
+
+		canvas->addLine(dot_from.x,dot_from.y,dot_to.x,dot_to.y);
 	}
 }
 
