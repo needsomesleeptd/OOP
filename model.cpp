@@ -19,6 +19,18 @@ error_category_t fscanf_model(FILE *f_in,model_t &model)
 	return rc;
 }
 
+error_category_t fprintf_model(FILE *f_out, model_t &model)
+{
+	error_category_t rc = OK;
+	rc = fprintf_dots(f_out, model.dots);
+	if (rc == OK)
+	{
+		fprintf(f_out,"\n");
+		rc = fprintf_lines(f_out, model.lines);
+	}
+	return rc;
+}
+
 
 
 void rotate_model(model_t &model, rotator_t &rotator)

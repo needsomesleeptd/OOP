@@ -16,7 +16,8 @@ struct request
 		scale,
 		move,
 		load_model,
-		draw_model
+		draw_model,
+		save_model
 	} type;
 
 	union

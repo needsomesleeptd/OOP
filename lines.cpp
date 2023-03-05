@@ -56,7 +56,7 @@ error_category_t fscanf_lines(FILE *f,line_array_t &lines)
 	if (f == NULL)
 		rc =  INVALID_FILENAME;
 	int lines_count;
-	if (fscanf(f,"%d",&lines_count) != 1)
+	if (rc == OK && fscanf(f,"%d",&lines_count) != 1)
 		rc =  INVALID_INPUT;
 	if (rc == OK)
 	{
@@ -71,6 +71,25 @@ error_category_t fscanf_lines(FILE *f,line_array_t &lines)
 			}
 			else
 				rc = push_line_back(lines, line);
+		}
+	}
+	return rc;
+}
+
+error_category_t fprintf_lines(FILE *f,line_array_t &line_array)
+{
+	error_category_t rc = OK;
+	if (f == NULL)
+		rc =  INVALID_FILENAME;
+
+	if (rc == OK  && fprintf(f,"%d",line_array.len) < 1)
+		rc =  INVALID_INPUT;
+	if (rc == OK)
+	{
+		for (int i = 0; i < line_array.len && rc == OK; i++)
+		{
+			fprintf(f, "\n");
+			rc = fprintf_line(f, line_array.lines[i]);
 		}
 	}
 	return rc;

@@ -6,389 +6,399 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1123</width>
-    <height>773</height>
+    <width>1135</width>
+    <height>687</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="horizontalLayoutWidget_4">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>1091</width>
-      <height>701</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QGraphicsView" name="graphicsView"/>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Перенос</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <layout class="QFormLayout" name="formLayout_5">
-           <item row="0" column="0">
-            <widget class="QLabel" name="kxLabel_3">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kx</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="kyLabel_3">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ky</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="kzLabel_3">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kz</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="move_x">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>300.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="move_y">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>300.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="move_z">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>300.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="apply_move">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Переместить</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Масштаб</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <layout class="QFormLayout" name="formLayout_4">
-           <item row="0" column="0">
-            <widget class="QLabel" name="kxLabel_2">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kx</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="kyLabel_2">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ky</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="kzLabel_2">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kz</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="scale_x">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <double>0.020000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>20.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>1.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="scale_y">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <double>0.020000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>20.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>1.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="scale_z">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <double>0.020000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>20.000000000000000</double>
-             </property>
-             <property name="value">
-              <double>1.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="apply_scale">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Масштабировать</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Поворот</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <layout class="QFormLayout" name="formLayout_6">
-           <item row="0" column="0">
-            <widget class="QLabel" name="kxLabel_4">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kx</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="kyLabel_4">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Ky</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="kzLabel_4">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Kz</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="rotate_x">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>360.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QDoubleSpinBox" name="rotate_y">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>360.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QDoubleSpinBox" name="rotate_z">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximum">
-              <double>360.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="apply_rotate">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Повернуть</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="load_model">
-         <property name="text">
-          <string>Загрузить </string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QGraphicsView" name="graphicsView"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Перенос</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QFormLayout" name="formLayout_5">
+            <item row="0" column="0">
+             <widget class="QLabel" name="kxLabel_3">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kx</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="kyLabel_3">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Ky</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="kzLabel_3">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kz</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QDoubleSpinBox" name="move_x">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>-300.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>300.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QDoubleSpinBox" name="move_y">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>-300.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>300.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QDoubleSpinBox" name="move_z">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>-300.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>300.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="apply_move">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Переместить</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Масштаб</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <layout class="QFormLayout" name="formLayout_4">
+            <item row="0" column="0">
+             <widget class="QLabel" name="kxLabel_2">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kx</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="kyLabel_2">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Ky</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="kzLabel_2">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kz</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QDoubleSpinBox" name="scale_x">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>0.020000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>20.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QDoubleSpinBox" name="scale_y">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>0.020000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>20.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QDoubleSpinBox" name="scale_z">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <double>0.020000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>20.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="apply_scale">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Масштабировать</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Поворот</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QFormLayout" name="formLayout_6">
+            <item row="0" column="0">
+             <widget class="QLabel" name="kxLabel_4">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kx</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="kyLabel_4">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Ky</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="kzLabel_4">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Kz</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QDoubleSpinBox" name="rotate_x">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>360.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QDoubleSpinBox" name="rotate_y">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>360.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QDoubleSpinBox" name="rotate_z">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximum">
+               <double>360.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="apply_rotate">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Повернуть</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="load_model">
+          <property name="text">
+           <string>Загрузить </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="save_model">
+          <property name="text">
+           <string>Сохранить</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1123</width>
+     <width>1135</width>
      <height>22</height>
     </rect>
    </property>

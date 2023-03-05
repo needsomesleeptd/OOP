@@ -25,6 +25,10 @@ void handle_request(request_t request)
 			draw_model(model,request.action.canvas);
 			break;
 
+		case request::save_model:
+			fprintf_model(request.action.f_pointer, model);
+			break;
+
 	}
 
 }

@@ -17,5 +17,7 @@ struct dot
 typedef dot dot_t;
 
 error_category fscanf_dot(FILE *f_in, dot_t &dot);
+error_category fprintf_dot(FILE *f_out,dot_t  &dot);
+
 
 #endif //INC_1_LAB_DOT_H

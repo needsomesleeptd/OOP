@@ -32,6 +32,8 @@ private slots:
 
 	void on_apply_move_clicked();
 
+	void on_save_model_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

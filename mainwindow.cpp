@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "request.h"
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -33,7 +34,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_load_model_clicked()
 {
-    FILE *f_in = fopen("../test.txt","r");
+	QString filename = QFileDialog::getOpenFileName(
+		this,
+		tr("Open File"),
+		"../tests",
+		"All files (*.*);;Model File (*.txt)"
+	);
+
+    FILE *f_in = fopen(filename.toUtf8(),"r");
 
 	request_t request;
     request.type = request::load_model;
@@ -94,4 +102,22 @@ void MainWindow::redraw_figure()
 	request.type = request::draw_model;
 	request.action.canvas = ui->graphicsView->scene();
 	handle_request(request);
+}
+void MainWindow::on_save_model_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(
+        this,
+        tr("Open File"),
+        "../tests",
+        "All files (*.*);;Model File (*.txt)"
+    );
+
+    FILE *f_out = fopen(filename.toUtf8(),"w");
+
+    request_t request;
+    request.type = request::save_model;
+    request.action.f_pointer = f_out;
+    handle_request(request);
+    fclose(f_out);
+
 }

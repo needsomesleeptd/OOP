@@ -28,6 +28,7 @@ void scale_model(model_t &model, scaler_t &scaler);
 void draw_model(model_t &model, QGraphicsScene *canvas);
 dot_t calculate_center_model(model_t &model);
 void move_model(model_t &model, dot_t &vector);
+error_category_t fprintf_model(FILE *f_out, model_t &model);
 
 
 

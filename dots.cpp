@@ -59,7 +59,7 @@ error_category_t fscanf_dots(FILE *f,dot_array_t &dots)
 	if (f == NULL)
 		rc =  INVALID_FILENAME;
 	int dots_count;
-	if (fscanf(f,"%d",&dots_count) != 1)
+	if (rc == OK && (fscanf(f,"%d",&dots_count) != 1 || dots_count < 0))
 		rc =  INVALID_INPUT;
 	if (rc == OK)
 	{
@@ -78,6 +78,30 @@ error_category_t fscanf_dots(FILE *f,dot_array_t &dots)
 	}
 	return rc;
 }
+
+error_category_t fprintf_dots(FILE *f,dot_array_t &dot_array)
+{
+	error_category_t rc = OK;
+	if (f == NULL)
+		rc =  INVALID_FILENAME;
+
+	if (rc == OK  && fprintf(f,"%d",dot_array.len) < 1)
+		rc =  INVALID_INPUT;
+
+	if (rc == OK)
+	{
+		for (int i = 0; i < dot_array.len && rc == OK; i++)
+		{
+			fprintf(f, "\n");
+			rc = fprintf_dot(f, dot_array.dots[i]);
+		}
+
+	}
+	return rc;
+}
+
+
+
 
 
 
