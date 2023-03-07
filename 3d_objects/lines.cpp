@@ -82,7 +82,7 @@ error_category_t fprintf_lines(FILE *f,line_array_t &line_array)
 	if (f == NULL)
 		rc =  INVALID_FILENAME;
 
-	if (rc == OK  && fprintf(f,"%d",line_array.len) < 1)
+	if (rc == OK  && (fprintf(f,"%d",line_array.len) < 1 || line_array.len <= 0))
 		rc =  INVALID_INPUT;
 	if (rc == OK)
 	{

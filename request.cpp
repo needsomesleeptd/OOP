@@ -19,7 +19,6 @@ error_category_t handle_request(request_t request)
 			break;
 
 		case request::load_model:
-			clear_model(model);
 			rc = fscanf_model(request.action.f_pointer, model);
 			break;
 

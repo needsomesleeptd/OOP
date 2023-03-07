@@ -10,14 +10,29 @@ model_t init_model()
 	return temp_model;
 }
 
+void reset_model(model_t &model)
+{
+	init_center(model.center);
+	init_dot_dyn_array(model.dots);
+	init_line_dyn_array(model.lines);
+}
+
 error_category_t fscanf_model(FILE *f_in,model_t &model)
 {
 	error_category_t rc = OK;
-	rc = fscanf_dots(f_in, model.dots);
+	model_t temp_model;
+	reset_model(temp_model);
+	rc = fscanf_dots(f_in, temp_model.dots);
 	if (rc == OK)
-		rc = fscanf_lines(f_in,model.lines);
+		rc = fscanf_lines(f_in,temp_model.lines);
 	if (rc == OK)
-		model.center = calculate_center_model(model);
+	{
+		temp_model.center = calculate_center_model(temp_model);
+		clear_model(model);
+		model = temp_model;
+	}
+	else
+		clear_model(temp_model);
 	return rc;
 }
 

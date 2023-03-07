@@ -52,6 +52,8 @@ void MainWindow::on_load_model_clicked()
 		fclose(f_in);
 		redraw_figure();
 	}
+	else
+		handle_error(rc);
 }
 
 void MainWindow::on_apply_scale_clicked()

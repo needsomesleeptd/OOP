@@ -59,7 +59,7 @@ error_category_t fscanf_dots(FILE *f,dot_array_t &dots)
 	if (f == NULL)
 		rc =  INVALID_FILENAME;
 	int dots_count;
-	if (rc == OK && (fscanf(f,"%d",&dots_count) != 1 || dots_count < 0))
+	if (rc == OK && (fscanf(f,"%d",&dots_count) != 1 || dots_count <= 0))
 		rc =  INVALID_INPUT;
 	if (rc == OK)
 	{

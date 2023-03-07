@@ -27,6 +27,7 @@ typedef model model_t;
 
 
 model_t init_model();
+void reset_model(model_t &model);
 error_category_t fscanf_model(FILE *f_in,model_t &model);
 error_category_t rotate_model(model_t &model, rotator_t &rotator);
 error_category_t scale_model(model_t &model, scaler_t &scaler);
