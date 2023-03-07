@@ -1,11 +1,9 @@
-
-
 #ifndef INC_1_LAB_ROTATOR_H
 #define INC_1_LAB_ROTATOR_H
 
 
 #include "error_handling.h"
-#include "dots.h"
+#include "3d_objects/dots.h"
 
 struct rotator
 {

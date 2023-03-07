@@ -12,7 +12,9 @@ enum error_category
 	OK,
 	INVALID_FILENAME,
 	INVALID_INPUT,
-	IMPOSSIBLE_TO_ALLOCATE
+	IMPOSSIBLE_TO_ALLOCATE,
+	INVALID_REQUEST,
+	INVALID_INDEX
 };
 
 typedef error_category error_category_t;

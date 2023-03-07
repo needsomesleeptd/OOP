@@ -94,3 +94,4 @@ error_category_t fprintf_lines(FILE *f,line_array_t &line_array)
 	}
 	return rc;
 }
+

@@ -44,7 +44,8 @@ void MainWindow::on_load_model_clicked()
     request.type = request::load_model;
 	request.action.f_pointer = f_in;
     handle_request(request);
-	fclose(f_in);
+	if (f_in != NULL)
+		fclose(f_in);
 	redraw_figure();
 }
 
@@ -116,7 +117,8 @@ void MainWindow::on_save_model_clicked()
     request.type = request::save_model;
     request.action.f_pointer = f_out;
     handle_request(request);
-    fclose(f_out);
+	if (f_out != NULL)
+        fclose(f_out);
 }
 
 

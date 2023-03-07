@@ -26,7 +26,7 @@ void handle_request(request_t request)
 			break;
 
 		case request::draw_model:
-			draw_model(model,request.action.canvas);
+			rc = draw_model(model,request.action.canvas);
 			break;
 
 		case request::save_model:
@@ -36,6 +36,8 @@ void handle_request(request_t request)
 		case request::clear_model:
 			clear_model(model);
 			break;
+
+
 	}
 
 }

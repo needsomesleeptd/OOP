@@ -28,7 +28,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
   add_library(1_lab SHARED
-    main.cpp
+          main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
@@ -38,25 +38,27 @@ else()
   add_executable(1_lab
           error_handling.cpp
           error_handling.h
-          dots.cpp
-          dots.h
-          dot.cpp
-          dot.h
+          3d_objects/dots.cpp
+          3d_objects/dots.h
+          3d_objects/dot.cpp
+          3d_objects/dot.h
           dot_math_operations/scaler.cpp
           dot_math_operations/scaler.h
           dot_math_operations/rotator.cpp
           dot_math_operations/rotator.h
-          dot_math_operations/center.cpp
-          dot_math_operations/center.h
-          line.cpp
-          line.h
-          lines.cpp
-          lines.h
+          dot_math_operations/center_movement.cpp
+          dot_math_operations/center_movement.h
+          3d_objects/line.cpp
+          3d_objects/line.h
+          3d_objects/lines.cpp
+          3d_objects/lines.h
           model.cpp
           model.h
           request.cpp
           request.h
-    main.cpp
+          main.cpp
+          drawing/draw_lines.cpp
+          drawing/draw_lines.h
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui

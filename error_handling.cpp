@@ -13,5 +13,9 @@ void handle_error(error_category_t error)
 		case IMPOSSIBLE_TO_ALLOCATE:
 			QMessageBox::warning(NULL,"Ошибка выделения памяти","Введенный файл слишком большой, невозможно выделить достаточный объем памяти под его данные");
 			break;
+		case INVALID_REQUEST:
+			QMessageBox::warning(NULL,"Ошибка выполнения запроса","Над моделью была попытка произвести невалидные действия");
+			break;
+
 	}
 }

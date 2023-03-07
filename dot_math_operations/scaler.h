@@ -1,12 +1,8 @@
-//
-// Created by Андрей on 02.03.2023.
-//
-
 #ifndef INC_1_LAB_SCALER_H
 #define INC_1_LAB_SCALER_H
 
 #include "error_handling.h"
-#include "dots.h"
+#include "3d_objects/dots.h"
 
 struct scaler
 {

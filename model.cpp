@@ -55,22 +55,12 @@ void move_model(model_t &model, dot_t &vector)
 	move_dots(model.dots,vector);
 }
 
-void draw_model(model_t &model, QGraphicsScene *canvas)
+error_category_t draw_model(model_t &model, QGraphicsScene *canvas)
 {
-	for (int i = 0; i < model.lines.len; i++)
-	{
-		int from_index = model.lines.lines[i].index_from;
-		int to_index = model.lines.lines[i].index_to;
-		dot_t dot_from = model.dots.dots[from_index];
-		dot_t dot_to = model.dots.dots[to_index];
-		dot_from.x += canvas->width() / 2;
-		dot_to.x += canvas->width() / 2;
-		dot_from.y += canvas->height() / 2;
-		dot_to.y += canvas->height() / 2;
+	error_category_t rc = OK;
+	rc = draw_lines(model.lines,model.dots,canvas);
+	return rc;
 
-
-		canvas->addLine(dot_from.x,dot_from.y,dot_to.x,dot_to.y);
-	}
 }
 
 void clear_model(model_t &model)

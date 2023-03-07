@@ -1,12 +1,8 @@
-//
-// Created by Андрей on 03.03.2023.
-//
-
-#ifndef INC_1_LAB_CENTER_H
-#define INC_1_LAB_CENTER_H
+#ifndef INC_1_LAB_CENTER_MOVEMENT_H
+#define INC_1_LAB_CENTER_MOVEMENT_H
 
 
-#include "dots.h"
+#include "3d_objects/dots.h"
 
 void init_center(dot_t &center);
 void move_dot(dot_t &dot,dot_t &vector);
@@ -15,4 +11,4 @@ dot_t find_center(dot_array_t &array);
 
 
 
-#endif //INC_1_LAB_CENTER_H
+#endif //INC_1_LAB_CENTER_MOVEMENT_H
