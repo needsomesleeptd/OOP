@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+	request_t request;
+	request.type = request::clear_model;
+	handle_request(request);
     delete ui;
 }
 
@@ -43,10 +46,12 @@ void MainWindow::on_load_model_clicked()
 	request_t request;
     request.type = request::load_model;
 	request.action.f_pointer = f_in;
-    handle_request(request);
-	if (f_in != NULL)
+    error_category_t rc = handle_request(request);
+	if (rc == OK)
+	{
 		fclose(f_in);
-	redraw_figure();
+		redraw_figure();
+	}
 }
 
 void MainWindow::on_apply_scale_clicked()
@@ -55,10 +60,11 @@ void MainWindow::on_apply_scale_clicked()
 	request_t request;
 	request.type = request::scale;
 	request.action.scaler = scaler;
-	handle_request(request);
-
-
-	redraw_figure();
+	error_category_t rc = handle_request(request);
+	if (rc != OK)
+		handle_error(rc);
+	else
+		redraw_figure();
 }
 
 void MainWindow::on_apply_move_clicked()
@@ -67,10 +73,11 @@ void MainWindow::on_apply_move_clicked()
     request_t request;
     request.type = request::move;
     request.action.vector = center;
-    handle_request(request);
-
-
-   redraw_figure();
+    error_category_t rc = handle_request(request);
+	if (rc != OK)
+		handle_error(rc);
+	else
+        redraw_figure();
 
 }
 
@@ -81,10 +88,43 @@ void MainWindow::on_apply_rotate_clicked()
 	request_t request;
 	request.type = request::rotate;
 	request.action.rotator = rotator;
-	handle_request(request);
+	error_category_t rc = handle_request(request);
+	if (rc != OK)
+		handle_error(rc);
+	else
+		redraw_figure();
+}
 
 
-	redraw_figure();
+
+void MainWindow::on_save_model_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(
+        this,
+        tr("Open File"),
+        "../tests",
+        "All files (*.*);;Model File (*.txt)"
+    );
+
+
+    FILE *f_out = fopen(filename.toUtf8(),"w");
+
+    request_t request;
+    request.type = request::save_model;
+    request.action.f_pointer = f_out;
+	error_category_t rc;
+    rc = handle_request(request);
+	if (rc == OK)
+        fclose(f_out);
+	else if (rc == MODEL_NOT_INITIALIZED)
+	{
+		fclose(f_out);
+		handle_error(rc);
+	}
+	else
+		handle_error(rc);
+
+
 }
 
 
@@ -101,24 +141,4 @@ void MainWindow::redraw_figure()
 	request.action.canvas = ui->graphicsView->scene();
 	handle_request(request);
 }
-void MainWindow::on_save_model_clicked()
-{
-    QString filename = QFileDialog::getSaveFileName(
-        this,
-        tr("Open File"),
-        "../tests",
-        "All files (*.*);;Model File (*.txt)"
-    );
-
-
-    FILE *f_out = fopen(filename.toUtf8(),"w");
-
-    request_t request;
-    request.type = request::save_model;
-    request.action.f_pointer = f_out;
-    handle_request(request);
-	if (f_out != NULL)
-        fclose(f_out);
-}
-
 

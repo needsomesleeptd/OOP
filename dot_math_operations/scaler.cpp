@@ -1,15 +1,24 @@
 #include "scaler.h"
 
-void scale_dot(dot_t &dot, scaler_t &scaler)
+error_category_t scale_dot(dot_t &dot, scaler_t &scaler)
 {
-	dot.x *= scaler.kx;
-	dot.y *= scaler.ky;
-	dot.z *= scaler.kz;
+	error_category_t rc = OK;
+	if (fabs(scaler.kx) < EPS && fabs(scaler.ky) < EPS && fabs(scaler.kz) < EPS)
+		rc = INVALID_SCALER;
+	if (rc == OK)
+	{
+		dot.x *= scaler.kx;
+		dot.y *= scaler.ky;
+		dot.z *= scaler.kz;
+	}
+	return rc;
 }
 
-void scale_dots(dot_array &array, scaler_t &scaler)
+error_category_t scale_dots(dot_array &array, scaler_t &scaler)
 {
-	for (int i = 0; i < array.len; i++)
-		scale_dot(array.dots[i],scaler);
+	error_category_t rc = OK;
+	for (int i = 0; i < array.len && rc == OK; i++)
+		rc = scale_dot(array.dots[i],scaler);
+	return rc;
 
 }

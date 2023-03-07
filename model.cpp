@@ -16,13 +16,18 @@ error_category_t fscanf_model(FILE *f_in,model_t &model)
 	rc = fscanf_dots(f_in, model.dots);
 	if (rc == OK)
 		rc = fscanf_lines(f_in,model.lines);
+	if (rc == OK)
+		model.center = calculate_center_model(model);
 	return rc;
 }
 
 error_category_t fprintf_model(FILE *f_out, model_t &model)
 {
 	error_category_t rc = OK;
-	rc = fprintf_dots(f_out, model.dots);
+	if (!model.dots.dots)
+		rc =  MODEL_NOT_INITIALIZED;
+	else
+		rc = fprintf_dots(f_out, model.dots);
 	if (rc == OK)
 	{
 		fprintf(f_out,"\n");
@@ -33,14 +38,24 @@ error_category_t fprintf_model(FILE *f_out, model_t &model)
 
 
 
-void rotate_model(model_t &model, rotator_t &rotator)
+error_category_t rotate_model(model_t &model, rotator_t &rotator)
 {
-	rotate_dots(model.dots,model.center,rotator);
+	error_category_t rc = OK;
+	if (!model.dots.dots)
+		rc = MODEL_NOT_INITIALIZED;
+	else
+		rc = rotate_dots(model.dots,model.center,rotator);
+	return rc;
 }
 
-void scale_model(model_t &model, scaler_t &scaler)
+error_category_t scale_model(model_t &model, scaler_t &scaler)
 {
-	scale_dots(model.dots,scaler);
+	error_category_t rc = OK;
+	if (!model.dots.dots)
+		rc = MODEL_NOT_INITIALIZED;
+	else
+		rc = scale_dots(model.dots,scaler);
+	return rc;
 }
 
 
@@ -49,10 +64,16 @@ dot_t calculate_center_model(model_t &model)
 	return find_center(model.dots);
 }
 
-void move_model(model_t &model, dot_t &vector)
+error_category_t move_model(model_t &model, dot_t &vector)
 {
-	move_dot(model.center,vector);
-	move_dots(model.dots,vector);
+	error_category_t rc = OK;
+	if (!model.dots.dots)
+		rc = MODEL_NOT_INITIALIZED;
+	else
+		rc = move_dot(model.center,vector);
+	if (rc == OK)
+		rc = move_dots(model.dots,vector);
+	return rc;
 }
 
 error_category_t draw_model(model_t &model, QGraphicsScene *canvas)
@@ -67,7 +88,7 @@ void clear_model(model_t &model)
 {
 	clear_dot_array(model.dots);
 	clear_line_array(model.lines);
-	model = init_model();
+	init_center(model.center);
 }
 
 

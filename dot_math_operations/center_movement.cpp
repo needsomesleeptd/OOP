@@ -7,17 +7,20 @@ void init_center(dot_t &center)
 	center.z = 0;
 }
 
-void move_dot(dot_t &dot,dot_t &vector)
+error_category_t move_dot(dot_t &dot,dot_t &vector)
 {
 	dot.x += vector.x;
 	dot.y += vector.y;
 	dot.z += vector.z;
+	return OK;
 }
 
-void move_dots(dot_array_t &array, dot_t &vector)
+error_category_t move_dots(dot_array_t &array, dot_t &vector)
 {
-	for (int i = 0; i < array.len; i++)
-		move_dot(array.dots[i],vector);
+	error_category_t rc = OK;
+	for (int i = 0; i < array.len && rc == OK; i++)
+		rc = move_dot(array.dots[i],vector);
+	return rc;
 }
 
 dot_t find_center(dot_array_t &array)

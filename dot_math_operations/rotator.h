@@ -15,9 +15,10 @@ struct rotator
 typedef rotator rotator_t;
 
 
-void rotate_dot(dot_t &dot, dot_t &center_of_rotation, rotator_t &rotator);
-void rotate_dots(dot_array_t array, dot_t &center_of_rotation, rotator_t &rotator);
-double to_radians(double angle_degrees);
+error_category_t  rotate_dot(dot_t &dot, dot_t &center_of_rotation, rotator_t &rotator);
+error_category_t  rotate_dots(dot_array_t array, dot_t &center_of_rotation, rotator_t &rotator);
+
+
 
 
 

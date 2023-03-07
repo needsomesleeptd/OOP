@@ -20,8 +20,6 @@ error_category_t draw_line(line_t &line, dot_array_t &dot_array,QGraphicsScene* 
 	{
 		dot_t dot_from = adjust_dot(dot_array.dots[from],canvas->width(),canvas->height());
 		dot_t dot_to = adjust_dot(dot_array.dots[to],canvas->width(),canvas->height());
-		//dot_t dot_from = dot_array.dots[from];
-		//dot_t dot_to = dot_array.dots[to];
 		canvas->addLine(dot_from.x,dot_from.y,dot_to.x,dot_to.y,black_pen);
 	}
 	else

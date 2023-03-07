@@ -207,7 +207,7 @@
                </size>
               </property>
               <property name="minimum">
-               <double>0.020000000000000</double>
+               <double>0.000000000000000</double>
               </property>
               <property name="maximum">
                <double>20.000000000000000</double>
@@ -226,7 +226,7 @@
                </size>
               </property>
               <property name="minimum">
-               <double>0.020000000000000</double>
+               <double>0.000000000000000</double>
               </property>
               <property name="maximum">
                <double>20.000000000000000</double>
@@ -245,7 +245,7 @@
                </size>
               </property>
               <property name="minimum">
-               <double>0.020000000000000</double>
+               <double>0.000000000000000</double>
               </property>
               <property name="maximum">
                <double>20.000000000000000</double>

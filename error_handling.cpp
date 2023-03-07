@@ -16,6 +16,14 @@ void handle_error(error_category_t error)
 		case INVALID_REQUEST:
 			QMessageBox::warning(NULL,"Ошибка выполнения запроса","Над моделью была попытка произвести невалидные действия");
 			break;
+		case INVALID_SCALER:
+			QMessageBox::warning(NULL,"Ошибка изменения размеров модели","Была попытка умножить точку на нулевой вектор");
+			break;
+		case MODEL_NOT_INITIALIZED:
+			QMessageBox::warning(NULL,"Модель не была инициализированна","Невозможно выполнить действие - модель не была инициализированна");
+			break;
+
+
 
 	}
 }

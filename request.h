@@ -34,6 +34,6 @@ struct request
 
 typedef request request_t;
 
-void handle_request(request_t request);
+error_category_t handle_request(request_t request);
 
 #endif //INC_1_LAB_REQUEST_H

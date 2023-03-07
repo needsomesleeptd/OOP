@@ -1,11 +1,8 @@
-//
-// Created by Андрей on 02.03.2023.
-//
-
 #ifndef INC_1_LAB_ERROR_HANDLING_H
 #define INC_1_LAB_ERROR_HANDLING_H
 
 #include <QMessageBox>
+#define EPS 1e-7
 
 enum error_category
 {
@@ -14,7 +11,10 @@ enum error_category
 	INVALID_INPUT,
 	IMPOSSIBLE_TO_ALLOCATE,
 	INVALID_REQUEST,
-	INVALID_INDEX
+	INVALID_INDEX,
+	INVALID_COMMAND,
+	INVALID_SCALER,
+	MODEL_NOT_INITIALIZED
 };
 
 typedef error_category error_category_t;
