@@ -60,12 +60,12 @@ error_category_t fscanf_model(model_t &model,FILE *f_in)
 
 error_category_t validate_model(model_t &model)
 {
-	return validate_lines(model.lines,len(model.dots)); //Todo:find a way not to jump
+	return validate_lines(model.lines,len(model.dots));
 }
 
 error_category_t fprintf_model(model_t &model, FILE *f_out)
 {
-	error_category_t rc = OK;
+	error_category_t rc;
 	if (is_empty(model.dots))
 		rc =  MODEL_NOT_INITIALIZED;
 	else
@@ -82,7 +82,7 @@ error_category_t fprintf_model(model_t &model, FILE *f_out)
 
 error_category_t rotate_model(model_t &model, rotator_t &rotator)
 {
-	error_category_t rc = OK;
+	error_category_t rc;
 	if (is_empty(model.dots))
 		rc = MODEL_NOT_INITIALIZED;
 	else
@@ -92,7 +92,7 @@ error_category_t rotate_model(model_t &model, rotator_t &rotator)
 
 error_category_t scale_model(model_t &model, scaler_t &scaler)
 {
-	error_category_t rc = OK;
+	error_category_t rc;
 	if (is_empty(model.dots))
 		rc = MODEL_NOT_INITIALIZED;
 	else

@@ -22,6 +22,10 @@ void handle_error(error_category_t error)
 		case MODEL_NOT_INITIALIZED:
 			QMessageBox::warning(NULL,"Модель не была инициализированна","Невозможно выполнить действие - модель не была инициализированна");
 			break;
+		case INVALID_INDEX:
+			QMessageBox::warning(NULL,"Одна из линий не валидна","Одна из линий имеет связь с несуществующей точкой");
+			break;
+
 
 
 
