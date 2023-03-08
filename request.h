@@ -5,11 +5,15 @@
 #ifndef INC_1_LAB_REQUEST_H
 #define INC_1_LAB_REQUEST_H
 
+#include <string>
+
 #include "model.h"
+
 
 
 struct request
 {
+
 	enum
 	{
 		rotate,
@@ -26,14 +30,14 @@ struct request
 		rotator_t rotator;
 		dot_t vector;
 		scaler_t scaler;
-		FILE *f_pointer;
+		const char* filename;
 		QGraphicsScene *canvas;
-	} action;
-
+	};
 };
 
 typedef request request_t;
 
 error_category_t handle_request(request_t request);
+
 
 #endif //INC_1_LAB_REQUEST_H

@@ -7,27 +7,27 @@ error_category_t handle_request(request_t request)
 	switch (request.type)
 	{
 		case request::rotate:
-			rc = rotate_model(model,request.action.rotator);
+			rc = rotate_model(model,request.rotator);
 			break;
 
 		case request::scale:
-			rc = scale_model(model,request.action.scaler);
+			rc = scale_model(model,request.scaler);
 			break;
 
 		case request::move:
-			rc  = move_model(model,request.action.vector);
+			rc  = move_model(model,request.vector);
 			break;
 
 		case request::load_model:
-			rc = fscanf_model(request.action.f_pointer, model);
+			rc = load_model(model,request.filename);
 			break;
 
 		case request::draw_model:
-			rc = draw_model(model,request.action.canvas);
+			rc = draw_model(model,request.canvas);
 			break;
 
 		case request::save_model:
-			rc = fprintf_model(request.action.f_pointer, model);
+			rc = save_model(model,request.filename);
 			break;
 		case request::clear_model:
 			clear_model(model);
@@ -39,3 +39,4 @@ error_category_t handle_request(request_t request)
 	return rc;
 
 }
+

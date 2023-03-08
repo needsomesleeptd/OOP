@@ -4,6 +4,7 @@
 
 #include "error_handling.h"
 #include "3d_objects/dots.h"
+#include "center_movement.h"
 
 struct rotator
 {

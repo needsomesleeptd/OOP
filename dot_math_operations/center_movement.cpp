@@ -15,10 +15,17 @@ error_category_t move_dot(dot_t &dot,dot_t &vector)
 	return OK;
 }
 
+void reverse_coordinates(dot_t &dot)
+{
+	dot.x *= -1;
+	dot.y *= -1;
+	dot.z *= -1;
+}
+
 error_category_t move_dots(dot_array_t &array, dot_t &vector)
 {
 	error_category_t rc = OK;
-	for (int i = 0; i < array.len && rc == OK; i++)
+	for (int i = 0; rc == OK && i < array.len; i++)
 		rc = move_dot(array.dots[i],vector);
 	return rc;
 }

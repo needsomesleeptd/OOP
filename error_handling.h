@@ -14,7 +14,8 @@ enum error_category
 	INVALID_INDEX,
 	INVALID_COMMAND,
 	INVALID_SCALER,
-	MODEL_NOT_INITIALIZED
+	MODEL_NOT_INITIALIZED,
+	IMPOSSIBLE_TO_OUTPUT
 };
 
 typedef error_category error_category_t;

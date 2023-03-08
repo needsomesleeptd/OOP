@@ -17,5 +17,6 @@ typedef line line_t;
 
 error_category fscanf_line(FILE *f_in, line_t &line);
 error_category fprintf_line(FILE *f_out, line_t &line);
+error_category_t validate_line(line_t line, int dots_count);
 
 #endif //INC_1_LAB_LINE_H

@@ -50,7 +50,7 @@ void clear_line_array(line_array_t &arr)
 }
 
 
-error_category_t fscanf_lines(FILE *f,line_array_t &lines)
+error_category_t fscanf_lines(line_array_t &lines, FILE *f)
 {
 	error_category_t rc = OK;
 	if (f == NULL)
@@ -76,7 +76,7 @@ error_category_t fscanf_lines(FILE *f,line_array_t &lines)
 	return rc;
 }
 
-error_category_t fprintf_lines(FILE *f,line_array_t &line_array)
+error_category_t fprintf_lines(line_array_t &line_array, FILE *f)
 {
 	error_category_t rc = OK;
 	if (f == NULL)
@@ -94,4 +94,14 @@ error_category_t fprintf_lines(FILE *f,line_array_t &line_array)
 	}
 	return rc;
 }
+
+
+error_category_t validate_lines(line_array_t &line_array, int dots_count)
+{
+	error_category_t rc = OK;
+	for (int i = 0; rc == OK && i < line_array.len; i++)
+		rc = validate_line(line_array.lines[i],dots_count);
+	return rc;
+}
+
 

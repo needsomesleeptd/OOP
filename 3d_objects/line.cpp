@@ -12,7 +12,7 @@ error_category fscanf_line(FILE *f_in, line_t &line)
 
 
 
-error_category fprintf_line(FILE *f_out, line_t &line)
+error_category_t fprintf_line(FILE *f_out, line_t &line)
 {
 	error_category_t err = OK;
 	if (f_out == NULL)
@@ -22,7 +22,13 @@ error_category fprintf_line(FILE *f_out, line_t &line)
 	return err;
 }
 
-
+error_category_t validate_line(line_t line, int dots_count)
+{
+	error_category_t rc = OK;
+	if (line.index_to >= dots_count || line.index_to < 0 || line.index_from >= dots_count || line.index_from < 0)
+		rc = INVALID_INDEX;
+	return rc;
+}
 
 
 

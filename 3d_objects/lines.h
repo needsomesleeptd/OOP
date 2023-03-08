@@ -21,8 +21,9 @@ typedef line_array line_array_t;
 void init_line_dyn_array(line_array &arr);
 error_category push_line_back(line_array_t *arr, line_t line);
 void clear_line_array(line_array_t &arr);
-error_category_t fscanf_lines(FILE *f,line_array_t &lines);
-error_category_t fprintf_lines(FILE *f,line_array_t &line_array);
+error_category_t fscanf_lines(line_array_t &lines, FILE *f);
+error_category_t fprintf_lines(line_array_t &line_array, FILE *f);
+error_category_t validate_lines(line_array_t &line_array, int dots_count);
 
 
 
