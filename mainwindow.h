@@ -34,6 +34,8 @@ private slots:
 
 	void on_save_model_clicked();
 
+    void on_revert_step_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

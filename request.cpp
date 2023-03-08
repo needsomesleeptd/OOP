@@ -7,18 +7,22 @@ error_category_t handle_request(request_t request)
 	switch (request.type)
 	{
 		case request::rotate:
+            rc = save_model(model,"../.last_change");
 			rc = rotate_model(model,request.rotator);
 			break;
 
 		case request::scale:
+            rc = save_model(model,"../.last_change");
 			rc = scale_model(model,request.scaler);
 			break;
 
 		case request::move:
+            rc = save_model(model,"../.last_change");
 			rc  = move_model(model,request.vector);
 			break;
 
 		case request::load_model:
+			rc = save_model(model,"../.last_change");
 			rc = load_model(model,request.filename);
 			break;
 
@@ -31,6 +35,9 @@ error_category_t handle_request(request_t request)
 			break;
 		case request::clear_model:
 			clear_model(model);
+			break;
+		case request::revert_changes:
+			rc = load_model(model,request.filename);
 			break;
 		default:
 			rc = INVALID_COMMAND;

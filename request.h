@@ -22,7 +22,8 @@ struct request
 		load_model,
 		draw_model,
 		save_model,
-		clear_model
+		clear_model,
+		revert_changes
 	} type;
 
 	union

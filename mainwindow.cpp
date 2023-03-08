@@ -113,6 +113,17 @@ void MainWindow::on_save_model_clicked()
 	handle_error(rc);
 }
 
+void MainWindow::on_revert_step_clicked()
+{
+    request_t request;
+    request.type = request::revert_changes;
+    request.filename = "../.last_change";
+    error_category_t rc = handle_request(request);
+    //handle_error(rc);
+    if (rc == OK)
+        redraw_figure();
+}
+
 
 void MainWindow::redraw_figure()
 {
@@ -128,4 +139,5 @@ void MainWindow::redraw_figure()
 	request.canvas = ui->graphicsView->scene();
 	handle_request(request);
 }
+
 

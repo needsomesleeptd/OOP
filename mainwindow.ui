@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
-    <height>592</height>
+    <width>916</width>
+    <height>614</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -412,6 +412,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="revert_step">
+          <property name="text">
+           <string>Вернуть на шаг назад</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -423,7 +430,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>855</width>
+     <width>916</width>
      <height>22</height>
     </rect>
    </property>
