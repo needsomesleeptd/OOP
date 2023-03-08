@@ -120,6 +120,7 @@ void MainWindow::redraw_figure()
 	scene->update();
 	scene = new QGraphicsScene(this);
 	scene->setSceneRect(0,0,ui->graphicsView->width(),ui->graphicsView->height());
+	ui->graphicsView->mapFromScene(ui->graphicsView->viewport()->rect().center());
 	ui->graphicsView->setScene(scene);
 
 	request_t request;
