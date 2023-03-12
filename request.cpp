@@ -38,6 +38,8 @@ error_category_t handle_request(request_t request)
 			break;
 		case request::revert_changes:
 			rc = load_model(model,request.filename);
+			if (rc != OK)
+				clear_model(model);
 			break;
 		default:
 			rc = INVALID_COMMAND;

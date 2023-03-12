@@ -120,8 +120,7 @@ void MainWindow::on_revert_step_clicked()
     request.filename = "../.last_change";
     error_category_t rc = handle_request(request);
     //handle_error(rc);
-    if (rc == OK)
-        redraw_figure();
+	redraw_figure();
 }
 
 
