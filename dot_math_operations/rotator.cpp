@@ -13,10 +13,10 @@ static double to_radians(double angle_degrees)
 
 
 
-static error_category_t rotate_OX_dot(dot_t &dot, rotator_t &rotator)
+static error_category_t rotate_OX_dot(dot_t &dot, double angle_degrees)
 {
-	double cos_val = cos(to_radians(rotator.ox));
-	double sin_val = sin(to_radians(rotator.ox));
+	double cos_val = cos(to_radians(angle_degrees));
+	double sin_val = sin(to_radians(angle_degrees));
 
 	double save_y = dot.y;
 
@@ -26,10 +26,10 @@ static error_category_t rotate_OX_dot(dot_t &dot, rotator_t &rotator)
 
 }
 
-static error_category_t   rotate_OY_dot(dot_t &dot, rotator_t &rotator)
+static error_category_t   rotate_OY_dot(dot_t &dot, double angle_degrees)
 {
-	double cos_val = cos(to_radians(rotator.oy));
-	double sin_val = sin(to_radians(rotator.oy));
+	double cos_val = cos(to_radians(angle_degrees));
+	double sin_val = sin(to_radians(angle_degrees));
 
 	double save_x = dot.x;
 
@@ -38,10 +38,10 @@ static error_category_t   rotate_OY_dot(dot_t &dot, rotator_t &rotator)
 	return OK;
 }
 
-static error_category_t   rotate_OZ_dot(dot_t &dot, rotator_t &rotator)
+static error_category_t   rotate_OZ_dot(dot_t &dot, double angle_degrees)
 {
-	double cos_val = cos(to_radians(rotator.oz));
-	double sin_val = sin(to_radians(rotator.oz));
+	double cos_val = cos(to_radians(angle_degrees));
+	double sin_val = sin(to_radians(angle_degrees));
 
 	double save_x = dot.x;
 
@@ -53,14 +53,14 @@ static error_category_t   rotate_OZ_dot(dot_t &dot, rotator_t &rotator)
 
 error_category_t  rotate_dot(dot_t &dot, dot_t &center_of_rotation, rotator_t &rotator)
 {
-	error_category_t rc = OK;
+	error_category_t rc;
 	substact_coordinates(dot, center_of_rotation);
 
-	rc = rotate_OX_dot(dot,rotator);
+	rc = rotate_OX_dot(dot,rotator.ox);
 	if (rc == OK)
-		rc = rotate_OY_dot(dot,rotator);
+		rc = rotate_OY_dot(dot,rotator.oy);
 	if (rc == OK)
-		rc = rotate_OZ_dot(dot,rotator);
+		rc = rotate_OZ_dot(dot,rotator.oz);
 
 	add_coordinates(dot,center_of_rotation);
 	return rc;

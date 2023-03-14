@@ -55,7 +55,11 @@ error_category_t fscanf_lines_count(int &lines_count, FILE *f)
 void clear_line_array(line_array_t &arr)
 {
 	free(arr.lines);
-	init_line_dyn_array(arr);
+	arr.len = 0;
+	arr.cap = 2;
+	arr.lines = NULL;
+	arr.start_val = 2;
+	arr.step = 2;
 }
 
 

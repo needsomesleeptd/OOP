@@ -49,7 +49,11 @@ error_category push_dot_back(dot_array_t &arr, dot_t dot)
 void clear_dot_array(dot_array_t &arr)
 {
 	free(arr.dots);
-	init_dot_dyn_array(arr);
+	arr.len = 0;
+	arr.cap = 2;
+	arr.dots = NULL;
+	arr.start_val = 2;
+	arr.step = 2;
 }
 
 error_category_t fscanf_dots_count(int &dots_count, FILE *f)
