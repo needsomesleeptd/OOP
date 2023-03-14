@@ -22,6 +22,20 @@ void reverse_coordinates(dot_t &dot)
 	dot.z *= -1;
 }
 
+void substact_coordinates(dot_t &first, dot_t &second)
+{
+	first.x -= second.x;
+	first.y -= second.y;
+	first.z -= second.z;
+}
+
+void add_coordinates(dot_t &first, dot_t &second)
+{
+	first.x += second.x;
+	first.y += second.y;
+	first.z += second.z;
+}
+
 error_category_t move_dots(dot_array_t &array, dot_t &vector)
 {
 	error_category_t rc = OK;

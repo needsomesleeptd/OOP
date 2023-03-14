@@ -54,16 +54,15 @@ static error_category_t   rotate_OZ_dot(dot_t &dot, rotator_t &rotator)
 error_category_t  rotate_dot(dot_t &dot, dot_t &center_of_rotation, rotator_t &rotator)
 {
 	error_category_t rc = OK;
-	reverse_coordinates(center_of_rotation);
-	move_dot(dot,center_of_rotation);
-	if (rc == OK)
+	substact_coordinates(dot, center_of_rotation);
+
 	rc = rotate_OX_dot(dot,rotator);
 	if (rc == OK)
 		rc = rotate_OY_dot(dot,rotator);
 	if (rc == OK)
 		rc = rotate_OZ_dot(dot,rotator);
-	reverse_coordinates(center_of_rotation);
-	move_dot(dot,center_of_rotation);
+
+	add_coordinates(dot,center_of_rotation);
 	return rc;
 }
 
