@@ -61,7 +61,7 @@ error_category_t fscanf_dots_count(int &dots_count, FILE *f)
 
 error_category_t fprintf_dots_count(int dots_count, FILE *f)
 {
-	if (fprintf(f,"%d",dots_count) != 1)
+	if (fprintf(f,"%d",dots_count) < 1)
 		return IMPOSSIBLE_TO_OUTPUT;
 	return OK;
 }

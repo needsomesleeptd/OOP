@@ -96,7 +96,7 @@ error_category_t scale_model(model_t &model, scaler_t &scaler)
 	if (is_empty(model.dots))
 		rc = MODEL_NOT_INITIALIZED;
 	else
-		rc = scale_dots(model.dots,scaler);
+		rc = scale_dots(model.dots,model.center,scaler);
 	return rc;
 }
 
@@ -108,7 +108,7 @@ void calculate_center_model(model_t &model)
 
 error_category_t move_model(model_t &model, dot_t &vector)
 {
-	error_category_t rc = OK;
+	error_category_t rc;
 	if (is_empty(model.dots))
 		rc = MODEL_NOT_INITIALIZED;
 	else
