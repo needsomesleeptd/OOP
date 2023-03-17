@@ -19,19 +19,20 @@ error_category_t load_model(model_t &model,const char* filename)
 	if (f_in == NULL)
 		return INVALID_FILENAME;
 	model_t temp_model = init_model();
-	error_category_t rc;
-	rc = fscanf_model(temp_model,f_in);
+	error_category_t rc = fscanf_model(temp_model,f_in);
 	fclose(f_in);
 	if (rc == OK)
-		rc = validate_model(temp_model);
-	if (rc == OK)
 	{
-		calculate_center_model(temp_model);
-		clear_model(model);
-		model = temp_model;
+		rc = validate_model(temp_model);
+		if (rc != OK)
+			clear_model(temp_model);
+		else
+		{
+			calculate_center_model(temp_model);
+			clear_model(model);
+			model = temp_model;
+		}
 	}
-	else
-		clear_model(temp_model);
 
 	return  rc;
 
@@ -54,7 +55,11 @@ error_category_t fscanf_model(model_t &model,FILE *f_in)
 	error_category_t rc;
 	rc = fscanf_dots(model.dots, f_in);
 	if (rc == OK)
+	{
 		rc = fscanf_lines(model.lines, f_in);
+		if (rc != OK)
+			clear_dot_array(model.dots);
+	}
 	return rc;
 }
 

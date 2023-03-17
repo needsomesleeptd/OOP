@@ -17,26 +17,29 @@ error_category push_line_back(line_array_t &arr, line_t line)
 	{
 		void *temp;
 		temp = malloc(sizeof(line_t) * arr.start_val);
-		if (!temp)
-			rc = IMPOSSIBLE_TO_ALLOCATE;
-		else
+
+
+		if (temp)
 		{
 			arr.lines = (line_t *)temp;
 			arr.cap = arr.start_val;
 		}
+		else
+			rc = IMPOSSIBLE_TO_ALLOCATE;
 
 	}
 	else if (arr.len == arr.cap)
 	{
 		void *temp;
 		temp = realloc(arr.lines,sizeof(line_t) * arr.cap * arr.step);
-		if (!temp)
-			rc = IMPOSSIBLE_TO_ALLOCATE;
-		else
+
+		if (temp)
 		{
 			arr.lines = (line_t *)temp;
 			arr.cap *= arr.step;
 		}
+		else
+			rc = IMPOSSIBLE_TO_ALLOCATE;
 
 	}
 

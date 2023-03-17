@@ -2,7 +2,7 @@
 #include "error_handling.h"
 
 
-error_category fscanf_dot(FILE *f_in, dot_t &dot)
+error_category fscanf_dot(dot_t &dot, FILE *f_in)
 {
 	error_category_t err = OK;
 	if (f_in == NULL)

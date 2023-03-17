@@ -19,26 +19,26 @@ error_category push_dot_back(dot_array_t &arr, dot_t dot)
 	{
 		void *temp;
 		temp = malloc(sizeof(dot_t) * arr.start_val);
-		if (!temp)
-			rc = IMPOSSIBLE_TO_ALLOCATE;
-		else
+		if (temp)
 		{
 			arr.dots = (dot_t *) temp;
 			arr.cap = arr.start_val;
 		}
+		else
+			rc = IMPOSSIBLE_TO_ALLOCATE;
 
 	}
 	else if (arr.len == arr.cap)
 	{
 		void *temp;
 		temp = realloc(arr.dots,sizeof(dot_t) * arr.cap * arr.step);
-		if (!temp)
-			rc = IMPOSSIBLE_TO_ALLOCATE;
-		else
+		if (temp)
 		{
 			arr.dots = (dot_t *) temp;
 			arr.cap *= arr.step;
 		}
+		else
+			rc = IMPOSSIBLE_TO_ALLOCATE;
 
 	}
 	if (rc == OK)
@@ -82,7 +82,7 @@ error_category_t fscanf_dots(dot_array_t &dots, FILE *f)
 	for (int i = 0;rc == OK &&  i < dots_count; i++)
 	{
 		dot_t dot;
-		rc = fscanf_dot(f, dot);
+		rc = fscanf_dot(dot, f);
 		if (rc == OK)
 			rc = push_dot_back(dots, dot);
 	}
