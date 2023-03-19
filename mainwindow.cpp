@@ -8,17 +8,21 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
-	ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
-	QAction *Action1 = new QAction();
-	connect(ui->about_creator, SIGNAL(triggered()),this,SLOT(on_actionabout_creator_triggered()));
-	//ui->about_creator->addAction(Action1);
 
-	QAction *Action2 = new QAction();
+
+
+
+
+	connect(ui->about_creator, SIGNAL(triggered()),this,SLOT(on_actionabout_creator_triggered()));
+
+
+
 	connect(ui->about_program, SIGNAL(triggered()),this,SLOT(on_actionabout_program_triggered()));
-	//ui->about_program->addAction(Action2);
+
 
 }
 
@@ -134,14 +138,22 @@ void MainWindow::on_revert_step_clicked()
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
+	int flag = 0;
+	if (this->width() < 1200)
+	{
+		this->resize(1200, this->height());
+		flag = 1;
+	}
+	{
+		if (this->height() < 700)
+		{
+			this->resize(this->width(), 700);
+			flag = 1;
+		}
+	}
+	if (flag == 0)
+		QMainWindow::resizeEvent(event);
 
-	if (this->height() < 1000)
-		this->resize(this->width(),1000);
-
-	if (this->width() < 1000)
-		this->resize(1000,this->height());
-
-	QMainWindow::resizeEvent(event);
 	redraw_figure();
 
 }
