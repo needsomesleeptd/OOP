@@ -36,6 +36,8 @@ private slots:
 
     void on_revert_step_clicked();
 
+	void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

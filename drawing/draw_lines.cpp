@@ -31,7 +31,10 @@ error_category_t get_adjusted_dots(dot_array_t &dot_array, dot_array_t &adjusted
 
 void draw_line_dots(dot_t &from, dot_t &to,QGraphicsScene* canvas)
 {
-	canvas->addLine(from.x,from.y,to.x,to.y);
+
+	QPen black_pen(Qt::black);
+	black_pen.setWidth(LINE_WIDTH);
+	canvas->addLine(from.x,from.y,to.x,to.y,black_pen);
 }
 
 error_category_t draw_line(line_t &line, dot_array_t &adjusted_dot_array,QGraphicsScene* canvas)

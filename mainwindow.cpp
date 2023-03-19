@@ -2,7 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "request.h"
 #include <QFileDialog>
-
+#include "iostream"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+	ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 
@@ -121,6 +122,20 @@ void MainWindow::on_revert_step_clicked()
     error_category_t rc = handle_request(request);
     //handle_error(rc);
 	redraw_figure();
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+
+	if (this->height() < 700)
+		this->resize(this->width(),700);
+
+	if (this->width() < 900)
+		this->resize(900,this->height());
+
+	QMainWindow::resizeEvent(event);
+	redraw_figure();
+
 }
 
 
