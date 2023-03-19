@@ -15,7 +15,7 @@ struct scaler
 
 typedef scaler scaler_t;
 
-error_category_t scale_dot(dot_t &dot, scaler_t &scaler);
-error_category_t scale_dots(dot_array &array, scaler_t &scaler);
+error_category_t scale_dot(dot_t &dot, dot_t &center, scaler_t &scaler);
+error_category_t scale_dots(dot_array &array, dot_t &center, scaler_t &scaler);
 
 #endif //INC_1_LAB_SCALER_H

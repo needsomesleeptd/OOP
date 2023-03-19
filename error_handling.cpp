@@ -25,6 +25,10 @@ void handle_error(error_category_t error)
 		case INVALID_INDEX:
 			QMessageBox::warning(NULL,"Одна из линий не валидна","Одна из линий имеет связь с несуществующей точкой");
 			break;
+		case INVALID_CANVAS:
+			QMessageBox::warning(NULL,"Канвас не валиден","Канваса по которому поступил запрос на рисование не существует");
+			break;
+
 
 
 

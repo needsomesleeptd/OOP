@@ -15,7 +15,8 @@ enum error_category
 	INVALID_COMMAND,
 	INVALID_SCALER,
 	MODEL_NOT_INITIALIZED,
-	IMPOSSIBLE_TO_OUTPUT
+	IMPOSSIBLE_TO_OUTPUT,
+	INVALID_CANVAS
 };
 
 typedef error_category error_category_t;

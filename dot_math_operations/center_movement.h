@@ -10,6 +10,8 @@ error_category_t move_dots(dot_array_t &array, dot_t &vector);
 dot_t find_center(dot_array_t &array);
 error_category_t move_dot_away(dot_t &dot, dot_t &vector);
 void reverse_coordinates(dot_t &dot);
+void substact_coordinates(dot_t &first, dot_t &second);
+void add_coordinates(dot_t &first, dot_t &second);
 
 
 #endif //INC_1_LAB_CENTER_MOVEMENT_H
