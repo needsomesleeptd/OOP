@@ -167,3 +167,12 @@ void MainWindow::on_change_center_clicked()
 	redraw_figure();
 
 }
+
+void MainWindow::on_reset_center_clicked()
+{
+    request request;
+	request.type = request::reset_center;
+	handle_request(request);
+	redraw_figure();
+
+}

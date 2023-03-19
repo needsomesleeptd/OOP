@@ -47,15 +47,34 @@ error_category_t move_dots(dot_array_t &array, dot_t &vector)
 dot_t find_center(dot_array_t &array)
 {
 	dot_t center = {0.0, 0.0, 0.0};
+	int min_x = array.dots[0].x;
+	int max_x = array.dots[0].x;
+	int min_y = array.dots[0].y;
+	int max_y = array.dots[0].y;
+	int min_z = array.dots[0].z;
+	int max_z = array.dots[0].z;
+
+
 	for (int i = 0; i < array.len; i++)
 	{
-		center.x += array.dots[i].x;
-		center.y += array.dots[i].y;
-		center.z += array.dots[i].z;
+		if (min_x > array.dots[i].x)
+			min_x = array.dots[i].x;
+		if (min_y > array.dots[i].y)
+			min_y = array.dots[i].y;
+		if (min_z > array.dots[i].z)
+			min_z = array.dots[i].z;
+
+		if (max_x < array.dots[i].x)
+			max_x = array.dots[i].x;
+		if (max_y < array.dots[i].y)
+			max_y = array.dots[i].y;
+		if (max_z < array.dots[i].z)
+			max_z = array.dots[i].z;
+		
 	}
-	center.x /= array.len;
-	center.y /= array.len;
-	center.z /= array.len;
+	center.x = (min_x + max_x) / 2;
+	center.y = (min_y + max_y) / 2;
+	center.z = (min_z + max_z) / 2;
 	return center;
 }
 

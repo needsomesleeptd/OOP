@@ -40,6 +40,8 @@ private slots:
 
 	void on_change_center_clicked();
 
+	void on_reset_center_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

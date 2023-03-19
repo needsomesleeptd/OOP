@@ -159,14 +159,22 @@ error_category_t move_model(model_t &model, dot_t &vector)
 	return rc;
 }
 
-error_category_t draw_model(model_t &model, QGraphicsScene *canvas)
+error_category_t draw_center(dot_t &center, QGraphicsScene *canvas)
 {
-	error_category_t rc;
-	rc =  draw_lines(model.lines,model.dots,canvas);
 	QPen red_pen(Qt::red);
 	red_pen.setWidth(LINE_WIDTH);
-	dot_t drawing_center = adjust_dot(model.center,canvas);
+	dot_t drawing_center = adjust_dot(center,canvas);
 	canvas->addEllipse(drawing_center.x,drawing_center.y,5,5,red_pen);
+	return OK;
+}
+
+error_category_t draw_model(model_t &model, QGraphicsScene *canvas)
+{
+	error_category_t rc = OK;
+	if (!is_empty(model.dots))
+		draw_center(model.center,canvas);
+	rc = draw_lines(model.lines,model.dots,canvas);
+
 	return rc;
 }
 

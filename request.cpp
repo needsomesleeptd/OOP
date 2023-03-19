@@ -45,6 +45,10 @@ error_category_t handle_request(request_t request)
 			rc = save_model(model,"../.last_change");
 			rc = change_center(model,request.dot);
 			break;
+		case request::reset_center:
+			rc = save_model(model,"../.last_change");
+			calculate_center_model(model);
+			break;
 		default:
 			rc = INVALID_COMMAND;
 
