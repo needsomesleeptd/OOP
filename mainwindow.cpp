@@ -155,3 +155,15 @@ void MainWindow::redraw_figure()
 }
 
 
+
+
+void MainWindow::on_change_center_clicked()
+{
+	request_t request;
+	request.type = request::change_center;
+	dot_t center = {ui->center_x->value(),ui->center_y->value(),ui->center_z->value()};
+	request.dot = center;
+	handle_request(request);
+	redraw_figure();
+
+}

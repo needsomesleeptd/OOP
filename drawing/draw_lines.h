@@ -14,6 +14,7 @@
 #define LINE_WIDTH 6
 
 error_category_t draw_lines(line_array_t &line_array,dot_array_t &dot_array,QGraphicsScene* canvas);
+dot_t adjust_dot(dot_t &dot,QGraphicsScene* canvas);
 
 
 

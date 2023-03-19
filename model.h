@@ -38,6 +38,7 @@ void clear_model(model_t &model);
 error_category_t validate_model(model_t &model);
 error_category_t save_model(model_t &model,const char* filename);
 error_category_t load_model(model_t &model,const char* filename);
+error_category_t change_center(model_t &model, dot_t &dot);
 
 
 

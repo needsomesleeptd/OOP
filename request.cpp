@@ -41,6 +41,10 @@ error_category_t handle_request(request_t request)
 			if (rc != OK)
 				clear_model(model);
 			break;
+		case request::change_center:
+			rc = save_model(model,"../.last_change");
+			rc = change_center(model,request.dot);
+			break;
 		default:
 			rc = INVALID_COMMAND;
 

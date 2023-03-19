@@ -23,7 +23,8 @@ struct request
 		draw_model,
 		save_model,
 		clear_model,
-		revert_changes
+		revert_changes,
+		change_center
 	} type;
 
 	union
@@ -33,6 +34,7 @@ struct request
 		scaler_t scaler;
 		const char* filename;
 		QGraphicsScene *canvas;
+		dot_t dot;
 	};
 };
 

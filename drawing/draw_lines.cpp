@@ -10,7 +10,7 @@ qreal get_canvas_height(QGraphicsScene* canvas)
 	return canvas->height();
 }
 
-static dot_t adjust_dot(dot_t &dot,QGraphicsScene* canvas)
+dot_t adjust_dot(dot_t &dot,QGraphicsScene* canvas)
 {
 	dot_t adjusted_dot;
 	adjusted_dot.x = dot.x + get_canvas_width(canvas) / 2;
@@ -76,6 +76,8 @@ error_category_t draw_lines(line_array_t &line_array,dot_array_t &dot_array,QGra
 
 	if (!is_empty(adjusted_dot_array))
 		clear_dot_array(adjusted_dot_array);
+
+
 
 	return rc;
 }
