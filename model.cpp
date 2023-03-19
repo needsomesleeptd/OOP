@@ -144,7 +144,8 @@ error_category_t scale_model(model_t &model, scaler_t &scaler)
 
 void calculate_center_model(model_t &model)
 {
-	model.center =  find_center(model.dots);
+	if (!is_empty(model.dots))
+		model.center =  find_center(model.dots);
 }
 
 error_category_t move_model(model_t &model, dot_t &vector)
@@ -180,7 +181,9 @@ error_category_t draw_model(model_t &model, QGraphicsScene *canvas)
 
 error_category_t change_center(model_t &model, dot_t &dot)
 {
-	model.center = dot;
+	if (is_empty(model.dots))
+		return MODEL_NOT_INITIALIZED;
+	add_coordinates(model.center,dot);
 	return OK;
 }
 void clear_model(model_t &model)

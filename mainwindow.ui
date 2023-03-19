@@ -89,6 +89,12 @@
            <layout class="QFormLayout" name="formLayout_5">
             <item row="0" column="0">
              <widget class="QLabel" name="kxLabel_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -101,6 +107,12 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="kyLabel_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -113,6 +125,12 @@
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="kzLabel_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -125,6 +143,12 @@
             </item>
             <item row="0" column="1">
              <widget class="QDoubleSpinBox" name="move_x">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -141,6 +165,12 @@
             </item>
             <item row="1" column="1">
              <widget class="QDoubleSpinBox" name="move_y">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -157,6 +187,12 @@
             </item>
             <item row="2" column="1">
              <widget class="QDoubleSpinBox" name="move_z">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -476,6 +512,12 @@
            <layout class="QFormLayout" name="formLayout_7">
             <item row="0" column="0">
              <widget class="QLabel" name="kxLabel_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -488,6 +530,12 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="kyLabel_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -500,6 +548,12 @@
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="kzLabel_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -633,6 +687,14 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Меню</string>
+    </property>
+    <addaction name="about_creator"/>
+    <addaction name="about_program"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -663,6 +725,16 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <action name="about_creator">
+   <property name="text">
+    <string>О создателе</string>
+   </property>
+  </action>
+  <action name="about_program">
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -12,6 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 	ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
+	QAction *Action1 = new QAction();
+	connect(ui->about_creator, SIGNAL(triggered()),this,SLOT(on_actionabout_creator_triggered()));
+	//ui->about_creator->addAction(Action1);
+
+	QAction *Action2 = new QAction();
+	connect(ui->about_program, SIGNAL(triggered()),this,SLOT(on_actionabout_program_triggered()));
+	//ui->about_program->addAction(Action2);
+
 }
 
 
@@ -127,11 +135,11 @@ void MainWindow::on_revert_step_clicked()
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
 
-	if (this->height() < 700)
-		this->resize(this->width(),700);
+	if (this->height() < 1000)
+		this->resize(this->width(),1000);
 
-	if (this->width() < 900)
-		this->resize(900,this->height());
+	if (this->width() < 1000)
+		this->resize(1000,this->height());
 
 	QMainWindow::resizeEvent(event);
 	redraw_figure();
@@ -163,8 +171,10 @@ void MainWindow::on_change_center_clicked()
 	request.type = request::change_center;
 	dot_t center = {ui->center_x->value(),ui->center_y->value(),ui->center_z->value()};
 	request.dot = center;
-	handle_request(request);
-	redraw_figure();
+	error_category_t rc = handle_request(request);
+	handle_error(rc);
+	if (rc == OK)
+		redraw_figure();
 
 }
 
@@ -174,5 +184,25 @@ void MainWindow::on_reset_center_clicked()
 	request.type = request::reset_center;
 	handle_request(request);
 	redraw_figure();
+
+}
+
+void MainWindow::on_actionabout_creator_triggered()
+{
+	QMessageBox::information(this,"Об авторе","Данная работа была выполнена студентом Разиным Андреем группы ИУ7-44Б");
+
+}
+
+void MainWindow::on_actionabout_program_triggered()
+{
+
+	QMessageBox::information(this,"О программе","Цель работы:Нарисовать исходный рисунок, затем его переместить,\n"
+	                                            "\n"
+	                                            "промасштабировать, повернуть\n"
+												"С помощью центральной красной точки задается центр вращения и масштабирования модели\n"
+												"При перемещении модели центр перемещается с ней ,для отдельного перемещения центра\n"
+												"Необходимо использовать отдельные параметры смещения центра\n"
+
+												);
 
 }

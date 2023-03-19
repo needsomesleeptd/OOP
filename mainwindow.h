@@ -42,6 +42,12 @@ private slots:
 
 	void on_reset_center_clicked();
 
+	void on_actionabout_creator_triggered();
+
+	void on_actionabout_program_triggered();
+
+
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;
