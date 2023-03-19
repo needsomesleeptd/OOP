@@ -24,7 +24,8 @@ struct request
 		save_model,
 		clear_model,
 		revert_changes,
-		change_center
+		change_center,
+		reset_center
 	} type;
 
 	union
