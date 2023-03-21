@@ -3,7 +3,7 @@
 error_category_t scale_dot(dot_t &dot, dot_t &center, scaler_t &scaler)
 {
 	error_category_t rc = OK;
-	if (fabs(scaler.kx) < EPS && fabs(scaler.ky) < EPS && fabs(scaler.kz) < EPS)
+	if (fabs(scaler.kx) < EPS || fabs(scaler.ky) < EPS || fabs(scaler.kz) < EPS)
 		rc = INVALID_SCALER;
 	if (rc == OK)
 	{

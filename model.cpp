@@ -150,11 +150,11 @@ void calculate_center_model(model_t &model)
 
 error_category_t move_model(model_t &model, dot_t &vector)
 {
-	error_category_t rc;
+	error_category_t rc = OK;
 	if (is_empty(model.dots))
 		rc = MODEL_NOT_INITIALIZED;
-	else
-		rc = move_dot(model.center,vector);
+	//else
+	//	rc = move_dot(model.center,vector);
 	if (rc == OK)
 		rc = move_dots(model.dots,vector);
 	return rc;
@@ -183,7 +183,7 @@ error_category_t change_center(model_t &model, dot_t &dot)
 {
 	if (is_empty(model.dots))
 		return MODEL_NOT_INITIALIZED;
-	add_coordinates(model.center,dot);
+	move_dot(model.center,dot);
 	return OK;
 }
 void clear_model(model_t &model)

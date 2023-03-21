@@ -13,9 +13,10 @@ qreal get_canvas_height(QGraphicsScene* canvas)
 dot_t adjust_dot(dot_t &dot,QGraphicsScene* canvas)
 {
 	dot_t adjusted_dot;
-	adjusted_dot.x = dot.x + get_canvas_width(canvas) / 2;
-	adjusted_dot.y = dot.y + get_canvas_height(canvas) / 2;
+	adjusted_dot.x = dot.x + get_canvas_width(canvas) / 2.0;
+	adjusted_dot.y = dot.y + get_canvas_height(canvas) / 2.0;
 	return adjusted_dot;
+
 }
 
 error_category_t get_adjusted_dots(dot_array_t &dot_array, dot_array_t &adjusted_dot_array, QGraphicsScene* canvas)

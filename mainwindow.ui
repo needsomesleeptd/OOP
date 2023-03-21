@@ -130,6 +130,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -155,10 +161,10 @@
                </size>
               </property>
               <property name="minimum">
-               <double>-300.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>300.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -176,11 +182,17 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="minimum">
-               <double>-300.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>300.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -195,6 +207,12 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -266,10 +284,10 @@
                </size>
               </property>
               <property name="minimum">
-               <double>0.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>20.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
               <property name="value">
                <double>1.000000000000000</double>
@@ -285,10 +303,10 @@
                </size>
               </property>
               <property name="minimum">
-               <double>0.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>20.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
               <property name="value">
                <double>1.000000000000000</double>
@@ -297,6 +315,12 @@
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="kzLabel_2">
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -311,7 +335,13 @@
              <widget class="QDoubleSpinBox" name="scale_z">
               <property name="minimumSize">
                <size>
-                <width>100</width>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -391,6 +421,12 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="kyLabel_4">
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -403,6 +439,12 @@
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="kzLabel_4">
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -422,13 +464,13 @@
                </size>
               </property>
               <property name="minimum">
-               <double>-360.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>360.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>5.000000000000000</double>
+               <double>1.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -437,6 +479,12 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -456,6 +504,12 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -553,6 +607,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>12</pointsize>
@@ -572,13 +632,13 @@
                </size>
               </property>
               <property name="minimum">
-               <double>-360.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>360.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>5.000000000000000</double>
+               <double>1.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -591,13 +651,13 @@
                </size>
               </property>
               <property name="minimum">
-               <double>-360.000000000000000</double>
+               <double>-1000.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>360.000000000000000</double>
+               <double>1000.000000000000000</double>
               </property>
               <property name="singleStep">
-               <double>5.000000000000000</double>
+               <double>1.000000000000000</double>
               </property>
              </widget>
             </item>
@@ -606,6 +666,12 @@
               <property name="minimumSize">
                <size>
                 <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
@@ -702,7 +768,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
