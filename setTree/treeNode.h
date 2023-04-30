@@ -18,7 +18,7 @@ struct Node
 	std::weak_ptr<Node<T>> parent_;
 	std::shared_ptr<Node<T>> left_;
 	std::shared_ptr<Node<T>> right_;
-	int color_;
+	NodeColor color_;
 
 	explicit Node(const T& data) : parent_(), left_(), right_(), data_(data), color_(RED)
 	{
@@ -30,6 +30,7 @@ struct Node
 	}
 
 	void clear_subtree();
+
 
 };
 

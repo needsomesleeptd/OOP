@@ -17,9 +17,8 @@ class RBTree : ISet<T>
 	NodePtr<T> findMin(const NodePtr<T> &root);
 	void RBTreeFixInsert(NodePtr<T> insertedNode);
 	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
-	void RBTreeFixInsert(NodePtr<T> insertedNode);
 
-	void setColor(NodePtr<T> node, int color);
+	void setColor(NodePtr<T> node, NodeColor color);
 	NodeColor getColor(NodePtr<T> node);
 
 
@@ -53,4 +52,4 @@ class RBTree : ISet<T>
 
 
 
-#endif _RB_TREE_
+#endif //_RB_TREE_
