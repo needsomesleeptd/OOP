@@ -3,16 +3,21 @@
 
 #include "treeNode.h"
 #include "Iset.h"
+#include "Iterator.hpp"
 
 template <typename T>
 class RBTree : ISet<T>
 {
  private:
 	NodePtr<T> root;
+	friend class RBIterator<T>;
  protected:
 	void rotateRight(NodePtr<T> node);
 	void rotateLeft(NodePtr<T> node);
 	NodePtr<T> search(const T& key);
+	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
+	void setColor(NodePtr<T> node, int color);
+	void RBTreeFixInsert(NodePtr<T> insertedNode);
 
 
 
@@ -29,6 +34,7 @@ class RBTree : ISet<T>
 	void set_union(ISet<T>* other);
 	void set_symmDifference(ISet<T>* other);
 	void set_intersection(ISet<T>* other);
+
 };
 
 
