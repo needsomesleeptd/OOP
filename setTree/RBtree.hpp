@@ -3,6 +3,13 @@
 
 #include "tree.h"
 
+
+template<typename T>
+RBTree<T>::RBTree() : root()
+{
+};
+
+
 template<typename T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
 {
@@ -46,14 +53,15 @@ void RBTree<T>::rotateRight(NodePtr<T> node)
 	node->parent = pivot;
 	pivot->right = node;
 };
+
 template<typename T>
 NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 {
 	if (root == nullptr)
 		return nodeToInsert;
-	if (nodeToInsert->data_ > root)
+	if (nodeToInsert->data_ > root->data_)
 		root->right_ = insertBin(root->right_, nodeToInsert);
-	else if (nodeToInsert->data_ > root)
+	else if (nodeToInsert->data_ > root->data_)
 		root->left_ = insertBin(root->left_, nodeToInsert);
 	/*
 	 * Todo::Implement Error throwing
@@ -70,15 +78,23 @@ void RBTree<T>::setColor(NodePtr<T> node, int color)
 }
 
 template<typename T>
+NodeColor RBTree<T>::getColor(NodePtr<T> node)
+{
+
+	return node->color_;
+}
+
+
+template<typename T>
 void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 {
 
 	NodePtr<T> parent = nullptr;
 	NodePtr<T> grandparent = nullptr;
-	while (insertedNode != root && getColor(insertedNode) == RED && getColor(insertedNode->parent) == RED)
+	while (insertedNode != root && getColor(insertedNode) == RED && getColor(*insertedNode->parent_) == RED)
 	{
-		parent = insertedNode->parent;
-		grandparent = parent->parent;
+		parent = insertedNode->parent_;
+		grandparent = parent->parent_;
 		if (parent == grandparent->left)
 		{
 			NodePtr<T> uncle = grandparent->right;
@@ -91,20 +107,20 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 			}
 			else
 			{
-				if (insertedNode == parent->right)
+				if (insertedNode == parent->right_)
 				{
 					rotateLeft(parent);
 					insertedNode = parent;
 					parent = insertedNode->parent;
 				}
 				rotateRight(grandparent);
-				std::swap(parent->color, grandparent->color);
+				std::swap(parent->color_, grandparent->color_);
 				insertedNode = parent;
 			}
 		}
 		else
 		{
-			NodePtr<T> uncle = grandparent->left;
+			NodePtr<T> uncle = grandparent->left_;
 			if (getColor(uncle) == RED)
 			{
 				setColor(uncle, BLACK);
@@ -114,14 +130,14 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 			}
 			else
 			{
-				if (insertedNode == parent->left)
+				if (insertedNode == parent->left_)
 				{
 					rotateRight(parent);
 					insertedNode = parent;
-					parent = insertedNode->parent;
+					parent = insertedNode->parent_;
 				}
 				rotateLeft(grandparent);
-				std::swap(parent->color, grandparent->color);
+				std::swap(parent->color_, grandparent->color_);
 				insertedNode = parent;
 			}
 		}
@@ -129,13 +145,33 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 	setColor(root, BLACK);
 }
 
-
 template<typename T>
-void RBTree<T>::add(const T &data)
+void RBTree<T>::add(const T& data)
 {
 	NodePtr<T> node = std::make_shared<Node<T>>(data);
-	root = insertBin(root);
+	root = insertBin(root, node);
 	RBTreeFixInsert(node);
+}
+
+template<typename T>
+NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root)
+{
+	NodePtr<T> temp = root;
+	while (temp->left_ != nullptr)
+		temp = temp->left_;
+	return temp;
+}
+
+template<typename T>
+RBIterator<T> RBTree<T>::begin()
+{
+	return RBIterator<T>(findMin(root));
+}
+
+template<typename T>
+RBIterator<T> RBTree<T>::end()
+{
+	return RBIterator<T>(nullptr);
 }
 
 #endif //TREE_HPP_

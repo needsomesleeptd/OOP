@@ -16,10 +16,11 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, NodePtr<T>>
 	NodePtr<T> find_prev_up();
 	NodePtr<T> find_prev_down();
 
-	explicit RBIterator(NodePtr<T> node);
+	//explicit RBIterator(NodePtr<T> node);
  public:
 	// Операции, необходимые для всех категорий итераторов.
 	RBIterator() = default;
+	explicit RBIterator(std::weak_ptr<NodePtr<T>>);
 	RBIterator(const RBIterator&) = default;
 	RBIterator& operator=(const RBIterator&) = default;
 	~RBIterator() = default;
@@ -42,6 +43,11 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, NodePtr<T>>
 	bool operator==(const RBIterator& other);
 	bool operator!=(const RBIterator& other);
 };
+
+template<typename T>
+RBIterator<T>::RBIterator(std::weak_ptr<NodePtr<T>> ptr) :cur_node(ptr)
+{
+}
 
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator++()
@@ -165,13 +171,13 @@ T RBIterator<T>::get()
 }
 
 template<typename T>
-T &RBIterator<T>::operator*()
+T& RBIterator<T>::operator*()
 {
 	return this->cur_node.lock().data;
 }
 
 template<typename T>
-T *RBIterator<T>::operator->()
+T* RBIterator<T>::operator->()
 {
 	return &(this->cur_node.lock().data);
 }

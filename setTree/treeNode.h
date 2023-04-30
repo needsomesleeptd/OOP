@@ -20,7 +20,11 @@ struct Node
 	std::shared_ptr<Node<T>> right_;
 	int color_;
 
-	explicit Node(const T& data) : parent_(nullptr), left_(nullptr), right_(nullptr), data_(data), color_(RED)
+	explicit Node(const T& data) : parent_(), left_(), right_(), data_(data), color_(RED)
+	{
+
+	}
+	explicit Node() : parent_(), left_(), right_(), data_(), color_(RED)
 	{
 
 	}

@@ -14,10 +14,16 @@ class RBTree : ISet<T>
  protected:
 	void rotateRight(NodePtr<T> node);
 	void rotateLeft(NodePtr<T> node);
-	NodePtr<T> search(const T& key);
-	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
-	void setColor(NodePtr<T> node, int color);
+	NodePtr<T> findMin(const NodePtr<T> &root);
 	void RBTreeFixInsert(NodePtr<T> insertedNode);
+	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
+	void RBTreeFixInsert(NodePtr<T> insertedNode);
+
+	void setColor(NodePtr<T> node, int color);
+	NodeColor getColor(NodePtr<T> node);
+
+
+
 
 
 
@@ -31,9 +37,15 @@ class RBTree : ISet<T>
 	void clear() override;
 	void find(const T &key) override;
 
+	RBIterator<T> begin();
+	RBIterator<T> end();
+
+
+
 	void set_union(ISet<T>* other);
 	void set_symmDifference(ISet<T>* other);
 	void set_intersection(ISet<T>* other);
+
 
 };
 
