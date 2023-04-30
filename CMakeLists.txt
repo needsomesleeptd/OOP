@@ -1,24 +1,12 @@
-cmake_minimum_required(VERSION 3.7.0)
+cmake_minimum_required(VERSION 3.0.0)
+project(dz2)
 
-project(lab-02 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
 
-#add_library(matrix
-        #src/except.cpp
-        #)
 
-#target_include_directories(matrix
-        #PUBLIC include)
 
-#add_executable(runner
-#        test/runner.cpp
-#        test/matrix.cpp
-#        test/vector.cpp
-#        )
+set(Srcs "setTree/RBtree.hpp" "iterator/Iterator.hpp" "setTree/main.cpp")
+set(Hdrs  "setTree/Iset.h" "setTree/treeNode.h" "setTree/tree.h")
 
-add_executable(tree/tree.hpp tree/main.cpp tree/Iset.h tree/treeNode.h)
 
-#target_link_libraries(runner
-#        matrix)
-
-#target_link_libraries(runner
-#        CppUTest)
+add_executable(dz2 ${Srcs} ${Hdrs})

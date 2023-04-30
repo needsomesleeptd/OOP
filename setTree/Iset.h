@@ -11,9 +11,9 @@ class ISet
 	virtual void remove(const T& key) = 0;
 	virtual void find(const T& key) = 0;
 
-	virtual ISet* set_union(ISet* other) = 0;
-	virtual ISet* set_SymmDifference(ISet* other) = 0;
-	virtual ISet* set_Intersection(ISet* other) = 0;
+	virtual void set_union(ISet* other) = 0;
+	virtual void set_symmDifference(ISet* other) = 0;
+	virtual void set_intersection(ISet* other) = 0;
 
 };
 

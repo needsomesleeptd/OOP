@@ -39,7 +39,7 @@ void Node<T>::clear_subtree()
 
 	right_ = nullptr;
 	left_ = nullptr;
-}
+};
 
 template<typename T>
 using NodePtr = std::shared_ptr<Node<T>>;

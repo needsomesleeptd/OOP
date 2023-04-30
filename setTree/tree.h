@@ -9,20 +9,30 @@ class RBTree : ISet<T>
 {
  private:
 	NodePtr<T> root;
+ protected:
+	void rotateRight(NodePtr<T> node);
+	void rotateLeft(NodePtr<T> node);
+	NodePtr<T> search(const T& key);
+
+
+
  public:
+
+	RBTree();
+	~RBTree() override;
+
 	void add(const T &data) override;
 	void remove(const T &data) override;
 	void clear() override;
 	void find(const T &key) override;
 
-	RBTree* set_Union(RBTree* other);
-	RBTree* set_SymmDifference(RBTree* other);
-	RBTree* set_Intersection(RBTree* other);
-
-
+	void set_union(ISet<T>* other);
+	void set_symmDifference(ISet<T>* other);
+	void set_intersection(ISet<T>* other);
 };
 
 
 
 
-#endif _RB_TREE
+
+#endif _RB_TREE_
