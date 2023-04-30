@@ -11,6 +11,19 @@ RBTree<T>::RBTree() : root()
 {
 };
 
+template<typename T>
+RBTree<T>::~RBTree()
+{
+	root->clear_subtree();
+}
+
+template<typename T>
+void RBTree<T>::clear()
+{
+	root->clear_subtree();
+}
+
+
 
 template<typename T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
@@ -176,6 +189,31 @@ template<typename T>
 RBIterator<T> RBTree<T>::end()
 {
 	return RBIterator<T>(nullptr);
+}
+template<typename T>
+void RBTree<T>::remove(const T& data)
+{
+	// TODO::Implement this
+}
+template<typename T>
+void RBTree<T>::find(const T& key)
+{
+	// TODO::Implement this
+}
+template<typename T>
+void RBTree<T>::set_union(ISet<T>* other)
+{
+	// TODO::Implement this
+}
+template<typename T>
+void RBTree<T>::set_symmDifference(ISet<T>* other)
+{
+	// TODO::Implement this
+}
+template<typename T>
+void RBTree<T>::set_intersection(ISet<T>* other)
+{
+	// TODO::Implement this
 }
 
 #endif //TREE_HPP_

@@ -3,12 +3,14 @@
 template<typename T>
 class RBTree;
 
+
+
 template<typename T>
-class RBIterator : std::iterator<std::random_access_iterator_tag, NodePtr<T>>
+class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 {
  private:
 	friend class RBTree<T>;
-	std::weak_ptr<NodePtr<T>> cur_node;
+	std::weak_ptr<Node<T>> cur_node;
 	const NodePtr<T> prev();
 	const NodePtr<T> next();
 	NodePtr<T> find_next_up();
@@ -20,8 +22,9 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, NodePtr<T>>
  public:
 	// Операции, необходимые для всех категорий итераторов.
 	RBIterator() = default;
-	explicit RBIterator(std::weak_ptr<NodePtr<T>>);
-	RBIterator(const RBIterator&) = default;
+	explicit RBIterator(const RBIterator&) = default;
+	explicit RBIterator(NodePtr<T> ptr);
+
 	RBIterator& operator=(const RBIterator&) = default;
 	~RBIterator() = default;
 
@@ -44,9 +47,13 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, NodePtr<T>>
 	bool operator!=(const RBIterator& other);
 };
 
+
+
 template<typename T>
-RBIterator<T>::RBIterator(std::weak_ptr<NodePtr<T>> ptr) :cur_node(ptr)
+RBIterator<T>::RBIterator(NodePtr<T> ptr)
 {
+	//std::shared_ptr<NodePtr<T>> new_node(ptr);
+	cur_node = ptr;
 }
 
 template<typename T>
@@ -66,7 +73,7 @@ const RBIterator<T> RBIterator<T>::operator--()
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator++(int)
 {
-	NodePtr<T> save_node_ptr = cur_node;
+	Node<T> save_node_ptr = cur_node;
 	next();
 	return save_node_ptr;
 }
@@ -173,7 +180,7 @@ T RBIterator<T>::get()
 template<typename T>
 T& RBIterator<T>::operator*()
 {
-	return this->cur_node.lock().data;
+	return this->cur_node.lock()->data_;
 }
 
 template<typename T>
