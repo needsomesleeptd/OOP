@@ -18,6 +18,12 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	NodePtr<T> find_prev_down();
 
  public:
+	/*using iteratorCategory = std::random_access_iterator_tag;
+	using valueType = Node<T>;
+	using diffrerenceType = ptrdiff_t;
+	using pointer = NodePtr<T>;
+	using reference = Node<T>&;*/
+
 	// Операции, необходимые для всех категорий итераторов.
 	RBIterator() = default;
 	explicit RBIterator(const RBIterator&) = default;
@@ -35,7 +41,7 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	RBIterator operator++(int);
 
 	// Операции, необходимые для InputIterator.
-	const T* operator->() const;
+	const T operator->() const;
 
 	// Операции, необходимые для BidirectionalIterator.
 	RBIterator& operator--();

@@ -20,7 +20,10 @@ int main()
 	std:: cout<< *it;
 	--it;
 	std:: cout<< *it;
+	std::cout<< "IsIn Check";
+	std::cout<< tree.isIn(3);
 	tree.remove(3);
+	std::cout<< tree.isIn(3);
 	std:: cout<<"REMOVED";
 	it = tree.begin();
 	std:: cout<< *it;

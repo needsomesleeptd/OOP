@@ -17,7 +17,7 @@ class RBTree : ISet<T>
 	NodePtr<T> findMin(const NodePtr<T> &root) const;
 	void RBTreeFixInsert(NodePtr<T> insertedNode);
 	void RBTreeFixRemove(NodePtr<T> node);
-	NodePtr<T> find(const T& key);
+	NodePtr<T> find(NodePtr<T> root,const T& key) const;
 	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
 	NodePtr<T> removeBin(NodePtr<T> root, const T& key);
 
