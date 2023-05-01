@@ -28,7 +28,7 @@ class RBIterator
 
 	// Операции, необходимые для всех категорий итераторов.
 
-	explicit RBIterator(const RBIterator&) = default;
+	RBIterator(const RBIterator&) = default;
 	explicit RBIterator(NodePtr<T> ptr);
 	RBIterator() = default;
 
@@ -49,13 +49,13 @@ class RBIterator
 	RBIterator& operator--();
 	RBIterator operator--(int) &;
 
-	bool operator!=(const RBIterator& other);
-	bool operator==(const RBIterator& other);
+	bool operator!=(const RBIterator& other) const;
+	bool operator==(const RBIterator& other) const;
 
 
 
 
-	T get();
+	T get() const;
 };
 
 template<typename T>
@@ -172,21 +172,21 @@ const NodePtr<T> RBIterator<T>::prev()
 }
 
 template<typename T>
-bool RBIterator<T>::operator==(const RBIterator& other)
+bool RBIterator<T>::operator==(const RBIterator& other) const
 {
 	return this->get() == other.get();
 }
 
 template<typename T>
-bool RBIterator<T>::operator!=(const RBIterator& other)
+bool RBIterator<T>::operator!=(const RBIterator& other) const
 {
 	return this->get() != other.get();
 }
 
 template<typename T>
-T RBIterator<T>::get()
+T RBIterator<T>::get() const
 {
-	return cur_node->data;
+	return cur_node.lock()->data_;
 }
 
 template<typename T>

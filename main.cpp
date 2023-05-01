@@ -1,7 +1,7 @@
 #include "RBtree.hpp"
 #include <iostream>
-
-
+#include <algorithm>
+#include <set>
 
 int main()
 {
@@ -35,6 +35,7 @@ int main()
 	std:: cout<< *it;
 	--it;
 	std:: cout<< *it;
+	std::set s(tree.begin(),tree.end());
 
 
 
