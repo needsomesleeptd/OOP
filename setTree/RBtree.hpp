@@ -74,10 +74,17 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 {
 	if (root == nullptr)
 		return nodeToInsert;
+
 	if (nodeToInsert->data_ > root->data_)
+	{
 		root->right_ = insertBin(root->right_, nodeToInsert);
-	else if (nodeToInsert->data_ > root->data_)
+		root->right_->parent_ = root;
+	}
+	else if (nodeToInsert->data_ < root->data_)
+	{
 		root->left_ = insertBin(root->left_, nodeToInsert);
+		root->left_->parent_ = root;
+	}
 	/*
 	 * Todo::Implement Error throwing
 	 */

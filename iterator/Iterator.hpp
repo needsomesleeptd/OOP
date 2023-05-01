@@ -1,9 +1,8 @@
 #include "tree.h"
+#include "iostream"
 
 template<typename T>
 class RBTree;
-
-
 
 template<typename T>
 class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
@@ -47,8 +46,6 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	bool operator!=(const RBIterator& other);
 };
 
-
-
 template<typename T>
 RBIterator<T>::RBIterator(NodePtr<T> ptr)
 {
@@ -59,40 +56,41 @@ RBIterator<T>::RBIterator(NodePtr<T> ptr)
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator++()
 {
-	return next();
+	cur_node = next();
+	return RBIterator<T>(cur_node.lock());
 
 }
 
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator--()
 {
-	return prev();
-
+	cur_node = prev();
+	return RBIterator<T>(cur_node.lock());
 }
 
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator++(int)
 {
-	Node<T> save_node_ptr = cur_node;
-	next();
-	return save_node_ptr;
+	NodePtr<T> save = cur_node.lock();
+	cur_node = next();
+	return  RBIterator<T>(save);
 }
 
 template<typename T>
 const RBIterator<T> RBIterator<T>::operator--(int)
 {
-	NodePtr<T> save_node_ptr = cur_node;
-	prev();
-	return save_node_ptr;
+	NodePtr<T> save = cur_node.lock();
+	cur_node = prev();
+	return  RBIterator<T>(save);
 }
 
 template<typename T>
 NodePtr<T> RBIterator<T>::find_next_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	shared_node_ptr = shared_node_ptr->right;
-	while (shared_node_ptr->left != nullptr)
-		shared_node_ptr = shared_node_ptr->left;
+	shared_node_ptr = shared_node_ptr->right_;
+	while (shared_node_ptr->left_ != nullptr)
+		shared_node_ptr = shared_node_ptr->left_;
 	return shared_node_ptr;
 }
 
@@ -100,11 +98,11 @@ template<typename T>
 NodePtr<T> RBIterator<T>::find_next_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	NodePtr<T> parent = shared_node_ptr->parent;
-	while (parent != nullptr && shared_node_ptr == parent->right)
+	NodePtr<T> parent = shared_node_ptr->parent_.lock();
+	while (parent != nullptr && shared_node_ptr == parent->right_)
 	{
 		shared_node_ptr = parent;
-		parent = parent->parent;
+		parent = parent->parent_.lock();
 	}
 	return parent;
 }
@@ -113,9 +111,9 @@ template<typename T>
 NodePtr<T> RBIterator<T>::find_prev_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	shared_node_ptr = shared_node_ptr->left;
-	while (shared_node_ptr->left != nullptr)
-		shared_node_ptr = shared_node_ptr->right;
+	shared_node_ptr = shared_node_ptr->left_;
+	while (shared_node_ptr->left_ != nullptr)
+		shared_node_ptr = shared_node_ptr->right_;
 	return shared_node_ptr;
 
 }
@@ -124,11 +122,11 @@ template<typename T>
 NodePtr<T> RBIterator<T>::find_prev_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	NodePtr<T> parent = shared_node_ptr->parent;
-	while (parent != nullptr && shared_node_ptr == parent->left)
+	NodePtr<T> parent = shared_node_ptr->parent_.lock();
+	while (parent != nullptr && shared_node_ptr == parent->left_)
 	{
 		shared_node_ptr = parent;
-		parent = parent->parent;
+		parent = parent->parent_.lock();
 	}
 	return parent;
 
@@ -141,7 +139,7 @@ const NodePtr<T> RBIterator<T>::next()
 
 	//if (shared_node_ptr == nullptr)
 	//Todo::Throw out of bounds exc
-	if (shared_node_ptr->right != nullptr)
+	if (shared_node_ptr->right_ != nullptr)
 		return find_next_down();
 	else
 		return find_next_up();
@@ -151,12 +149,15 @@ const NodePtr<T> RBIterator<T>::next()
 template<typename T>
 const NodePtr<T> RBIterator<T>::prev()
 {
+	NodePtr<T> shared_node_ptr = cur_node.lock();
 	//if (shared_node_ptr == nullptr)
 	//Todo::Throw out of bounds exc
-	if (cur_node->right != nullptr)
+	if (shared_node_ptr->left_ != nullptr)
 		return find_prev_down();
 	else
 		return find_prev_up();
+
+
 }
 
 template<typename T>
