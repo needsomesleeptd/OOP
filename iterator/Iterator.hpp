@@ -1,10 +1,15 @@
+#include <ctime>
+
 #include "tree.h"
-#include "iostream"
+#include "exceptions.h"
+
+
+
 
 template<ValidNodeData T>
 class RBTree;
 
-template<typename T>
+template<ValidNodeData T>
 class RBIterator
 {
  private:
@@ -58,14 +63,14 @@ class RBIterator
 	T get() const;
 };
 
-template<typename T>
+template<ValidNodeData T>
 RBIterator<T>::RBIterator(NodePtr<T> ptr)
 {
 
 	cur_node = ptr;
 }
 
-template<typename T>
+template<ValidNodeData T>
 RBIterator<T>& RBIterator<T>::operator++()
 {
 	cur_node = next();
@@ -73,14 +78,14 @@ RBIterator<T>& RBIterator<T>::operator++()
 
 }
 
-template<typename T>
+template<ValidNodeData T>
 RBIterator<T>& RBIterator<T>::operator--()
 {
 	cur_node = prev();
 	return *this;
 }
 
-template<typename T>
+template<ValidNodeData T>
 RBIterator<T> RBIterator<T>::operator++(int) &
 {
 	NodePtr<T> save = cur_node.lock();
@@ -88,7 +93,7 @@ RBIterator<T> RBIterator<T>::operator++(int) &
 	return RBIterator<T>(save);
 }
 
-template<typename T>
+template<ValidNodeData T>
 RBIterator<T> RBIterator<T>::operator--(int) &
 {
 	NodePtr<T> save = cur_node.lock();
@@ -96,7 +101,7 @@ RBIterator<T> RBIterator<T>::operator--(int) &
 	return RBIterator<T>(save);
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_next_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
@@ -106,7 +111,7 @@ NodePtr<T> RBIterator<T>::find_next_down()
 	return shared_node_ptr;
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_next_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
@@ -119,7 +124,7 @@ NodePtr<T> RBIterator<T>::find_next_up()
 	return parent;
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_prev_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
@@ -130,7 +135,7 @@ NodePtr<T> RBIterator<T>::find_prev_down()
 
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_prev_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
@@ -144,13 +149,17 @@ NodePtr<T> RBIterator<T>::find_prev_up()
 
 }
 
-template<typename T>
+template<ValidNodeData T>
 const NodePtr<T> RBIterator<T>::next()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
 
-	//if (shared_node_ptr == nullptr)
-	//Todo::Throw out of bounds exc
+	if (shared_node_ptr == nullptr)
+	{
+		time_t timer = time(nullptr);
+		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>",ctime(&timer));
+	}
+
 	if (shared_node_ptr->right_ != nullptr)
 		return find_next_down();
 	else
@@ -158,12 +167,16 @@ const NodePtr<T> RBIterator<T>::next()
 	//return *this;
 }
 
-template<typename T>
+template<ValidNodeData T>
 const NodePtr<T> RBIterator<T>::prev()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	//if (shared_node_ptr == nullptr)
-	//Todo::Throw out of bounds exc
+	if (shared_node_ptr == nullptr)
+	{
+		time_t timer = time(nullptr);
+		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>",ctime(&timer));
+	}
+
 	if (shared_node_ptr->left_ != nullptr)
 		return find_prev_down();
 	else
@@ -171,31 +184,31 @@ const NodePtr<T> RBIterator<T>::prev()
 
 }
 
-template<typename T>
+template<ValidNodeData T>
 bool RBIterator<T>::operator==(const RBIterator& other) const
 {
 	return this->get() == other.get();
 }
 
-template<typename T>
+template<ValidNodeData T>
 bool RBIterator<T>::operator!=(const RBIterator& other) const
 {
 	return this->get() != other.get();
 }
 
-template<typename T>
+template<ValidNodeData T>
 T RBIterator<T>::get() const
 {
 	return cur_node.lock()->data_;
 }
 
-template<typename T>
+template<ValidNodeData T>
 T& RBIterator<T>::operator*()
 {
 	return this->cur_node.lock()->data_;
 }
 
-template<typename T>
+template<ValidNodeData T>
 T* RBIterator<T>::operator->()
 {
 	return &(this->cur_node.lock().data);

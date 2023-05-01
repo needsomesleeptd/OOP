@@ -33,7 +33,10 @@ class RBTree : ISet<T>
 	using iterator = RBIterator<T>;
 	using const_iterator = const RBIterator<T>;
 
-	RBTree();
+	explicit RBTree();
+
+
+
 	~RBTree() override;
 
 	void add(const T& data) override;

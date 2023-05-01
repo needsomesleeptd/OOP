@@ -23,6 +23,8 @@ void RBTree<T>::clear()
 template<ValidNodeData T>
 NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
 {
+	if (root == nullptr)
+		return root;
 	NodePtr<T> temp = root;
 	while (temp->left_ != nullptr)
 		temp = temp->left_;
@@ -101,10 +103,13 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 		root->left_ = insertBin(root->left_, nodeToInsert);
 		root->left_->parent_ = root;
 	}
-	/*
-	 * Todo::Implement Error throwing
-	 */
+	else
+	{
+		time_t timer = time(nullptr);
+		throw AddException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+	}
 	return root;
+
 }
 
 template<ValidNodeData T>
@@ -339,7 +344,12 @@ void RBTree<T>::remove(const T& data)
 {
 	NodePtr<T> node = removeBin(root, data);
 
-	//Todo::If node is nullptr throw error
+	if (root != nullptr)
+	{
+		time_t timer = time(nullptr);
+		throw RemoveException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+	}
+
 	RBTreeFixRemove(node);
 }
 
@@ -361,8 +371,11 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 template<ValidNodeData T>
 bool RBTree<T>::isIn(const T& key)
 {
-	return find(root,key) != nullptr;
+	return find(root, key) != nullptr;
 }
+
+
+
 template<ValidNodeData T>
 void RBTree<T>::set_union(ISet<T>* other)
 {

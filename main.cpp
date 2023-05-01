@@ -6,7 +6,7 @@
 int main()
 {
 	RBTree<int> tree;
-	tree.add(2);
+	/*tree.add(2);
 	tree.add(1);
 	tree.add(3);
 	auto  it = tree.begin();
@@ -35,7 +35,18 @@ int main()
 	std:: cout<< *it;
 	--it;
 	std:: cout<< *it;
-	std::set s(tree.begin(),tree.end());
+	std::set s(tree.begin(),tree.end());*/
+	tree.add(2);
+	tree.add(1);
+	tree.remove(3);
+	auto  it = tree.begin();
+	//std:: cout<< *it;
+	//it--;
+	std:: cout<< *it;
+	++it;
+	std:: cout<< *it;
+	++it;
+
 
 
 
