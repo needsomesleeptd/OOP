@@ -5,11 +5,12 @@ template<typename T>
 class RBTree;
 
 template<typename T>
-class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
+class RBIterator
 {
  private:
 	friend class RBTree<T>;
 	std::weak_ptr<Node<T>> cur_node;
+	int index;
 	const NodePtr<T> prev();
 	const NodePtr<T> next();
 	NodePtr<T> find_next_up();
@@ -18,37 +19,42 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	NodePtr<T> find_prev_down();
 
  public:
-	/*using iteratorCategory = std::random_access_iterator_tag;
-	using valueType = Node<T>;
-	using diffrerenceType = ptrdiff_t;
-	using pointer = NodePtr<T>;
-	using reference = Node<T>&;*/
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = T;
+	using pointer = T*;
+	using reference = T&;
+	using difference_type = std::ptrdiff_t;
 
 	// Операции, необходимые для всех категорий итераторов.
-	RBIterator() = default;
+
 	explicit RBIterator(const RBIterator&) = default;
 	explicit RBIterator(NodePtr<T> ptr);
+	RBIterator() = default;
+
 
 	RBIterator& operator=(const RBIterator&) = default;
 	~RBIterator() = default;
 
-	T get();
 
-	T& operator*();
-	T* operator->();
+
+
+	reference operator*();
+
+
+	pointer operator->();
 
 	RBIterator& operator++();
-	RBIterator operator++(int);
-
-	// Операции, необходимые для InputIterator.
-	const T operator->() const;
-
-	// Операции, необходимые для BidirectionalIterator.
+	RBIterator operator++(int) &;
 	RBIterator& operator--();
-	RBIterator operator--(int);
+	RBIterator operator--(int) &;
 
-	bool operator==(const RBIterator& other);
 	bool operator!=(const RBIterator& other);
+	bool operator==(const RBIterator& other);
+
+
+
+
+	T get();
 };
 
 template<typename T>
@@ -74,7 +80,7 @@ RBIterator<T>& RBIterator<T>::operator--()
 }
 
 template<typename T>
-RBIterator<T> RBIterator<T>::operator++(int)
+RBIterator<T> RBIterator<T>::operator++(int) &
 {
 	NodePtr<T> save = cur_node.lock();
 	cur_node = next();
@@ -82,7 +88,7 @@ RBIterator<T> RBIterator<T>::operator++(int)
 }
 
 template<typename T>
-RBIterator<T> RBIterator<T>::operator--(int)
+RBIterator<T> RBIterator<T>::operator--(int) &
 {
 	NodePtr<T> save = cur_node.lock();
 	cur_node = prev();
@@ -193,3 +199,4 @@ T* RBIterator<T>::operator->()
 {
 	return &(this->cur_node.lock().data);
 }
+
