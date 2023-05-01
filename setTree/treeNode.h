@@ -6,6 +6,7 @@
 #define LAB_02__TREENODE_H_
 
 #include <memory>
+#include "concepts.h"
 
 enum NodeColor
 {

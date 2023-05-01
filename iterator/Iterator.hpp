@@ -1,7 +1,7 @@
 #include "tree.h"
 #include "iostream"
 
-template<typename T>
+template<ValidNodeData T>
 class RBTree;
 
 template<typename T>
@@ -19,11 +19,12 @@ class RBIterator
 	NodePtr<T> find_prev_down();
 
  public:
-	using iterator_category = std::forward_iterator_tag;
+	using iterator_category = std::bidirectional_iterator_tag;
 	using value_type = T;
 	using pointer = T*;
 	using reference = T&;
 	using difference_type = std::ptrdiff_t;
+
 
 	// Операции, необходимые для всех категорий итераторов.
 

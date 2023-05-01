@@ -3,24 +3,24 @@
 
 #include "tree.h"
 
-template<typename T>
+template<ValidNodeData T>
 RBTree<T>::RBTree() : root()
 {
 };
 
-template<typename T>
+template<ValidNodeData T>
 RBTree<T>::~RBTree()
 {
 	root->clear_subtree();
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::clear()
 {
 	root->clear_subtree();
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
 {
 	NodePtr<T> temp = root;
@@ -29,19 +29,19 @@ NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
 	return temp;
 }
 
-template<typename T>
-RBIterator<T> RBTree<T>::begin()
+template<ValidNodeData T>
+RBIterator<T> RBTree<T>::begin() noexcept
 {
 	return RBIterator<T>(findMin(root));
 }
 
-template<typename T>
-RBIterator<T> RBTree<T>::end()
+template<ValidNodeData T>
+RBIterator<T> RBTree<T>::end() noexcept
 {
 	return RBIterator<T>(nullptr);
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
 {
 	NodePtr<T> pivot = node->right_;
@@ -63,7 +63,7 @@ void RBTree<T>::rotateLeft(NodePtr<T> node)
 
 };
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::rotateRight(NodePtr<T> node)
 {
 	NodePtr<T> pivot = node->left_;
@@ -85,7 +85,7 @@ void RBTree<T>::rotateRight(NodePtr<T> node)
 	pivot->right_ = node;
 };
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 {
 	if (root == nullptr)
@@ -107,7 +107,7 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 	return root;
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::setColor(NodePtr<T> node, NodeColor color)
 {
 	if (node == nullptr)
@@ -116,7 +116,7 @@ void RBTree<T>::setColor(NodePtr<T> node, NodeColor color)
 	node->color_ = color;
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodeColor RBTree<T>::getColor(NodePtr<T> node)
 {
 	if (node == nullptr)
@@ -124,7 +124,7 @@ NodeColor RBTree<T>::getColor(NodePtr<T> node)
 	return node->color_;
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 {
 
@@ -184,7 +184,7 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 	setColor(root, BLACK);
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 {
 	if (node == nullptr)
@@ -306,7 +306,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 	}
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::add(const T& data)
 {
 	NodePtr<T> node = std::make_shared<Node<T>>(data);
@@ -314,7 +314,7 @@ void RBTree<T>::add(const T& data)
 	RBTreeFixInsert(node);
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
 	if (root == nullptr)
@@ -334,7 +334,7 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 	return removeBin(root->right_, temp->data_);
 }
 
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::remove(const T& data)
 {
 	NodePtr<T> node = removeBin(root, data);
@@ -343,7 +343,7 @@ void RBTree<T>::remove(const T& data)
 	RBTreeFixRemove(node);
 }
 
-template<typename T>
+template<ValidNodeData T>
 NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 {
 	if (root == nullptr)
@@ -358,22 +358,22 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 	return root;
 }
 
-template<typename T>
+template<ValidNodeData T>
 bool RBTree<T>::isIn(const T& key)
 {
 	return find(root,key) != nullptr;
 }
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::set_union(ISet<T>* other)
 {
 	// TODO::Implement this
 }
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::set_symmDifference(ISet<T>* other)
 {
 	// TODO::Implement this
 }
-template<typename T>
+template<ValidNodeData T>
 void RBTree<T>::set_intersection(ISet<T>* other)
 {
 	// TODO::Implement this
