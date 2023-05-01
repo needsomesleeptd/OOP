@@ -17,7 +17,6 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	NodePtr<T> find_prev_up();
 	NodePtr<T> find_prev_down();
 
-	//explicit RBIterator(NodePtr<T> node);
  public:
 	// Операции, необходимые для всех категорий итераторов.
 	RBIterator() = default;
@@ -32,15 +31,15 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 	T& operator*();
 	T* operator->();
 
-	const RBIterator operator++();
-	const RBIterator operator++(int);
+	RBIterator& operator++();
+	RBIterator operator++(int);
 
 	// Операции, необходимые для InputIterator.
 	const T* operator->() const;
 
 	// Операции, необходимые для BidirectionalIterator.
-	const RBIterator operator--();
-	const RBIterator operator--(int);
+	RBIterator& operator--();
+	RBIterator operator--(int);
 
 	bool operator==(const RBIterator& other);
 	bool operator!=(const RBIterator& other);
@@ -49,39 +48,39 @@ class RBIterator : std::iterator<std::random_access_iterator_tag, Node<T>>
 template<typename T>
 RBIterator<T>::RBIterator(NodePtr<T> ptr)
 {
-	//std::shared_ptr<NodePtr<T>> new_node(ptr);
+
 	cur_node = ptr;
 }
 
 template<typename T>
-const RBIterator<T> RBIterator<T>::operator++()
+RBIterator<T>& RBIterator<T>::operator++()
 {
 	cur_node = next();
-	return RBIterator<T>(cur_node.lock());
+	return *this;
 
 }
 
 template<typename T>
-const RBIterator<T> RBIterator<T>::operator--()
+RBIterator<T>& RBIterator<T>::operator--()
 {
 	cur_node = prev();
-	return RBIterator<T>(cur_node.lock());
+	return *this;
 }
 
 template<typename T>
-const RBIterator<T> RBIterator<T>::operator++(int)
+RBIterator<T> RBIterator<T>::operator++(int)
 {
 	NodePtr<T> save = cur_node.lock();
 	cur_node = next();
-	return  RBIterator<T>(save);
+	return RBIterator<T>(save);
 }
 
 template<typename T>
-const RBIterator<T> RBIterator<T>::operator--(int)
+RBIterator<T> RBIterator<T>::operator--(int)
 {
 	NodePtr<T> save = cur_node.lock();
 	cur_node = prev();
-	return  RBIterator<T>(save);
+	return RBIterator<T>(save);
 }
 
 template<typename T>
@@ -156,7 +155,6 @@ const NodePtr<T> RBIterator<T>::prev()
 		return find_prev_down();
 	else
 		return find_prev_up();
-
 
 }
 

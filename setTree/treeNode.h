@@ -9,7 +9,7 @@
 
 enum NodeColor
 {
-	RED, BLACK
+	RED, BLACK,DOUBLE_BLACK
 };
 template<typename T>
 struct Node

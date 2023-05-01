@@ -23,7 +23,26 @@ void RBTree<T>::clear()
 	root->clear_subtree();
 }
 
+template<typename T>
+NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
+{
+	NodePtr<T> temp = root;
+	while (temp->left_ != nullptr)
+		temp = temp->left_;
+	return temp;
+}
 
+template<typename T>
+RBIterator<T> RBTree<T>::begin()
+{
+	return RBIterator<T>(findMin(root));
+}
+
+template<typename T>
+RBIterator<T> RBTree<T>::end()
+{
+	return RBIterator<T>(nullptr);
+}
 
 template<typename T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
@@ -169,6 +188,104 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 	setColor(root, BLACK);
 }
 
+
+template<typename T>
+void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
+{
+	if (node == nullptr)
+		return;
+
+	if (node == root) {
+		root = nullptr;
+		return;
+	}
+
+	if (getColor(node) == RED || getColor(node->left_) == RED || getColor(node->right_) == RED) {
+		NodePtr<T> child = node->left_ != nullptr ? node->left_ : node->right_;
+
+		if (node == node->parent_.lock()->left_) {
+			node->parent_.lock()->left_ = child;
+			if (child != nullptr)
+				child->parent_.lock() = node->parent_.lock();
+			setColor(child, BLACK);
+		} else {
+			node->parent_.lock()->right_ = child;
+			if (child != nullptr)
+				child->parent_.lock() = node->parent_.lock();
+			setColor(child, BLACK);
+		}
+	} else {
+		NodePtr<T>sibling = nullptr;
+		NodePtr<T>parent = nullptr;
+		NodePtr<T>ptr = node;
+		setColor(ptr, DOUBLE_BLACK);
+		while (ptr != root && getColor(ptr) == DOUBLE_BLACK) {
+			parent = ptr->parent_.lock();
+			if (ptr == parent->left_) {
+				sibling = parent->right_;
+				if (getColor(sibling) == RED) {
+					setColor(sibling, BLACK);
+					setColor(parent, RED);
+					rotateLeft(parent);
+				} else {
+					if (getColor(sibling->left_) == BLACK && getColor(sibling->right_) == BLACK) {
+						setColor(sibling, RED);
+						if(getColor(parent) == RED)
+							setColor(parent, BLACK);
+						else
+							setColor(parent, DOUBLE_BLACK);
+						ptr = parent;
+					} else {
+						if (getColor(sibling->right_) == BLACK) {
+							setColor(sibling->left_, BLACK);
+							setColor(sibling, RED);
+							rotateRight(sibling);
+							sibling = parent->right_;
+						}
+						setColor(sibling, parent->color_);
+						setColor(parent, BLACK);
+						setColor(sibling->right_, BLACK);
+						rotateLeft(parent);
+						break;
+					}
+				}
+			} else {
+				sibling = parent->left_;
+				if (getColor(sibling) == RED) {
+					setColor(sibling, BLACK);
+					setColor(parent, RED);
+					rotateRight(parent);
+				} else {
+					if (getColor(sibling->left_) == BLACK && getColor(sibling->right_) == BLACK) {
+						setColor(sibling, RED);
+						if (getColor(parent) == RED)
+							setColor(parent, BLACK);
+						else
+							setColor(parent, DOUBLE_BLACK);
+						ptr = parent;
+					} else {
+						if (getColor(sibling->left_) == BLACK) {
+							setColor(sibling->right_, BLACK);
+							setColor(sibling, RED);
+							rotateLeft(sibling);
+							sibling = parent->left_;
+						}
+						setColor(sibling, parent->color_);
+						setColor(parent, BLACK);
+						setColor(sibling->left_, BLACK);
+						rotateRight(parent);
+					}
+				}
+			}
+		}
+		if (node == node->parent_.lock()->left_)
+			node->parent_.lock()->left_ = nullptr;
+		else
+			node->parent_.lock()->right_ = nullptr;
+		setColor(root, BLACK);
+	}
+}
+
 template<typename T>
 void RBTree<T>::add(const T& data)
 {
@@ -177,30 +294,36 @@ void RBTree<T>::add(const T& data)
 	RBTreeFixInsert(node);
 }
 
-template<typename T>
-NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root)
-{
-	NodePtr<T> temp = root;
-	while (temp->left_ != nullptr)
-		temp = temp->left_;
-	return temp;
-}
 
 template<typename T>
-RBIterator<T> RBTree<T>::begin()
+NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
-	return RBIterator<T>(findMin(root));
+	if (root == nullptr)
+		return root;
+
+	if (key < root->data_)
+		return removeBin(root->left_, key);
+
+	if (key > root->data_)
+		return removeBin(root->right_, key);
+
+	if (root->left_ == nullptr || root->right_ == nullptr)
+		return root;
+
+	NodePtr<T> temp = findMin(root->right_);
+	root->data_ = temp->data_;
+	return removeBin(root->right_, temp->data_);
 }
 
-template<typename T>
-RBIterator<T> RBTree<T>::end()
-{
-	return RBIterator<T>(nullptr);
-}
+
+
+
+
 template<typename T>
 void RBTree<T>::remove(const T& data)
 {
-	// TODO::Implement this
+	NodePtr<T> node = removeBin(root, data);
+	RBTreeFixRemove(node);
 }
 template<typename T>
 void RBTree<T>::find(const T& key)

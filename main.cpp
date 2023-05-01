@@ -12,10 +12,27 @@ int main()
 	auto  it = tree.begin();
 	std:: cout<< *it;
 	it++; //Find out why It is nullptr
+	it++; //Find out why It is nullptr
+	std:: cout<< *it;
 	it--;
+	std:: cout<< *it;
 	++it;
+	std:: cout<< *it;
 	--it;
 	std:: cout<< *it;
+	tree.remove(3);
+	std:: cout<<"REMOVED";
+	it = tree.begin();
+	std:: cout<< *it;
+	it++; //Find out why It is nullptr
+	std:: cout<< *it;
+	it--;
+	std:: cout<< *it;
+	++it;
+	std:: cout<< *it;
+	--it;
+	std:: cout<< *it;
+
 
 
 

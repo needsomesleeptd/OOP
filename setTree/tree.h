@@ -14,9 +14,11 @@ class RBTree : ISet<T>
  protected:
 	void rotateRight(NodePtr<T> node);
 	void rotateLeft(NodePtr<T> node);
-	NodePtr<T> findMin(const NodePtr<T> &root);
+	NodePtr<T> findMin(const NodePtr<T> &root) const;
 	void RBTreeFixInsert(NodePtr<T> insertedNode);
+	void RBTreeFixRemove(NodePtr<T> node);
 	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
+	NodePtr<T> removeBin(NodePtr<T> root, const T& key);
 
 	void setColor(NodePtr<T> node, NodeColor color);
 	NodeColor getColor(NodePtr<T> node);
