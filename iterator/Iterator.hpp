@@ -187,13 +187,14 @@ const NodePtr<T> RBIterator<T>::prev()
 template<ValidNodeData T>
 bool RBIterator<T>::operator==(const RBIterator& other) const
 {
-	return this->get() == other.get();
+	return this->cur_node.lock() == other.cur_node.lock();
 }
 
 template<ValidNodeData T>
 bool RBIterator<T>::operator!=(const RBIterator& other) const
 {
-	return this->get() != other.get();
+
+	return this->cur_node.lock() != other.cur_node.lock();
 }
 
 template<ValidNodeData T>

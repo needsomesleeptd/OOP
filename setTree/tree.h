@@ -35,6 +35,10 @@ class RBTree : ISet<T>
 
 	explicit RBTree();
 
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	explicit RBTree(const ContainerType& container);
+
 
 
 	~RBTree() override;
@@ -50,6 +54,7 @@ class RBTree : ISet<T>
 	void set_union(ISet<T>* other);
 	void set_symmDifference(ISet<T>* other);
 	void set_intersection(ISet<T>* other);
+	void  print();
 
 };
 

@@ -1,6 +1,8 @@
 #ifndef TREE_HPP_
 #define TREE_HPP_
 
+#include <iostream>
+
 #include "tree.h"
 
 template<ValidNodeData T>
@@ -374,12 +376,20 @@ bool RBTree<T>::isIn(const T& key)
 	return find(root, key) != nullptr;
 }
 
+template<ValidNodeData T>
+void  RBTree<T>::print()
+{
+	for (auto it = begin();it != end();++it)
+		std::cout<< *it << " ";
+}
+
+
 
 
 template<ValidNodeData T>
 void RBTree<T>::set_union(ISet<T>* other)
 {
-	// TODO::Implement this
+
 }
 template<ValidNodeData T>
 void RBTree<T>::set_symmDifference(ISet<T>* other)
@@ -390,6 +400,18 @@ template<ValidNodeData T>
 void RBTree<T>::set_intersection(ISet<T>* other)
 {
 	// TODO::Implement this
+}
+
+
+
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T>::RBTree(const ContainerType& container)
+{
+	for (auto it = container.begin(); it != container.end();it++)
+		this->add(*it);
 }
 
 #endif //TREE_HPP_

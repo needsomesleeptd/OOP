@@ -21,6 +21,10 @@ requires(T a, T b) {
 template<typename T>
 concept ValidNodeData = Comparable < T> && std::is_default_constructible<T>::value;
 
+template<typename From, typename To>
+concept Convertible = std::is_convertible<From, To>::value;
+
+
 template<class T>
 concept Container =
 requires(T container) {
@@ -28,7 +32,7 @@ requires(T container) {
 	typename T::size_type;
 	typename T::iterator;
 	typename T::const_iterator;
-	{ container.begin() } noexcept -> std::same_as<typename T::size_type>;
+	{ container.begin() } noexcept -> std::same_as<typename T::iterator>;
 	{ container.end() } noexcept -> std::same_as<typename T::iterator>;
 
 };
