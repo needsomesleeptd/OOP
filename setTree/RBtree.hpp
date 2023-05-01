@@ -323,12 +323,29 @@ template<typename T>
 void RBTree<T>::remove(const T& data)
 {
 	NodePtr<T> node = removeBin(root, data);
+
+	//Todo::If node is nullptr throw error
 	RBTreeFixRemove(node);
 }
+
 template<typename T>
-void RBTree<T>::find(const T& key)
+NodePtr<T> RBTree<T>::find(const T& key)
 {
-	// TODO::Implement this
+	if (root == nullptr)
+		return root;
+
+	if (root->data_ > key)
+		return find(root->left_, key);
+
+	if (root->data_ < key)
+		return find(root->right_, key);
+}
+
+
+template<typename T>
+bool RBTree<T>::isIn(const T& key)
+{
+	return find(key) != nullptr;
 }
 template<typename T>
 void RBTree<T>::set_union(ISet<T>* other)

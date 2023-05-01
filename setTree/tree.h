@@ -17,6 +17,7 @@ class RBTree : ISet<T>
 	NodePtr<T> findMin(const NodePtr<T> &root) const;
 	void RBTreeFixInsert(NodePtr<T> insertedNode);
 	void RBTreeFixRemove(NodePtr<T> node);
+	NodePtr<T> find(const T& key);
 	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
 	NodePtr<T> removeBin(NodePtr<T> root, const T& key);
 
@@ -36,7 +37,7 @@ class RBTree : ISet<T>
 	void add(const T &data) override;
 	void remove(const T &data) override;
 	void clear() override;
-	void find(const T &key) override;
+	bool isIn(const T &key) override;
 
 	RBIterator<T> begin();
 	RBIterator<T> end();
