@@ -18,12 +18,25 @@ RBTree<T>::RBTree(const RBTree &other)
 		this->add(elem);
 }
 
-/*template<ValidNodeData T>
+template<ValidNodeData T>
 RBTree<T>::RBTree(const RBTree &&other)
 {
 	this->root_ = std::move(other.root_);
-}*/
+}
 
+template<ValidNodeData T>
+RBTree<T> &RBTree<T>::operator=(const RBTree<T> &other) // copy
+{
+	this->clear();
+	for (auto &elem: other)
+		this->add(elem);
+}
+
+template<ValidNodeData T>
+RBTree<T> &RBTree<T>::operator=(const  RBTree &&other) noexcept // move
+{
+	this->root_ = std::move(other.root_);
+}
 
 
 
@@ -541,6 +554,8 @@ RBTree<T> RBTree<T>::setIntersection(const ContainerType& other)
 	for (auto it = other.begin(); it != other.end(); it++)
 		if (!result.contains(*it))
 			this->remove(*it);
+
+
 	return result;
 }
 

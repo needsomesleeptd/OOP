@@ -36,7 +36,7 @@ class RBTree : ISet<T>
 	explicit RBTree();
 	RBTree(const RBTree &other);
 
-	//RBTree(const RBTree &&other);
+	RBTree(const RBTree &&other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
@@ -67,6 +67,11 @@ class RBTree : ISet<T>
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
 	RBTree setIntersection(const ContainerType& container);
+
+
+
+	RBTree &operator=(const RBTree &other); // copy
+	RBTree &operator=(const  RBTree &&other) noexcept; // move
 
 	void print();
 

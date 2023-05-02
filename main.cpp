@@ -25,11 +25,12 @@ int main()
 */
 	tree.setDifference(a);
 	//tree.print();
-	tree.add(3);
+    tree.add(3);
 	//tree.print();
-	tree.setIntersection(tree2);
+	auto tree_3 = tree.setIntersection(tree2);
 
 
-	tree.print();
+	//tree.print();
+	tree_3.print();
 
 }
