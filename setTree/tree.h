@@ -63,9 +63,9 @@ class RBTree : ISet<T>
 	requires Convertible<typename ContainerType::value_type, T>
 	RBTree setDifference(const ContainerType& container);
 
-	template<Container ContainerType>
+	/*template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setSymmDifference(const ContainerType& container);
+	RBTree setSymmDifference(const ContainerType& container);*/
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>

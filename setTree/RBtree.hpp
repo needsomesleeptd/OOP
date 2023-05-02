@@ -538,7 +538,7 @@ RBTree<T> RBTree<T>::setUnion(const ContainerType& other)
 
 }
 
-template<ValidNodeData T>
+/*template<ValidNodeData T>
 template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
 RBTree<T> RBTree<T>::setSymmDifference(const ContainerType& other)
@@ -547,7 +547,7 @@ RBTree<T> RBTree<T>::setSymmDifference(const ContainerType& other)
 	this->setDifference(other);
 	this->setDifference(this);
 
-}
+}*/
 
 template<ValidNodeData T>
 template<Container ContainerType>

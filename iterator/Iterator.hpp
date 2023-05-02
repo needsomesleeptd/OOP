@@ -57,6 +57,7 @@ RBIterator<T>::RBIterator(NodePtr<T> ptr)
 {
 
 	cur_node = ptr;
+	index = 0;
 }
 
 template<ValidNodeData T>
@@ -70,6 +71,7 @@ RBIterator<T>& RBIterator<T>::operator++()
 	{
 		throw;
 	}
+	index++;
 	return *this;
 
 }
@@ -85,6 +87,7 @@ RBIterator<T>& RBIterator<T>::operator--()
 	{
 		throw;
 	}
+	index--;
 	return *this;
 }
 

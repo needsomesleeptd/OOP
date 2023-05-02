@@ -60,8 +60,8 @@ int main()
 	std::cout<< "\nsize of tree\n" << tree2.size();
 	std::cout<<"\n_____________________________________\n";
 	std::cout<<"\nCleared tree\n";
-	std::cout<< ""
 	tree.clear();
+
 
 
 
