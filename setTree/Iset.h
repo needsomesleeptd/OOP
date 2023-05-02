@@ -9,12 +9,12 @@ class ISet
 	virtual void clear() = 0;
 	virtual bool add(const T& data) = 0;
 	virtual bool remove(const T& key) = 0;
-	virtual bool isIn(const T& key) = 0;
+	virtual bool contains(const T& key) = 0;
 
 
-	virtual void set_union(ISet* other) = 0;
-	virtual void set_symmDifference(ISet* other) = 0;
-	virtual void set_intersection(ISet* other) = 0;
+	/*virtual void set_union(ISet* other) = 0;
+	virtual void setSymmDifference(ISet* other) = 0;
+	virtual void set_intersection(ISet* other) = 0;*/
 
 };
 

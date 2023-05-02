@@ -14,13 +14,15 @@ RBTree<T>::RBTree() : root_(nullptr)
 template<ValidNodeData T>
 RBTree<T>::~RBTree()
 {
-	root_->clear_subtree();
+	if (root_ != nullptr)
+		root_->clear_subtree();
 }
 
 template<ValidNodeData T>
 void RBTree<T>::clear()
 {
-	root_->clear_subtree();
+	if (root_ != nullptr)
+		root_->clear_subtree();
 }
 
 template<ValidNodeData T>
@@ -261,7 +263,20 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 
 	if (node == root_)
 	{
-		root_ = nullptr;
+		if (root_->right_)
+		{
+			root_->right_->parent_ = NodePtr<T>(nullptr);
+			root_ = root_->right_;
+		}
+		else if (root_->left_)
+		{
+			root_->left_->parent_ = NodePtr<T>(nullptr);
+			root_ = root_->left_;
+		}
+		else
+		{
+			root_ = nullptr;
+		}
 		return;
 	}
 
@@ -397,8 +412,7 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
 	if (root == nullptr)
 	{
-		time_t timer = time(nullptr);
-		throw RemoveException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+		return nullptr;
 	}
 
 	if (key < root->data_)
@@ -448,7 +462,7 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 }
 
 template<ValidNodeData T>
-bool RBTree<T>::isIn(const T& key)
+bool RBTree<T>::contains(const T& key)
 {
 	return find(root_, key) != nullptr;
 }
@@ -461,19 +475,44 @@ void RBTree<T>::print()
 }
 
 template<ValidNodeData T>
-void RBTree<T>::set_union(ISet<T>* other)
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::setUnion(const ContainerType& other)
 {
-	
+	for (auto it = other.begin(); it != other.end(); it++)
+		this->add(*it);
 }
+
 template<ValidNodeData T>
-void RBTree<T>::set_symmDifference(ISet<T>* other)
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::setSymmDifference(const ContainerType& other)
 {
-	// TODO::Implement this
+
+	this->setDifference(other);
+	this->setDifference(this);
+
 }
+
 template<ValidNodeData T>
-void RBTree<T>::set_intersection(ISet<T>* other)
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::setDifference(const ContainerType& other)
 {
-	// TODO::Implement this
+	for (auto it = other.begin(); it != other.end(); it++)
+		if (this->contains(*it))
+			this->remove(*it);
+
+}
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::setIntersection(const ContainerType& other)
+{
+	for (auto it = other.begin(); it != other.end(); it++)
+		if (!this->contains(*it))
+			this->add(*it);
 }
 
 template<ValidNodeData T>

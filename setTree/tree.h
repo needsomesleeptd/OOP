@@ -46,14 +46,28 @@ class RBTree : ISet<T>
 	bool add(const T& data) override;
 	bool remove(const T& data) override;
 	void clear() override;
-	bool isIn(const T& key) override;
+	bool contains(const T& key) override;
 
 	RBIterator<T> begin() noexcept;
 	RBIterator<T> end() noexcept;
 
-	void set_union(ISet<T>* other);
-	void set_symmDifference(ISet<T>* other);
-	void set_intersection(ISet<T>* other);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void setUnion(const ContainerType& container);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void setDifference(const ContainerType& container);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void setSymmDifference(const ContainerType& container);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void setIntersection(const ContainerType& container);
+
 	void  print();
 
 };
