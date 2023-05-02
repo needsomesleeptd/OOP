@@ -34,12 +34,13 @@ class RBTree : ISet<T>
 	using const_iterator = const RBIterator<T>;
 
 	explicit RBTree();
+	RBTree(const RBTree &other);
+
+	//RBTree(const RBTree &&other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
 	explicit RBTree(const ContainerType& container);
-
-
 
 	~RBTree() override;
 
@@ -48,27 +49,26 @@ class RBTree : ISet<T>
 	void clear() override;
 	bool contains(const T& key) override;
 
-	RBIterator<T> begin() noexcept;
-	RBIterator<T> end() noexcept;
-
-
-	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
-	void setUnion(const ContainerType& container);
+	RBIterator<T> begin() const noexcept;
+	RBIterator<T> end() const noexcept;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	void setDifference(const ContainerType& container);
+	RBTree setUnion(const ContainerType& container);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	void setSymmDifference(const ContainerType& container);
+	RBTree setDifference(const ContainerType& container);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	void setIntersection(const ContainerType& container);
+	RBTree setSymmDifference(const ContainerType& container);
 
-	void  print();
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree setIntersection(const ContainerType& container);
+
+	void print();
 
 };
 
