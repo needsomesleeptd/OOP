@@ -30,12 +30,14 @@ RBTree<T> &RBTree<T>::operator=(const RBTree<T> &other) // copy
 	this->clear();
 	for (auto &elem: other)
 		this->add(elem);
+	return *this;
 }
 
 template<ValidNodeData T>
 RBTree<T> &RBTree<T>::operator=(const  RBTree &&other) noexcept // move
 {
 	this->root_ = std::move(other.root_);
+	return *this;
 }
 
 
@@ -462,14 +464,9 @@ template<ValidNodeData T>
 bool RBTree<T>::remove(const T& data)
 {
 	NodePtr<T> node;
-	try
-	{
-		node = removeBin(root_, data);
-	}
-	catch (const RemoveException& exception)
-	{
+	node = removeBin(root_, data);
+	if (node == nullptr)
 		return false;
-	}
 
 	RBTreeFixRemove(node);
 	return true;
@@ -549,11 +546,10 @@ requires Convertible<typename ContainerType::value_type, T>
 RBTree<T> RBTree<T>::setIntersection(const ContainerType& other)
 {
 	RBTree<T> result;
-	result = *this;
 
-	for (auto it = other.begin(); it != other.end(); it++)
-		if (!result.contains(*it))
-			this->remove(*it);
+	for (auto elem: other)
+		if (this->contains(elem))
+			result.add(elem);
 
 
 	return result;
