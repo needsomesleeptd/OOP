@@ -6,7 +6,7 @@
 #include "tree.h"
 
 template<ValidNodeData T>
-RBTree<T>::RBTree() : root_(nullptr)
+RBTree<T>::RBTree() : root_(nullptr),size_(0)
 {
 
 }
@@ -34,6 +34,7 @@ RBTree<T> &RBTree<T>::operator=(const RBTree<T> &other) // copy
 }
 
 template<ValidNodeData T>
+
 RBTree<T> &RBTree<T>::operator=(const  RBTree &&other) noexcept // move
 {
 	this->root_ = std::move(other.root_);
@@ -47,6 +48,7 @@ RBTree<T>::~RBTree()
 {
 	if (root_ != nullptr)
 		root_->clear_subtree();
+	root_ = nullptr;
 }
 
 template<ValidNodeData T>
@@ -102,8 +104,7 @@ void RBTree<T>::rotateLeft(NodePtr<T> node)
 	{
 		x->parent_.lock()->right_ = y;
 	}
-	y->left_ = x;            // Размещение x в качестве левого
-	// дочернего узла y
+	y->left_ = x;
 	x->parent_ = y;
 
 }
@@ -433,7 +434,7 @@ bool RBTree<T>::add(const T& data)
 	{
 		return false;
 	}
-
+	++size_;
 	RBTreeFixInsert(node);
 	return true;
 }
@@ -464,10 +465,10 @@ template<ValidNodeData T>
 bool RBTree<T>::remove(const T& data)
 {
 	NodePtr<T> node;
-	node = removeBin(root_, data);
-	if (node == nullptr)
+	if (contains(data))
 		return false;
-
+	node = removeBin(root_, data);
+	--size_;
 	RBTreeFixRemove(node);
 	return true;
 }

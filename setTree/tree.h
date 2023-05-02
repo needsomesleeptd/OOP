@@ -13,6 +13,7 @@ class RBTree : ISet<T>
  private:
 	NodePtr<T> root_;
 	friend class RBIterator<T>;
+	size_t size_;
  protected:
 	void rotateRight(NodePtr<T> node);
 	void rotateLeft(NodePtr<T> node);
@@ -70,7 +71,8 @@ class RBTree : ISet<T>
 
 
 
-	RBTree &operator=(const RBTree &other); // copy
+	RBTree &operator=(const RBTree<T> &other); // copy
+
 	RBTree &operator=(const  RBTree &&other) noexcept; // move
 
 	void print();
