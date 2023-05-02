@@ -11,7 +11,7 @@ template<ValidNodeData T>
 class RBTree : ISet<T>
 {
  private:
-	NodePtr<T> root;
+	NodePtr<T> root_;
 	friend class RBIterator<T>;
  protected:
 	void rotateRight(NodePtr<T> node);
@@ -43,7 +43,7 @@ class RBTree : ISet<T>
 
 	~RBTree() override;
 
-	void add(const T& data) override;
+	bool add(const T& data) override;
 	void remove(const T& data) override;
 	void clear() override;
 	bool isIn(const T& key) override;

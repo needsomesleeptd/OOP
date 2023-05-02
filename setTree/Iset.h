@@ -7,7 +7,7 @@ class ISet
  public:
 	virtual  ~ISet() = default;
 	virtual void clear() = 0;
-	virtual void add(const T& data) = 0;
+	virtual bool add(const T& data) = 0;
 	virtual void remove(const T& key) = 0;
 	virtual bool isIn(const T& key) = 0;
 

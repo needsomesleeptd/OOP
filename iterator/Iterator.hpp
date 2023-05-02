@@ -116,7 +116,7 @@ NodePtr<T> RBIterator<T>::find_next_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
 	NodePtr<T> parent = shared_node_ptr->parent_.lock();
-	while (parent != nullptr && shared_node_ptr == parent->right_)
+	while (parent != nullptr && shared_node_ptr != parent->left_)
 	{
 		shared_node_ptr = parent;
 		parent = parent->parent_.lock();

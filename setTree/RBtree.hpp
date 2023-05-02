@@ -6,20 +6,21 @@
 #include "tree.h"
 
 template<ValidNodeData T>
-RBTree<T>::RBTree() : root()
+RBTree<T>::RBTree() : root_(nullptr)
 {
-};
+
+}
 
 template<ValidNodeData T>
 RBTree<T>::~RBTree()
 {
-	root->clear_subtree();
+	root_->clear_subtree();
 }
 
 template<ValidNodeData T>
 void RBTree<T>::clear()
 {
-	root->clear_subtree();
+	root_->clear_subtree();
 }
 
 template<ValidNodeData T>
@@ -36,7 +37,7 @@ NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
 template<ValidNodeData T>
 RBIterator<T> RBTree<T>::begin() noexcept
 {
-	return RBIterator<T>(findMin(root));
+	return RBIterator<T>(findMin(root_));
 }
 
 template<ValidNodeData T>
@@ -48,46 +49,107 @@ RBIterator<T> RBTree<T>::end() noexcept
 template<ValidNodeData T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
 {
-	NodePtr<T> pivot = node->right_;
-	pivot->parent_ = node->parent_;
-	if (node->parent_.lock() != nullptr)
+	NodePtr<T> x = node;       // Установка y
+	NodePtr<T> y = x->right_;   // Превращение левого поддерева y
+	x->right_ = y->left_;
+	if (y->left_ != nullptr)
 	{
-		if (node->parent_.lock()->left_ == node)
-			node->parent_.lock()->left_ = pivot;
-		else
-			node->parent_.lock()->right_ = pivot;
+		y->left_->parent_ = x;
 	}
+	y->parent_ = x->parent_;  // Передача родителя x узлу y
+	if (x->parent_.lock() == nullptr)
+	{
+		root_ = y;
+	}
+	else if (x == x->parent_.lock()->left_)
+	{
+		x->parent_.lock()->left_ = y;
+	}
+	else
+	{
+		x->parent_.lock()->right_ = y;
+	}
+	y->left_ = x;            // Размещение x в качестве левого
+	// дочернего узла y
+	x->parent_ = y;
 
-	node->right_ = pivot->left_;
-	if (pivot->left_ != nullptr)
-		pivot->left_->parent_ = node;
-
-	node->parent_ = pivot;
-	pivot->left_ = node;
-
-};
+}
 
 template<ValidNodeData T>
 void RBTree<T>::rotateRight(NodePtr<T> node)
 {
-	NodePtr<T> pivot = node->left_;
+	NodePtr<T> y = node;
+	NodePtr<T> x = y->left_;
+	y->left_ = x->right_;
+	if (x->right_ != nullptr)
+		x->right_->parent_ = y;
 
-	pivot->parent_ = node->parent_;
-	if (node->parent_.lock())
+	x->parent_ = y->parent_;
+	if (y->parent_.lock() == nullptr)
+		root_ = x;
+	else
 	{
-		if (node->parent_.lock()->left_ == node)
-			node->parent_.lock()->left_ = pivot;
+		if (y == y->parent_.lock()->right_)
+			y->parent_.lock()->right_ = x;
 		else
-			node->parent_.lock()->right_ = pivot;
+			y->parent_.lock()->left_ = x;
 	}
+	x->right_ = y;
+	y->parent_ = x;
+}
 
-	node->left_ = pivot->right_;
-	if (pivot->right_ != nullptr)
-		pivot->right_->parent_ = node;
+/*template<ValidNodeData T>
+NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root_, NodePtr<T> nodeToInsert)
+{
+	if (root_ == nullptr)
+		return nodeToInsert;
+	while (nodeToInsert != root_ && nodeToInsert->parent_.lock()->color_== RED)
+	{
+		NodePtr<T> parent = nodeToInsert->parent_.lock();
+		NodePtr<T> grandParent = parent->parent_.lock();
+		if (parent == grandParent->left_)
+		{
+			NodePtr<T> uncle = grandParent->right_;
+			if (uncle->color_ == RED)
+			{
+				parent->color_ = BLACK;
+				uncle->color_ = BLACK;
+				grandParent->color_ = RED;
+				nodeToInsert = grandParent;
+			}
+			else if (nodeToInsert == parent->right_)
+			{
+				nodeToInsert = parent;
+				rotateLeft(nodeToInsert);
+			}
+			parent->color_ = BLACK;
+			grandParent->color_ = RED;
+			rotateRight(grandParent);
+		}
+		else
+		{
+			NodePtr<T> uncle = grandParent->left_;
+			if (uncle->color_ == RED)
+			{
+				parent->color_ = BLACK;
+				uncle->color_ = BLACK;
+				grandParent->color_ = RED;
+				nodeToInsert = grandParent;
+			}
+			else if (nodeToInsert == parent->left_)
+			{
+				nodeToInsert = parent;
+				rotateLeft(nodeToInsert);
+			}
+			parent->color_ = BLACK;
+			grandParent->color_ = RED;
+			rotateRight(grandParent);
+		}
+	}
+	root_->color_ = BLACK;
+	return root_;
 
-	node->parent_ = pivot;
-	pivot->right_ = node;
-};
+}*/
 
 template<ValidNodeData T>
 NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
@@ -137,7 +199,7 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 
 	NodePtr<T> parent = nullptr;
 	NodePtr<T> grandparent = nullptr;
-	while (insertedNode != root && getColor(insertedNode) == RED && getColor(insertedNode->parent_.lock()) == RED)
+	while (insertedNode != root_ && getColor(insertedNode) == RED && getColor(insertedNode->parent_.lock()) == RED)
 	{
 		parent = insertedNode->parent_.lock();
 		grandparent = parent->parent_.lock();
@@ -188,7 +250,7 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 			}
 		}
 	}
-	setColor(root, BLACK);
+	setColor(root_, BLACK);
 }
 
 template<ValidNodeData T>
@@ -197,9 +259,9 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 	if (node == nullptr)
 		return;
 
-	if (node == root)
+	if (node == root_)
 	{
-		root = nullptr;
+		root_ = nullptr;
 		return;
 	}
 
@@ -228,7 +290,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 		NodePtr<T> parent = nullptr;
 		NodePtr<T> ptr = node;
 		setColor(ptr, DOUBLE_BLACK);
-		while (ptr != root && getColor(ptr) == DOUBLE_BLACK)
+		while (ptr != root_ && getColor(ptr) == DOUBLE_BLACK)
 		{
 			parent = ptr->parent_.lock();
 			if (ptr == parent->left_)
@@ -309,16 +371,25 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 			node->parent_.lock()->left_ = nullptr;
 		else
 			node->parent_.lock()->right_ = nullptr;
-		setColor(root, BLACK);
+		setColor(root_, BLACK);
 	}
 }
 
 template<ValidNodeData T>
-void RBTree<T>::add(const T& data)
+bool RBTree<T>::add(const T& data)
 {
 	NodePtr<T> node = std::make_shared<Node<T>>(data);
-	root = insertBin(root, node);
+	try
+	{
+		root_ = insertBin(root_, node);
+	}
+	catch (const AddException exception)
+	{
+		return false;
+	}
+
 	RBTreeFixInsert(node);
+	return true;
 }
 
 template<ValidNodeData T>
@@ -344,9 +415,9 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 template<ValidNodeData T>
 void RBTree<T>::remove(const T& data)
 {
-	NodePtr<T> node = removeBin(root, data);
+	NodePtr<T> node = removeBin(root_, data);
 
-	if (root != nullptr)
+	if (root_ != nullptr)
 	{
 		time_t timer = time(nullptr);
 		throw RemoveException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
@@ -373,18 +444,15 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 template<ValidNodeData T>
 bool RBTree<T>::isIn(const T& key)
 {
-	return find(root, key) != nullptr;
+	return find(root_, key) != nullptr;
 }
 
 template<ValidNodeData T>
-void  RBTree<T>::print()
+void RBTree<T>::print()
 {
-	for (auto it = begin();it != end();++it)
-		std::cout<< *it << " ";
+	for (auto it = begin(); it != end(); ++it)
+		std::cout << *it << " ";
 }
-
-
-
 
 template<ValidNodeData T>
 void RBTree<T>::set_union(ISet<T>* other)
@@ -402,15 +470,12 @@ void RBTree<T>::set_intersection(ISet<T>* other)
 	// TODO::Implement this
 }
 
-
-
-
 template<ValidNodeData T>
 template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
 RBTree<T>::RBTree(const ContainerType& container)
 {
-	for (auto it = container.begin(); it != container.end();it++)
+	for (auto it = container.begin(); it != container.end(); it++)
 		this->add(*it);
 }
 
