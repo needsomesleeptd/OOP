@@ -44,7 +44,7 @@ class RBTree : ISet<T>
 	~RBTree() override;
 
 	bool add(const T& data) override;
-	void remove(const T& data) override;
+	bool remove(const T& data) override;
 	void clear() override;
 	bool isIn(const T& key) override;
 

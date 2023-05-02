@@ -396,7 +396,10 @@ template<ValidNodeData T>
 NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
 	if (root == nullptr)
-		return root;
+	{
+		time_t timer = time(nullptr);
+		throw RemoveException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+	}
 
 	if (key < root->data_)
 		return removeBin(root->left_, key);
@@ -413,17 +416,20 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 }
 
 template<ValidNodeData T>
-void RBTree<T>::remove(const T& data)
+bool RBTree<T>::remove(const T& data)
 {
-	NodePtr<T> node = removeBin(root_, data);
-
-	if (root_ != nullptr)
+	NodePtr<T> node;
+	try
 	{
-		time_t timer = time(nullptr);
-		throw RemoveException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+		node = removeBin(root_, data);
+	}
+	catch (const RemoveException& exception)
+	{
+		return false;
 	}
 
 	RBTreeFixRemove(node);
+	return true;
 }
 
 template<ValidNodeData T>
@@ -457,7 +463,7 @@ void RBTree<T>::print()
 template<ValidNodeData T>
 void RBTree<T>::set_union(ISet<T>* other)
 {
-
+	
 }
 template<ValidNodeData T>
 void RBTree<T>::set_symmDifference(ISet<T>* other)

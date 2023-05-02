@@ -3,9 +3,6 @@
 #include "tree.h"
 #include "exceptions.h"
 
-
-
-
 template<ValidNodeData T>
 class RBTree;
 
@@ -37,28 +34,20 @@ class RBIterator
 	explicit RBIterator(NodePtr<T> ptr);
 	RBIterator() = default;
 
-
 	RBIterator& operator=(const RBIterator&) = default;
 	~RBIterator() = default;
 
-
-
-
 	reference operator*();
-
 
 	pointer operator->();
 
 	RBIterator& operator++();
-	RBIterator operator++(int) &;
+	RBIterator operator++(int)&;
 	RBIterator& operator--();
-	RBIterator operator--(int) &;
+	RBIterator operator--(int)&;
 
 	bool operator!=(const RBIterator& other) const;
 	bool operator==(const RBIterator& other) const;
-
-
-
 
 	T get() const;
 };
@@ -73,7 +62,14 @@ RBIterator<T>::RBIterator(NodePtr<T> ptr)
 template<ValidNodeData T>
 RBIterator<T>& RBIterator<T>::operator++()
 {
-	cur_node = next();
+	try
+	{
+		cur_node = next();
+	}
+	catch (const OutOfBoundsException& exception)
+	{
+		throw;
+	}
 	return *this;
 
 }
@@ -81,23 +77,30 @@ RBIterator<T>& RBIterator<T>::operator++()
 template<ValidNodeData T>
 RBIterator<T>& RBIterator<T>::operator--()
 {
-	cur_node = prev();
+	try
+	{
+		cur_node = prev();
+	}
+	catch (const OutOfBoundsException& exception)
+	{
+		throw;
+	}
 	return *this;
 }
 
 template<ValidNodeData T>
-RBIterator<T> RBIterator<T>::operator++(int) &
+RBIterator<T> RBIterator<T>::operator++(int)&
 {
 	NodePtr<T> save = cur_node.lock();
-	cur_node = next();
+	++(*this);
 	return RBIterator<T>(save);
 }
 
 template<ValidNodeData T>
-RBIterator<T> RBIterator<T>::operator--(int) &
+RBIterator<T> RBIterator<T>::operator--(int)&
 {
 	NodePtr<T> save = cur_node.lock();
-	cur_node = prev();
+	--(*this);
 	return RBIterator<T>(save);
 }
 
@@ -157,7 +160,7 @@ const NodePtr<T> RBIterator<T>::next()
 	if (shared_node_ptr == nullptr)
 	{
 		time_t timer = time(nullptr);
-		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>",ctime(&timer));
+		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
 	}
 
 	if (shared_node_ptr->right_ != nullptr)
@@ -174,7 +177,7 @@ const NodePtr<T> RBIterator<T>::prev()
 	if (shared_node_ptr == nullptr)
 	{
 		time_t timer = time(nullptr);
-		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>",ctime(&timer));
+		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
 	}
 
 	if (shared_node_ptr->left_ != nullptr)
