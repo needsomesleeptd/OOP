@@ -560,7 +560,7 @@ template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
 RBTree<T>::RBTree(const ContainerType& container)
 {
-	for (auto it = container.begin(); it != container.end(); it++)
+	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
 		this->add(*it);
 }
 
