@@ -43,8 +43,10 @@ int main()
 	std:: cout<< "\nadding existing values";
 	std:: cout<< "\nValues was successfully added:" << tree.add(3);
 
-	std::cout<< "\nTesting iterators\n";
+	std::cout<< "\n\nTesting iterators\n\n";
 	std::cout<< "iterators with std::advance\n";
+	tree.add(1);
+	tree = tree2;
 	tree2.add(3);
 	tree2.add(-23);
 	tree2.add(123);
@@ -55,6 +57,11 @@ int main()
 	std::advance(it,2);
 	std::cout<< "\nadvance 2\n";
 	std::cout<< *it;
+	std::cout<< "\nsize of tree\n" << tree2.size();
+	std::cout<<"\n_____________________________________\n";
+	std::cout<<"\nCleared tree\n";
+	std::cout<< ""
+	tree.clear();
 
 
 

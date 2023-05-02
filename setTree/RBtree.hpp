@@ -22,6 +22,18 @@ template<ValidNodeData T>
 RBTree<T>::RBTree(const RBTree &&other)
 {
 	this->root_ = std::move(other.root_);
+	this->size_ = std::move(other.size_);
+}
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+RBTree<T> &RBTree<T>::operator=(const RBTree<O> &other) // copy
+{
+	this->clear();
+	for (auto &elem: other)
+		this->add(elem);
+	return *this;
 }
 
 template<ValidNodeData T>
@@ -38,6 +50,7 @@ template<ValidNodeData T>
 RBTree<T> &RBTree<T>::operator=(const  RBTree &&other) noexcept // move
 {
 	this->root_ = std::move(other.root_);
+	this->size_ = std::move(other.size_);
 	return *this;
 }
 
@@ -56,6 +69,7 @@ void RBTree<T>::clear()
 {
 	if (root_ != nullptr)
 		root_->clear_subtree();
+	root_ = nullptr;
 }
 
 template<ValidNodeData T>
@@ -84,14 +98,14 @@ RBIterator<T> RBTree<T>::end() const noexcept
 template<ValidNodeData T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
 {
-	NodePtr<T> x = node;       // Установка y
-	NodePtr<T> y = x->right_;   // Превращение левого поддерева y
+	NodePtr<T> x = node;
+	NodePtr<T> y = x->right_;
 	x->right_ = y->left_;
 	if (y->left_ != nullptr)
 	{
 		y->left_->parent_ = x;
 	}
-	y->parent_ = x->parent_;  // Передача родителя x узлу y
+	y->parent_ = x->parent_;
 	if (x->parent_.lock() == nullptr)
 	{
 		root_ = y;
@@ -500,6 +514,14 @@ void RBTree<T>::print()
 	for (auto it = begin(); it != end(); ++it)
 		std::cout << *it << " ";
 }
+
+
+template<ValidNodeData T>
+size_t RBTree<T>::size() const noexcept
+{
+	return size_;
+}
+
 
 template<ValidNodeData T>
 template<Container ContainerType>

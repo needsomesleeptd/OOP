@@ -50,6 +50,8 @@ class RBTree : ISet<T>
 	void clear() override;
 	bool contains(const T& key) override;
 
+	size_type size() const noexcept;
+
 	RBIterator<T> begin() const noexcept;
 	RBIterator<T> end() const noexcept;
 
@@ -70,8 +72,12 @@ class RBTree : ISet<T>
 	RBTree setIntersection(const ContainerType& container);
 
 
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	RBTree &operator=(const RBTree<O> &other); // copy
 
-	RBTree &operator=(const RBTree<T> &other); // copy
+	RBTree &operator=(const RBTree &other); // copy
+
 
 	RBTree &operator=(const  RBTree &&other) noexcept; // move
 
