@@ -24,8 +24,6 @@ class RBTree : ISet<T>
 	NodePtr<T> insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert);
 	NodePtr<T> removeBin(NodePtr<T> root, const T& key);
 
-	void setColor(NodePtr<T> node, NodeColor color);
-	NodeColor getColor(NodePtr<T> node);
 
  public:
 
@@ -37,7 +35,10 @@ class RBTree : ISet<T>
 	explicit RBTree();
 	RBTree(const RBTree &other);
 
-	RBTree(const RBTree &&other);
+	RBTree(RBTree &&other) noexcept;
+
+	RBTree(std::initializer_list<T> l);
+
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
@@ -79,7 +80,7 @@ class RBTree : ISet<T>
 	RBTree &operator=(const RBTree &other); // copy
 
 
-	RBTree &operator=(const  RBTree &&other) noexcept; // move
+	RBTree &operator=( RBTree &&other) noexcept; // move
 
 	void print();
 

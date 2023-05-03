@@ -61,7 +61,12 @@ int main()
 	std::cout<<"\n_____________________________________\n";
 	std::cout<<"\nCleared tree\n";
 	tree.clear();
+	tree.add(1);
+	auto it_2 = tree.begin();
+	it_2--;
+	RBTree<int> t{1,2,3};
 
+	//RBTree<int> test_tree({1,2,3});
 
 
 

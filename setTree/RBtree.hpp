@@ -5,6 +5,26 @@
 
 #include "tree.h"
 
+
+template <ValidNodeData T>
+NodeColor getColor(NodePtr<T> node)
+{
+	if (node == nullptr)
+		return BLACK;
+	return node->color_;
+}
+
+template <ValidNodeData T>
+void setColor(NodePtr<T> node, NodeColor color)
+{
+	if (node == nullptr)
+		return;
+
+	node->setColor(color);
+}
+
+
+
 template<ValidNodeData T>
 RBTree<T>::RBTree() : root_(nullptr),size_(0)
 {
@@ -224,22 +244,6 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 
 }
 
-template<ValidNodeData T>
-void RBTree<T>::setColor(NodePtr<T> node, NodeColor color)
-{
-	if (node == nullptr)
-		return;
-
-	node->color_ = color;
-}
-
-template<ValidNodeData T>
-NodeColor RBTree<T>::getColor(NodePtr<T> node)
-{
-	if (node == nullptr)
-		return BLACK;
-	return node->color_;
-}
 
 template<ValidNodeData T>
 void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
@@ -586,5 +590,12 @@ RBTree<T>::RBTree(const ContainerType& container)
 	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
 		this->add(*it);
 }
+template<ValidNodeData T>
+RBTree<T>::RBTree(std::initializer_list<T> l)
+{
+	for (auto elem : l)
+		add(elem);
+}
+
 
 #endif //TREE_HPP_

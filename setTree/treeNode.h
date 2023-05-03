@@ -12,7 +12,7 @@ enum NodeColor
 {
 	RED, BLACK,DOUBLE_BLACK
 };
-template<typename T>
+template<ValidNodeData T>
 struct Node
 {
 	T data_;
@@ -29,13 +29,14 @@ struct Node
 	{
 
 	}
-
+	void setColor(NodeColor color);
+	NodeColor getColor();
 	void clear_subtree();
 
 
 };
 
-template<typename T>
+template<ValidNodeData T>
 void Node<T>::clear_subtree()
 {
 	if (left_)
@@ -47,7 +48,20 @@ void Node<T>::clear_subtree()
 	left_ = nullptr;
 };
 
-template<typename T>
+
+template<ValidNodeData T>
+void Node<T>::setColor(NodeColor color)
+{
+	color_ = color;
+}
+
+template<ValidNodeData T>
+NodeColor Node<T>::getColor()
+{
+	return color_;
+}
+
+template<ValidNodeData T>
 using NodePtr = std::shared_ptr<Node<T>>;
 
 #endif //LAB_02__TREENODE_H_

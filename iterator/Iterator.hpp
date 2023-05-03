@@ -20,6 +20,9 @@ class RBIterator
 	NodePtr<T> find_prev_up();
 	NodePtr<T> find_prev_down();
 
+	RBIterator() = default;
+	explicit RBIterator(NodePtr<T> ptr);
+
  public:
 	using iterator_category = std::forward_iterator_tag;
 	using value_type = T;
@@ -30,10 +33,10 @@ class RBIterator
 
 	// Операции, необходимые для всех категорий итераторов.
 
-	RBIterator(const RBIterator&) = default;
-	explicit RBIterator(NodePtr<T> ptr);
-	RBIterator() = default;
 
+
+
+	RBIterator(const RBIterator&) = default;
 	RBIterator& operator=(const RBIterator&) = default;
 	~RBIterator() = default;
 
