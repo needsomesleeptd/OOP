@@ -5,8 +5,7 @@
 
 #include "tree.h"
 
-
-template <ValidNodeData T>
+template<ValidNodeData T>
 NodeColor getColor(NodePtr<T> node)
 {
 	if (node == nullptr)
@@ -14,7 +13,7 @@ NodeColor getColor(NodePtr<T> node)
 	return node->color_;
 }
 
-template <ValidNodeData T>
+template<ValidNodeData T>
 void setColor(NodePtr<T> node, NodeColor color)
 {
 	if (node == nullptr)
@@ -23,23 +22,21 @@ void setColor(NodePtr<T> node, NodeColor color)
 	node->setColor(color);
 }
 
-
-
 template<ValidNodeData T>
-RBTree<T>::RBTree() : root_(nullptr),size_(0)
+RBTree<T>::RBTree() : root_(nullptr), size_(0)
 {
 
 }
 
 template<ValidNodeData T>
-RBTree<T>::RBTree(const RBTree &other)
+RBTree<T>::RBTree(const RBTree& other)
 {
-	for (auto &elem: other)
+	for (auto& elem : other)
 		this->add(elem);
 }
 
 template<ValidNodeData T>
-RBTree<T>::RBTree(const RBTree &&other)
+RBTree<T>::RBTree(RBTree&& other) noexcept
 {
 	this->root_ = std::move(other.root_);
 	this->size_ = std::move(other.size_);
@@ -48,33 +45,31 @@ RBTree<T>::RBTree(const RBTree &&other)
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
-RBTree<T> &RBTree<T>::operator=(const RBTree<O> &other) // copy
+RBTree<T>& RBTree<T>::operator=(const RBTree<O>& other) // copy
 {
 	this->clear();
-	for (auto &elem: other)
+	for (auto& elem : other)
 		this->add(elem);
 	return *this;
 }
 
 template<ValidNodeData T>
-RBTree<T> &RBTree<T>::operator=(const RBTree<T> &other) // copy
+RBTree<T>& RBTree<T>::operator=(const RBTree<T>& other) // copy
 {
 	this->clear();
-	for (auto &elem: other)
+	for (auto& elem : other)
 		this->add(elem);
 	return *this;
 }
 
 template<ValidNodeData T>
 
-RBTree<T> &RBTree<T>::operator=(const  RBTree &&other) noexcept // move
+RBTree<T>& RBTree<T>::operator=(RBTree&& other) noexcept // move
 {
 	this->root_ = std::move(other.root_);
 	this->size_ = std::move(other.size_);
 	return *this;
 }
-
-
 
 template<ValidNodeData T>
 RBTree<T>::~RBTree()
@@ -237,13 +232,11 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 	}
 	else
 	{
-		time_t timer = time(nullptr);
-		throw AddException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+		return nullptr;
 	}
 	return root;
 
 }
-
 
 template<ValidNodeData T>
 void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
@@ -441,17 +434,16 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 }
 
 template<ValidNodeData T>
-bool RBTree<T>::add(const T& data)
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::add(const O& data)
 {
-	NodePtr<T> node = std::make_shared<Node<T>>(data);
-	try
-	{
-		root_ = insertBin(root_, node);
-	}
-	catch (const AddException exception)
-	{
+	if (contains(data))
 		return false;
-	}
+	NodePtr<T> node = std::make_shared<Node<T>>(data);
+
+	root_ = insertBin(root_, node);
+
 	++size_;
 	RBTreeFixInsert(node);
 	return true;
@@ -461,9 +453,7 @@ template<ValidNodeData T>
 NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
 	if (root == nullptr)
-	{
 		return nullptr;
-	}
 
 	if (key < root->data_)
 		return removeBin(root->left_, key);
@@ -479,8 +469,11 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 	return removeBin(root->right_, temp->data_);
 }
 
+
 template<ValidNodeData T>
-bool RBTree<T>::remove(const T& data)
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::remove(const O& data)
 {
 	NodePtr<T> node;
 	if (contains(data))
@@ -507,7 +500,9 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 }
 
 template<ValidNodeData T>
-bool RBTree<T>::contains(const T& key)
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::contains(const O& key)
 {
 	return find(root_, key) != nullptr;
 }
@@ -519,13 +514,11 @@ void RBTree<T>::print()
 		std::cout << *it << " ";
 }
 
-
 template<ValidNodeData T>
 size_t RBTree<T>::size() const noexcept
 {
 	return size_;
 }
-
 
 template<ValidNodeData T>
 template<Container ContainerType>
@@ -563,7 +556,7 @@ RBTree<T> RBTree<T>::setDifference(const ContainerType& other)
 	for (auto it = other.begin(); it != other.end(); it++)
 		if (result.contains(*it))
 			result.remove(*it);
-	return result;
+	return RBTree<T>(result);
 
 }
 
@@ -574,12 +567,11 @@ RBTree<T> RBTree<T>::setIntersection(const ContainerType& other)
 {
 	RBTree<T> result;
 
-	for (auto elem: other)
+	for (auto elem : other)
 		if (this->contains(elem))
 			result.add(elem);
 
-
-	return result;
+	return RBTree<T>(result);
 }
 
 template<ValidNodeData T>
@@ -597,5 +589,13 @@ RBTree<T>::RBTree(std::initializer_list<T> l)
 		add(elem);
 }
 
+template<ValidNodeData T>
+template<std::input_iterator IteratorType>
+requires Convertible<typename IteratorType::value_type, T>
+RBTree<T>::RBTree(IteratorType begin, IteratorType end)
+{
+	for (auto it = begin; it != end; it++)
+		add(*it);
+}
 
 #endif //TREE_HPP_

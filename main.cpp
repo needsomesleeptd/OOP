@@ -66,6 +66,11 @@ int main()
 	it_2--;
 	RBTree<int> t{1,2,3};
 
+	std::cout<< "\nCreating tree by iterators\n";
+	RBTree<int> temp(a.begin(),a.end());
+	temp.add(10.123);
+	temp.print();
+
 	//RBTree<int> test_tree({1,2,3});
 
 

@@ -32,12 +32,19 @@ class RBTree : ISet<T>
 	using iterator = RBIterator<T>;
 	using const_iterator = const RBIterator<T>;
 
-	explicit RBTree();
-	RBTree(const RBTree &other);
+	RBTree();
+	explicit RBTree(const RBTree &other);
 
-	RBTree(RBTree &&other) noexcept;
+	explicit RBTree(RBTree &&other) noexcept;
 
-	RBTree(std::initializer_list<T> l);
+	explicit RBTree(std::initializer_list<T> l);
+
+	template<std::input_iterator IteratorType>
+	requires Convertible<typename IteratorType::value_type, T>
+	RBTree(IteratorType begin, IteratorType end);
+
+
+
 
 
 	template<Container ContainerType>
@@ -46,10 +53,19 @@ class RBTree : ISet<T>
 
 	~RBTree() override;
 
-	bool add(const T& data) override;
-	bool remove(const T& data) override;
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool add(const O& data);
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool remove(const O& data);
+
 	void clear() override;
-	bool contains(const T& key) override;
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool contains(const O& key);
 
 	size_type size() const noexcept;
 

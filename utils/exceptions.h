@@ -71,16 +71,16 @@ class OutOfBoundsException : public BaseException
 	char errorText[DEFAULT_EXC_STR_LEN];
 };
 
-class RemoveException : public BaseException
+class MemoryException : public BaseException
 {
  public:
-	RemoveException(
+	MemoryException(
 		const char* filename,
 		const int line,
 		const char* className,
 		const char* time,
-		const char* exceptionName = "RemoveException",
-		const char* additionalInfo = "requested removal of non existent value"
+		const char* exceptionName = "MemoryException",
+		const char* additionalInfo = "failed to allocate memory"
 	) : BaseException(filename,line,className,time,exceptionName,additionalInfo)
 	{
 		sprintf(errorText,
