@@ -2,7 +2,8 @@
 #define TREE_HPP_
 
 #include <iostream>
-
+#include <compare>
+#include <type_traits>
 #include "tree.h"
 
 template<ValidNodeData T>
@@ -503,7 +504,7 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
-bool RBTree<T>::contains(const O& key)
+bool RBTree<T>::contains(const O& key) const
 {
 	return find(root_, key) != nullptr;
 }
@@ -622,5 +623,94 @@ RBTree<T>& RBTree<T>::operator=(RBTree<O>&& other) noexcept
 	this->root_ = std::move(other.root_);
 	this->size_ = std::move(other.size_);
 }
+
+
+
+
+
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::is_subset(const RBTree<O> &other) const
+{
+	for (auto it = begin(); it != end(); it++)
+		if (!other.contains(*it))
+			return false;
+	return true;
+}
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::is_upperset(const RBTree<O> &other) const
+{
+	if (!other.is_subset(*this))
+		return false;
+	return true;
+}
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::operator<(const RBTree<O>& other)
+{
+	if (this->is_subset(other) && !this->is_upperset(other))
+		return true;
+	return false;
+}
+
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::operator==(const RBTree<O>& other) const
+{
+	if (this->is_subset(other) && this->is_upperset(other))
+		return true;
+	return false;
+}
+
+
+template<ValidNodeData T>
+bool RBTree<T>::operator<(const RBTree<T>& other)
+{
+	if (this->is_subset(other) && !this->is_upperset(other))
+		return true;
+	return false;
+}
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+std::partial_ordering  RBTree<T>::operator <=>(const RBTree<O>& other) const
+{
+	bool is_upper = other.is_subset(*this);
+	bool is_subset = other.is_upperset(*this);
+	if (is_upper && is_subset)
+		return std::partial_ordering::equivalent;
+	else if (is_upper)
+		return std::partial_ordering::greater;
+	else if (is_subset)
+		return std::partial_ordering::less;
+	else
+		return std::partial_ordering::unordered;
+}
+
+template<ValidNodeData T>
+std::partial_ordering  RBTree<T>::operator <=>(const RBTree<T>& other) const
+{
+	bool is_upper = other.is_subset(*this);
+	bool is_subset = other.is_upperset(*this);
+	if (is_upper && is_subset)
+		return std::partial_ordering::equivalent;
+	else if (is_upper)
+		return std::partial_ordering::greater;
+	else if (is_subset)
+		return std::partial_ordering::less;
+	else
+		return std::partial_ordering::unordered;
+}
+
 
 #endif //TREE_HPP_

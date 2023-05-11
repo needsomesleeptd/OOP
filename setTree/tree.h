@@ -47,7 +47,7 @@ class RBTree : ISet<T>
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
-	bool contains(const O& key);
+	bool contains(const O& key) const;
 
 	size_type size() const noexcept;
 
@@ -88,6 +88,36 @@ class RBTree : ISet<T>
 	RBTree& operator=(RBTree<O>&& other) noexcept; // move
 
 	void print();
+
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool operator <(const RBTree<O> &other);
+
+
+	bool operator <(const RBTree<T> &other);
+
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool operator==(const RBTree<O>& other) const;
+
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	std::partial_ordering operator <=>(const RBTree<O>& other) const;
+
+
+	std::partial_ordering operator <=>(const RBTree<T>& other) const;
+
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool is_subset(const RBTree<O> &other) const;
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	bool is_upperset(const RBTree<O> &other) const;
 
  protected:
 	void rotateRight(NodePtr<T> node);
