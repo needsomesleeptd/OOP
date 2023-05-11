@@ -88,6 +88,37 @@ int main()
 	std::cout << "f == s " << (t == tr) << "\n";
 	std::cout << "s >= f " << (tr >= t) << "\n";
 	std::cout << "f > f " << (t > t) << "\n";
+	std::cout << "f != empty tree " << (t != tree) << "\n";
+
+	std::cout << "\n";
+	std::cout << "\n creating tree intersections exc\n";
+	t.add(54);
+
+	std::cout << "f:";
+	tr.print();
+	std::cout << "\n";
+	std::cout << "s:";
+	t.print();
+	std::cout << "\n";
+
+	std::cout<< "\nf | s ";
+	(t | tr).print();
+
+	std::cout<< "\nf & s ";
+	(t & tr).print();
+
+	std::cout<< "\nf - s ";
+	(t - tr).print();
+
+
+	std::cout<< "\n(1 2 10) |= s ";
+	temp |= tr;
+	temp.print();
+
+	std::cout<< "\n(1 2 10 {s}) &= s ";
+	temp &= tr;
+	temp.print();
+
 
 
 }

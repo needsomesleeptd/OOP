@@ -56,19 +56,42 @@ class RBTree : ISet<T>
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setUnion(const ContainerType& container);
+	RBTree setUnion(const ContainerType& container) const;
+
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setDifference(const ContainerType& container);
-
-	/*template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setSymmDifference(const ContainerType& container);*/
+	RBTree operator |(const  ContainerType &other) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setIntersection(const ContainerType& container);
+	void operator |=(const  ContainerType &other);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree setDifference(const ContainerType& container) const;
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree operator &(const  ContainerType &other) const;
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void operator &=(const  ContainerType &other);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree operator -(const  ContainerType &other) const;
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void operator -=(const  ContainerType &other);
+
+
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree setIntersection(const ContainerType& container) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>

@@ -311,12 +311,12 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 	{
 		if (root_->right())
 		{
-			root_->right()->parent() = NodePtr<T>(nullptr);
+			root_->right()->parent() = Node<T>::create();
 			root_ = root_->right();
 		}
 		else if (root_->left())
 		{
-			root_->left()->parent() = NodePtr<T>(nullptr);
+			root_->left()->parent() = Node<T>::create();
 			root_ = root_->left();
 		}
 		else
@@ -347,14 +347,14 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 	}
 	else
 	{
-		NodePtr<T> sibling = nullptr;
-		NodePtr<T> parent = nullptr;
+		NodePtr<T> sibling = Node<T>::create();
+		NodePtr<T> parent = Node<T>::create();
 		NodePtr<T> ptr = node;
 		setColor(ptr, DOUBLE_BLACK);
 		while (ptr != root_ && getColor(ptr) == DOUBLE_BLACK)
 		{
 			parent = ptr->parent().lock();
-			if (ptr == parent->left())
+			if (ptr == parent->left() && parent->right())
 			{
 				sibling = parent->right();
 				if (getColor(sibling) == RED)
@@ -429,9 +429,9 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 			}
 		}
 		if (node == node->parent().lock()->left())
-			node->parent().lock()->left() = nullptr;
+			node->parent().lock()->left() = Node<T>::create();
 		else
-			node->parent().lock()->right() = nullptr;
+			node->parent().lock()->right() = Node<T>::create();
 		setColor(root_, BLACK);
 	}
 }
@@ -487,10 +487,9 @@ template<ValidNodeData O>
 requires Convertible<O, T>
 bool RBTree<T>::remove(const O& data)
 {
-	NodePtr<T> node;
-	if (contains(data))
+	if (!contains(data))
 		return false;
-	node = removeBin(root_, data);
+	NodePtr<T> node = removeBin(root_, data);
 	--size_;
 	RBTreeFixRemove(node);
 	return true;
@@ -535,7 +534,7 @@ size_t RBTree<T>::size() const noexcept
 template<ValidNodeData T>
 template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
-RBTree<T> RBTree<T>::setUnion(const ContainerType& other)
+RBTree<T> RBTree<T>::setUnion(const ContainerType& other) const
 {
 	RBTree<T> result;
 
@@ -543,7 +542,7 @@ RBTree<T> RBTree<T>::setUnion(const ContainerType& other)
 		result.add(*it);
 	for (auto it = this->begin(); it != this->end(); it++)
 		result.add(*it);
-	return result;
+	return RBTree(result);
 
 }
 
@@ -561,7 +560,7 @@ RBTree<T> RBTree<T>::setSymmDifference(const ContainerType& other)
 template<ValidNodeData T>
 template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
-RBTree<T> RBTree<T>::setDifference(const ContainerType& other)
+RBTree<T> RBTree<T>::setDifference(const ContainerType& other) const
 {
 	RBTree<T> result;
 	result = *this;
@@ -575,7 +574,7 @@ RBTree<T> RBTree<T>::setDifference(const ContainerType& other)
 template<ValidNodeData T>
 template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
-RBTree<T> RBTree<T>::setIntersection(const ContainerType& other)
+RBTree<T> RBTree<T>::setIntersection(const ContainerType& other) const
 {
 	RBTree<T> result;
 
@@ -721,6 +720,51 @@ std::partial_ordering  RBTree<T>::operator <=>(const RBTree<T>& other) const
 	else
 		return std::partial_ordering::unordered;
 }
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T> RBTree<T>::operator|(const ContainerType& other) const
+{
+	return this->setUnion(other);
+}
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::operator|=(const ContainerType& other)
+{
+	*this = this->setUnion(other);
+}
 
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T> RBTree<T>::operator&(const ContainerType& other) const
+{
+	return this->setIntersection(other);
+}
+
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::operator&=(const ContainerType& other)
+{
+	*this = this->setIntersection(other);
+}
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T> RBTree<T>::operator-(const ContainerType& other) const
+{
+	return this->setDifference(other);
+}
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::operator-=(const ContainerType& other)
+{
+	*this = this->setDifference(other);
+}
 
 #endif //TREE_HPP_
