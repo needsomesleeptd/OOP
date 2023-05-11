@@ -100,7 +100,7 @@ class RBTree : ISet<T>
 	NodePtr<T> removeBin(NodePtr<T> root, const T& key);
 
  private:
-	NodePtr<T> root_;
+	std::shared_ptr<Node<T>> root_;
 	friend class RBIterator<T>;
 	size_t size_;
 

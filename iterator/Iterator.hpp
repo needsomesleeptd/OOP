@@ -114,9 +114,9 @@ template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_next_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	shared_node_ptr = shared_node_ptr->right_;
-	while (shared_node_ptr->left_ != nullptr)
-		shared_node_ptr = shared_node_ptr->left_;
+	shared_node_ptr = shared_node_ptr->right();
+	while (shared_node_ptr->left() != nullptr)
+		shared_node_ptr = shared_node_ptr->left();
 	return shared_node_ptr;
 }
 
@@ -124,11 +124,11 @@ template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_next_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	NodePtr<T> parent = shared_node_ptr->parent_.lock();
-	while (parent != nullptr && shared_node_ptr != parent->left_)
+	NodePtr<T> parent = shared_node_ptr->parent().lock();
+	while (parent != nullptr && shared_node_ptr != parent->left())
 	{
 		shared_node_ptr = parent;
-		parent = parent->parent_.lock();
+		parent = parent->parent().lock();
 	}
 	return parent;
 }
@@ -137,9 +137,9 @@ template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_prev_down()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	shared_node_ptr = shared_node_ptr->left_;
-	while (shared_node_ptr->left_ != nullptr)
-		shared_node_ptr = shared_node_ptr->right_;
+	shared_node_ptr = shared_node_ptr->left();
+	while (shared_node_ptr->left() != nullptr)
+		shared_node_ptr = shared_node_ptr->right();
 	return shared_node_ptr;
 
 }
@@ -148,11 +148,11 @@ template<ValidNodeData T>
 NodePtr<T> RBIterator<T>::find_prev_up()
 {
 	NodePtr<T> shared_node_ptr = cur_node.lock();
-	NodePtr<T> parent = shared_node_ptr->parent_.lock();
-	while (parent != nullptr && shared_node_ptr == parent->left_)
+	NodePtr<T> parent = shared_node_ptr->parent().lock();
+	while (parent != nullptr && shared_node_ptr == parent->left())
 	{
 		shared_node_ptr = parent;
-		parent = parent->parent_.lock();
+		parent = parent->parent().lock();
 	}
 	return parent;
 
@@ -169,7 +169,7 @@ const NodePtr<T> RBIterator<T>::next()
 		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
 	}
 
-	if (shared_node_ptr->right_ != nullptr)
+	if (shared_node_ptr->right() != nullptr)
 		return find_next_down();
 	else
 		return find_next_up();
@@ -186,7 +186,7 @@ const NodePtr<T> RBIterator<T>::prev()
 		throw OutOfBoundsException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
 	}
 
-	if (shared_node_ptr->left_ != nullptr)
+	if (shared_node_ptr->left() != nullptr)
 		return find_prev_down();
 	else
 		return find_prev_up();
@@ -209,13 +209,13 @@ bool RBIterator<T>::operator!=(const RBIterator& other) const
 template<ValidNodeData T>
 T RBIterator<T>::get() const
 {
-	return cur_node.lock()->data_;
+	return cur_node.lock()->data();
 }
 
 template<ValidNodeData T>
 T& RBIterator<T>::operator*()
 {
-	return this->cur_node.lock()->data_;
+	return this->cur_node.lock()->data();
 }
 
 template<ValidNodeData T>

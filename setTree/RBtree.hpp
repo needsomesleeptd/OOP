@@ -10,7 +10,7 @@ NodeColor getColor(NodePtr<T> node)
 {
 	if (node == nullptr)
 		return BLACK;
-	return node->color_;
+	return node->getColor();
 }
 
 template<ValidNodeData T>
@@ -23,7 +23,7 @@ void setColor(NodePtr<T> node, NodeColor color)
 }
 
 template<ValidNodeData T>
-RBTree<T>::RBTree() : root_(nullptr), size_(0)
+RBTree<T>::RBTree() : size_(0), root_(nullptr)
 {
 
 }
@@ -31,6 +31,7 @@ RBTree<T>::RBTree() : root_(nullptr), size_(0)
 template<ValidNodeData T>
 RBTree<T>::RBTree(const RBTree& other)
 {
+	size_ = 0;
 	for (auto& elem : other)
 		this->add(elem);
 }
@@ -62,10 +63,10 @@ RBTree<T>& RBTree<T>::operator=(const RBTree<T>& other) // copy
 	return *this;
 }
 
-
 template<ValidNodeData T>
 RBTree<T>& RBTree<T>::operator=(RBTree&& other) noexcept // move
 {
+	this->clear();
 	this->root_ = std::move(other.root_);
 	this->size_ = std::move(other.size_);
 	return *this;
@@ -82,9 +83,8 @@ RBTree<T>::~RBTree()
 template<ValidNodeData T>
 void RBTree<T>::clear()
 {
-	if (root_ != nullptr)
-		root_->clear_subtree();
-	root_ = nullptr;
+	size_ = 0;
+	root_.reset();
 }
 
 template<ValidNodeData T>
@@ -93,8 +93,8 @@ NodePtr<T> RBTree<T>::findMin(const NodePtr<T>& root) const
 	if (root == nullptr)
 		return root;
 	NodePtr<T> temp = root;
-	while (temp->left_ != nullptr)
-		temp = temp->left_;
+	while (temp->left() != nullptr)
+		temp = temp->left();
 	return temp;
 }
 
@@ -114,27 +114,27 @@ template<ValidNodeData T>
 void RBTree<T>::rotateLeft(NodePtr<T> node)
 {
 	NodePtr<T> x = node;
-	NodePtr<T> y = x->right_;
-	x->right_ = y->left_;
-	if (y->left_ != nullptr)
+	NodePtr<T> y = x->right();
+	x->right() = y->left();
+	if (y->left() != nullptr)
 	{
-		y->left_->parent_ = x;
+		y->left()->parent() = x;
 	}
-	y->parent_ = x->parent_;
-	if (x->parent_.lock() == nullptr)
+	y->parent() = x->parent();
+	if (x->parent().lock() == nullptr)
 	{
 		root_ = y;
 	}
-	else if (x == x->parent_.lock()->left_)
+	else if (x == x->parent().lock()->left())
 	{
-		x->parent_.lock()->left_ = y;
+		x->parent().lock()->left() = y;
 	}
 	else
 	{
-		x->parent_.lock()->right_ = y;
+		x->parent().lock()->right() = y;
 	}
-	y->left_ = x;
-	x->parent_ = y;
+	y->left() = x;
+	x->parent() = y;
 
 }
 
@@ -142,23 +142,23 @@ template<ValidNodeData T>
 void RBTree<T>::rotateRight(NodePtr<T> node)
 {
 	NodePtr<T> y = node;
-	NodePtr<T> x = y->left_;
-	y->left_ = x->right_;
-	if (x->right_ != nullptr)
-		x->right_->parent_ = y;
+	NodePtr<T> x = y->left();
+	y->left() = x->right();
+	if (x->right() != nullptr)
+		x->right()->parent() = y;
 
-	x->parent_ = y->parent_;
-	if (y->parent_.lock() == nullptr)
+	x->parent() = y->parent();
+	if (y->parent().lock() == nullptr)
 		root_ = x;
 	else
 	{
-		if (y == y->parent_.lock()->right_)
-			y->parent_.lock()->right_ = x;
+		if (y == y->parent().lock()->right())
+			y->parent().lock()->right() = x;
 		else
-			y->parent_.lock()->left_ = x;
+			y->parent().lock()->left() = x;
 	}
-	x->right_ = y;
-	y->parent_ = x;
+	x->right() = y;
+	y->parent() = x;
 }
 
 /*template<ValidNodeData T>
@@ -166,13 +166,13 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root_, NodePtr<T> nodeToInsert)
 {
 	if (root_ == nullptr)
 		return nodeToInsert;
-	while (nodeToInsert != root_ && nodeToInsert->parent_.lock()->color_== RED)
+	while (nodeToInsert != root_ && nodeToInsert->parent().lock()->color_== RED)
 	{
-		NodePtr<T> parent = nodeToInsert->parent_.lock();
-		NodePtr<T> grandParent = parent->parent_.lock();
-		if (parent == grandParent->left_)
+		NodePtr<T> parent = nodeToInsert->parent().lock();
+		NodePtr<T> grandParent = parent->parent().lock();
+		if (parent == grandParent->left())
 		{
-			NodePtr<T> uncle = grandParent->right_;
+			NodePtr<T> uncle = grandParent->right();
 			if (uncle->color_ == RED)
 			{
 				parent->color_ = BLACK;
@@ -180,7 +180,7 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root_, NodePtr<T> nodeToInsert)
 				grandParent->color_ = RED;
 				nodeToInsert = grandParent;
 			}
-			else if (nodeToInsert == parent->right_)
+			else if (nodeToInsert == parent->right())
 			{
 				nodeToInsert = parent;
 				rotateLeft(nodeToInsert);
@@ -191,7 +191,7 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root_, NodePtr<T> nodeToInsert)
 		}
 		else
 		{
-			NodePtr<T> uncle = grandParent->left_;
+			NodePtr<T> uncle = grandParent->left();
 			if (uncle->color_ == RED)
 			{
 				parent->color_ = BLACK;
@@ -199,7 +199,7 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root_, NodePtr<T> nodeToInsert)
 				grandParent->color_ = RED;
 				nodeToInsert = grandParent;
 			}
-			else if (nodeToInsert == parent->left_)
+			else if (nodeToInsert == parent->left())
 			{
 				nodeToInsert = parent;
 				rotateLeft(nodeToInsert);
@@ -220,15 +220,15 @@ NodePtr<T> RBTree<T>::insertBin(NodePtr<T> root, NodePtr<T> nodeToInsert)
 	if (root == nullptr)
 		return nodeToInsert;
 
-	if (nodeToInsert->data_ > root->data_)
+	if (nodeToInsert->data() > root->data())
 	{
-		root->right_ = insertBin(root->right_, nodeToInsert);
-		root->right_->parent_ = root;
+		root->right() = insertBin(root->right(), nodeToInsert);
+		root->right()->parent() = root;
 	}
-	else if (nodeToInsert->data_ < root->data_)
+	else if (nodeToInsert->data() < root->data())
 	{
-		root->left_ = insertBin(root->left_, nodeToInsert);
-		root->left_->parent_ = root;
+		root->left() = insertBin(root->left(), nodeToInsert);
+		root->left()->parent() = root;
 	}
 	else
 	{
@@ -244,13 +244,13 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 
 	NodePtr<T> parent = nullptr;
 	NodePtr<T> grandparent = nullptr;
-	while (insertedNode != root_ && getColor(insertedNode) == RED && getColor(insertedNode->parent_.lock()) == RED)
+	while (insertedNode != root_ && getColor(insertedNode) == RED && getColor(insertedNode->parent().lock()) == RED)
 	{
-		parent = insertedNode->parent_.lock();
-		grandparent = parent->parent_.lock();
-		if (parent == grandparent->left_)
+		parent = insertedNode->parent().lock();
+		grandparent = parent->parent().lock();
+		if (parent == grandparent->left())
 		{
-			NodePtr<T> uncle = grandparent->right_;
+			NodePtr<T> uncle = grandparent->right();
 			if (getColor(uncle) == RED)
 			{
 				setColor(uncle, BLACK);
@@ -260,20 +260,21 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 			}
 			else
 			{
-				if (insertedNode == parent->right_)
+				if (insertedNode == parent->right())
 				{
 					rotateLeft(parent);
 					insertedNode = parent;
-					parent = insertedNode->parent_.lock();
+					parent = insertedNode->parent().lock();
 				}
 				rotateRight(grandparent);
-				std::swap(parent->color_, grandparent->color_);
+				parent->setColor(grandparent->getColor());
+				grandparent->setColor(parent->getColor());
 				insertedNode = parent;
 			}
 		}
 		else
 		{
-			NodePtr<T> uncle = grandparent->left_;
+			NodePtr<T> uncle = grandparent->left();
 			if (getColor(uncle) == RED)
 			{
 				setColor(uncle, BLACK);
@@ -283,14 +284,15 @@ void RBTree<T>::RBTreeFixInsert(NodePtr<T> insertedNode)
 			}
 			else
 			{
-				if (insertedNode == parent->left_)
+				if (insertedNode == parent->left())
 				{
 					rotateRight(parent);
 					insertedNode = parent;
-					parent = insertedNode->parent_.lock();
+					parent = insertedNode->parent().lock();
 				}
 				rotateLeft(grandparent);
-				std::swap(parent->color_, grandparent->color_);
+				parent->setColor(grandparent->getColor());
+				grandparent->setColor(parent->getColor());
 				insertedNode = parent;
 			}
 		}
@@ -306,15 +308,15 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 
 	if (node == root_)
 	{
-		if (root_->right_)
+		if (root_->right())
 		{
-			root_->right_->parent_ = NodePtr<T>(nullptr);
-			root_ = root_->right_;
+			root_->right()->parent() = NodePtr<T>(nullptr);
+			root_ = root_->right();
 		}
-		else if (root_->left_)
+		else if (root_->left())
 		{
-			root_->left_->parent_ = NodePtr<T>(nullptr);
-			root_ = root_->left_;
+			root_->left()->parent() = NodePtr<T>(nullptr);
+			root_ = root_->left();
 		}
 		else
 		{
@@ -323,22 +325,22 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 		return;
 	}
 
-	if (getColor(node) == RED || getColor(node->left_) == RED || getColor(node->right_) == RED)
+	if (getColor(node) == RED || getColor(node->left()) == RED || getColor(node->right()) == RED)
 	{
-		NodePtr<T> child = node->left_ != nullptr ? node->left_ : node->right_;
+		NodePtr<T> child = node->left() != nullptr ? node->left() : node->right();
 
-		if (node == node->parent_.lock()->left_)
+		if (node == node->parent().lock()->left())
 		{
-			node->parent_.lock()->left_ = child;
+			node->parent().lock()->left() = child;
 			if (child != nullptr)
-				child->parent_.lock() = node->parent_.lock();
+				child->parent().lock() = node->parent().lock();
 			setColor(child, BLACK);
 		}
 		else
 		{
-			node->parent_.lock()->right_ = child;
+			node->parent().lock()->right() = child;
 			if (child != nullptr)
-				child->parent_.lock() = node->parent_.lock();
+				child->parent().lock() = node->parent().lock();
 			setColor(child, BLACK);
 		}
 	}
@@ -350,10 +352,10 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 		setColor(ptr, DOUBLE_BLACK);
 		while (ptr != root_ && getColor(ptr) == DOUBLE_BLACK)
 		{
-			parent = ptr->parent_.lock();
-			if (ptr == parent->left_)
+			parent = ptr->parent().lock();
+			if (ptr == parent->left())
 			{
-				sibling = parent->right_;
+				sibling = parent->right();
 				if (getColor(sibling) == RED)
 				{
 					setColor(sibling, BLACK);
@@ -362,7 +364,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 				}
 				else
 				{
-					if (getColor(sibling->left_) == BLACK && getColor(sibling->right_) == BLACK)
+					if (getColor(sibling->left()) == BLACK && getColor(sibling->right()) == BLACK)
 					{
 						setColor(sibling, RED);
 						if (getColor(parent) == RED)
@@ -373,16 +375,16 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 					}
 					else
 					{
-						if (getColor(sibling->right_) == BLACK)
+						if (getColor(sibling->right()) == BLACK)
 						{
-							setColor(sibling->left_, BLACK);
+							setColor(sibling->left(), BLACK);
 							setColor(sibling, RED);
 							rotateRight(sibling);
-							sibling = parent->right_;
+							sibling = parent->right();
 						}
-						setColor(sibling, parent->color_);
+						setColor(sibling, parent->getColor());
 						setColor(parent, BLACK);
-						setColor(sibling->right_, BLACK);
+						setColor(sibling->right(), BLACK);
 						rotateLeft(parent);
 						break;
 					}
@@ -390,7 +392,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 			}
 			else
 			{
-				sibling = parent->left_;
+				sibling = parent->left();
 				if (getColor(sibling) == RED)
 				{
 					setColor(sibling, BLACK);
@@ -399,7 +401,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 				}
 				else
 				{
-					if (getColor(sibling->left_) == BLACK && getColor(sibling->right_) == BLACK)
+					if (getColor(sibling->left()) == BLACK && getColor(sibling->right()) == BLACK)
 					{
 						setColor(sibling, RED);
 						if (getColor(parent) == RED)
@@ -410,25 +412,25 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 					}
 					else
 					{
-						if (getColor(sibling->left_) == BLACK)
+						if (getColor(sibling->left()) == BLACK)
 						{
-							setColor(sibling->right_, BLACK);
+							setColor(sibling->right(), BLACK);
 							setColor(sibling, RED);
 							rotateLeft(sibling);
-							sibling = parent->left_;
+							sibling = parent->left();
 						}
-						setColor(sibling, parent->color_);
+						setColor(sibling, parent->getColor());
 						setColor(parent, BLACK);
-						setColor(sibling->left_, BLACK);
+						setColor(sibling->left(), BLACK);
 						rotateRight(parent);
 					}
 				}
 			}
 		}
-		if (node == node->parent_.lock()->left_)
-			node->parent_.lock()->left_ = nullptr;
+		if (node == node->parent().lock()->left())
+			node->parent().lock()->left() = nullptr;
 		else
-			node->parent_.lock()->right_ = nullptr;
+			node->parent().lock()->right() = nullptr;
 		setColor(root_, BLACK);
 	}
 }
@@ -440,7 +442,7 @@ bool RBTree<T>::add(const O& data)
 {
 	if (contains(data))
 		return false;
-	NodePtr<T> node = std::make_shared<Node<T>>(data);
+	NodePtr<T> node = Node<T>::create(data);
 
 	root_ = insertBin(root_, node);
 
@@ -455,20 +457,19 @@ NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 	if (root == nullptr)
 		return nullptr;
 
-	if (key < root->data_)
-		return removeBin(root->left_, key);
+	if (key < root->data())
+		return removeBin(root->left(), key);
 
-	if (key > root->data_)
-		return removeBin(root->right_, key);
+	if (key > root->data())
+		return removeBin(root->right(), key);
 
-	if (root->left_ == nullptr || root->right_ == nullptr)
+	if (root->left() == nullptr || root->right() == nullptr)
 		return root;
 
-	NodePtr<T> temp = findMin(root->right_);
-	root->data_ = temp->data_;
-	return removeBin(root->right_, temp->data_);
+	NodePtr<T> temp = findMin(root->right());
+	root->data() = temp->data();
+	return removeBin(root->right(), temp->data());
 }
-
 
 template<ValidNodeData T>
 template<ValidNodeData O>
@@ -490,11 +491,11 @@ NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const
 	if (root == nullptr)
 		return root;
 
-	if (root->data_ > key)
-		return find(root->left_, key);
+	if (root->data() > key)
+		return find(root->left(), key);
 
-	if (root->data_ < key)
-		return find(root->right_, key);
+	if (root->data() < key)
+		return find(root->right(), key);
 
 	return root;
 }
@@ -579,6 +580,7 @@ template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
 RBTree<T>::RBTree(const ContainerType& container)
 {
+	this->size_ = 0;
 	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
 		this->add(*it);
 }
@@ -588,6 +590,7 @@ template<Container ContainerType>
 requires Convertible<typename ContainerType::value_type, T>
 RBTree<T>::RBTree(ContainerType&& container) noexcept
 {
+	this->size_ = 0;
 	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
 		this->add(std::move(*it));
 }
@@ -595,6 +598,7 @@ RBTree<T>::RBTree(ContainerType&& container) noexcept
 template<ValidNodeData T>
 RBTree<T>::RBTree(std::initializer_list<T> l)
 {
+	this->size_ = 0;
 	for (auto elem : l)
 		add(elem);
 }
@@ -604,6 +608,7 @@ template<std::input_iterator IteratorType>
 requires Convertible<typename IteratorType::value_type, T>
 RBTree<T>::RBTree(IteratorType begin, IteratorType end)
 {
+	this->size_ = 0;
 	for (auto it = begin; it != end; it++)
 		add(*it);
 }
@@ -613,8 +618,9 @@ template<ValidNodeData O>
 requires Convertible<O, T>
 RBTree<T>& RBTree<T>::operator=(RBTree<O>&& other) noexcept
 {
-	for (auto it = other.begin(); it != other.end(); it++)
-		this->add(std::move(*it));
+	this->clear();
+	this->root_ = std::move(other.root_);
+	this->size_ = std::move(other.size_);
 }
 
 #endif //TREE_HPP_

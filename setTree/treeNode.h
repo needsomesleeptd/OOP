@@ -10,17 +10,29 @@
 
 enum NodeColor
 {
-	RED, BLACK,DOUBLE_BLACK
+	RED, BLACK, DOUBLE_BLACK
 };
 template<ValidNodeData T>
-struct Node
+class Node : public std::enable_shared_from_this<Node<T>>
 {
-	T data_;
-	std::weak_ptr<Node<T>> parent_;
-	std::shared_ptr<Node<T>> left_;
-	std::shared_ptr<Node<T>> right_;
-	NodeColor color_;
+ public:
 
+	void setColor(NodeColor color);
+	NodeColor getColor();
+	void clear_subtree();
+
+	std::shared_ptr<Node<T>> get();
+
+	T& data();
+
+	std::shared_ptr<Node<T>>& left();
+	std::shared_ptr<Node<T>>& right();
+	std::weak_ptr<Node<T>>& parent();
+
+	template<typename... Args>
+	static std::shared_ptr<Node<T>> create(Args&& ... params);
+
+ private:
 	explicit Node(const T& data) : parent_(), left_(), right_(), data_(data), color_(RED)
 	{
 
@@ -29,10 +41,11 @@ struct Node
 	{
 
 	}
-	void setColor(NodeColor color);
-	NodeColor getColor();
-	void clear_subtree();
-
+	T data_;
+	std::weak_ptr<Node<T>> parent_;
+	std::shared_ptr<Node<T>> left_;
+	std::shared_ptr<Node<T>> right_;
+	NodeColor color_;
 
 };
 
@@ -48,7 +61,6 @@ void Node<T>::clear_subtree()
 	left_ = nullptr;
 };
 
-
 template<ValidNodeData T>
 void Node<T>::setColor(NodeColor color)
 {
@@ -59,6 +71,48 @@ template<ValidNodeData T>
 NodeColor Node<T>::getColor()
 {
 	return color_;
+}
+
+template<ValidNodeData T>
+std::shared_ptr<Node<T>>& Node<T>::left()
+{
+	return left_;
+}
+
+template<ValidNodeData T>
+std::shared_ptr<Node<T>>& Node<T>::right()
+{
+	return right_;
+}
+template<ValidNodeData T>
+std::weak_ptr<Node<T>>& Node<T>::parent()
+{
+	return parent_;
+}
+
+template<ValidNodeData T>
+std::shared_ptr<Node<T>> Node<T>::get()
+{
+	return this->shared_from_this();
+}
+
+template<ValidNodeData T>
+template<typename... Args>
+std::shared_ptr<Node<T>> Node<T>::create(Args&& ... params)
+{
+	struct Enable_make_shared : public Node<T>
+	{
+		Enable_make_shared(Args&& ... params) : Node<T>(std::forward<Args>(params)...)
+		{
+		}
+	};
+
+	return std::make_shared<Enable_make_shared>(std::forward<Args>(params)...);
+}
+template<ValidNodeData T>
+T& Node<T>::data()
+{
+	return this->data_;
 }
 
 template<ValidNodeData T>
