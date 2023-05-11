@@ -70,8 +70,10 @@ int main()
 	RBTree<int> temp(a.begin(),a.end());
 	temp.add(10.123);
 	temp.print();
-
-	//RBTree<int> test_tree({1,2,3});
+	std:: cout<< "\b";
+	std::cout<< "\n creating tree with rvalue containers\n";
+	RBTree<int> tr(std::vector<int>{5,3,3532});
+	tr.print();
 
 
 

@@ -62,8 +62,8 @@ RBTree<T>& RBTree<T>::operator=(const RBTree<T>& other) // copy
 	return *this;
 }
 
-template<ValidNodeData T>
 
+template<ValidNodeData T>
 RBTree<T>& RBTree<T>::operator=(RBTree&& other) noexcept // move
 {
 	this->root_ = std::move(other.root_);
@@ -582,6 +582,16 @@ RBTree<T>::RBTree(const ContainerType& container)
 	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
 		this->add(*it);
 }
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T>::RBTree(ContainerType&& container) noexcept
+{
+	for (typename ContainerType::const_iterator it = container.begin(); it != container.end(); it++)
+		this->add(std::move(*it));
+}
+
 template<ValidNodeData T>
 RBTree<T>::RBTree(std::initializer_list<T> l)
 {
@@ -596,6 +606,15 @@ RBTree<T>::RBTree(IteratorType begin, IteratorType end)
 {
 	for (auto it = begin; it != end; it++)
 		add(*it);
+}
+
+template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+RBTree<T>& RBTree<T>::operator=(RBTree<O>&& other) noexcept
+{
+	for (auto it = other.begin(); it != other.end(); it++)
+		this->add(std::move(*it));
 }
 
 #endif //TREE_HPP_
