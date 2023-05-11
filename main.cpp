@@ -86,7 +86,8 @@ int main()
 	std::cout << "f < s " << bl << "\n";
 	std::cout << "f == f " << (t == t) << "\n";
 	std::cout << "f == s " << (t == tr) << "\n";
-	std::cout << "s > f " << (tr > t) << "\n";
+	std::cout << "s >= f " << (tr >= t) << "\n";
 	std::cout << "f > f " << (t > t) << "\n";
+
 
 }

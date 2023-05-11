@@ -102,17 +102,16 @@ class MemoryException : public BaseException
 	char errorText[DEFAULT_EXC_STR_LEN];
 };
 
-
-class AddException : public BaseException
+class InvalidIteratorException : public BaseException
 {
  public:
-	AddException(
+	InvalidIteratorException(
 		const char* filename,
 		const int line,
 		const char* className,
 		const char* time,
-		const char* exceptionName = "AddException",
-		const char* additionalInfo = "requested adding of existing value"
+		const char* exceptionName = "InvalidIteratorException",
+		const char* additionalInfo = "attempt of getting data from invalid iterator"
 	) : BaseException(filename,line,className,time,exceptionName,additionalInfo)
 	{
 		sprintf(errorText,
@@ -133,5 +132,7 @@ class AddException : public BaseException
  private:
 	char errorText[DEFAULT_EXC_STR_LEN];
 };
+
+
 
 #endif //DZ2_OOP_UTILS_EXCEPTIONS_H_

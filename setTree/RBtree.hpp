@@ -443,12 +443,22 @@ bool RBTree<T>::add(const O& data)
 {
 	if (contains(data))
 		return false;
-	NodePtr<T> node = Node<T>::create(data);
+	try
+	{
+		NodePtr<T> node = Node<T>::create(data);
+		root_ = insertBin(root_, node);
+		RBTreeFixInsert(node);
+	}
+	catch (std::bad_alloc)
+	{
+		time_t timer = time(nullptr);
+		throw MemoryException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+	}
 
-	root_ = insertBin(root_, node);
+
 
 	++size_;
-	RBTreeFixInsert(node);
+
 	return true;
 }
 
