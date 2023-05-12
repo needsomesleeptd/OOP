@@ -102,15 +102,15 @@ class MemoryException : public BaseException
 	char errorText[DEFAULT_EXC_STR_LEN];
 };
 
-class InvalidIteratorException : public BaseException
+class InvalidIteratorAccessException : public BaseException
 {
  public:
-	InvalidIteratorException(
+	InvalidIteratorAccessException(
 		const char* filename,
 		const int line,
 		const char* className,
 		const char* time,
-		const char* exceptionName = "InvalidIteratorException",
+		const char* exceptionName = "InvalidIteratorAccessException",
 		const char* additionalInfo = "attempt of getting data from invalid iterator"
 	) : BaseException(filename,line,className,time,exceptionName,additionalInfo)
 	{

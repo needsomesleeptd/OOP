@@ -14,16 +14,14 @@ concept Comparable =
 requires(T a, T b) {
 	{ a < b } -> std::convertible_to<bool>;
 	{ a > b } -> std::convertible_to<bool>;
+	{ a == b } -> std::convertible_to<bool>;
 };
 
-
-
 template<typename T>
-concept ValidNodeData = Comparable < T> && std::is_default_constructible<T>::value && std::is_copy_constructible<T>::value;
+concept ValidNodeData = Comparable<T> && std::is_default_constructible<T>::value && std::is_copy_constructible<T>::value;
 
 template<typename From, typename To>
 concept Convertible = std::is_convertible<From, To>::value;
-
 
 template<class T>
 concept Container =

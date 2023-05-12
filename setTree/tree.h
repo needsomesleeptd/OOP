@@ -41,6 +41,10 @@ class RBTree : ISet<T>
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
+	bool add(O&& data);
+
+	template<ValidNodeData O>
+	requires Convertible<O, T>
 	bool remove(const O& data);
 
 	void clear() override;
@@ -54,39 +58,33 @@ class RBTree : ISet<T>
 	RBIterator<T> begin() const noexcept;
 	RBIterator<T> end() const noexcept;
 
-
-
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree operator|(const ContainerType& other) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree operator |(const  ContainerType &other) const;
+	void operator|=(const ContainerType& other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	void operator |=(const  ContainerType &other);
+	RBTree operator+(const ContainerType& other) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree operator +(const  ContainerType &other) const;
-
-	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
-	void operator +=(const  ContainerType &other);
+	void operator+=(const ContainerType& other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
 	RBTree setUnion(const ContainerType& container) const;
 
-
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree operator&(const ContainerType& other) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree operator &(const  ContainerType &other) const;
-
-	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
-	void operator &=(const  ContainerType &other);
-
+	void operator&=(const ContainerType& other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
@@ -94,18 +92,15 @@ class RBTree : ISet<T>
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree operator -(const  ContainerType &other) const;
+	RBTree operator-(const ContainerType& other) const;
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	void operator -=(const  ContainerType &other);
+	void operator-=(const ContainerType& other);
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
 	RBTree setDifference(const ContainerType& container) const;
-
-
-
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
@@ -126,35 +121,29 @@ class RBTree : ISet<T>
 
 	void print();
 
-
 	template<ValidNodeData O>
 	requires Convertible<O, T>
-	bool operator <(const RBTree<O> &other);
+	bool operator<(const RBTree<O>& other);
 
-
-	bool operator <(const RBTree<T> &other);
-
+	bool operator<(const RBTree<T>& other);
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
 	bool operator==(const RBTree<O>& other) const;
 
+	template<ValidNodeData O>
+	requires Convertible<O, T>
+	std::strong_ordering operator<=>(const RBTree<O>& other) const;
+
+	std::strong_ordering operator<=>(const RBTree<T>& other) const;
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
-	std::strong_ordering operator <=>(const RBTree<O>& other) const;
-
-
-	std::strong_ordering operator <=>(const RBTree<T>& other) const;
-
+	bool is_subset(const RBTree<O>& other) const;
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
-	bool is_subset(const RBTree<O> &other) const;
-
-	template<ValidNodeData O>
-	requires Convertible<O, T>
-	bool is_upperset(const RBTree<O> &other) const;
+	bool is_upperset(const RBTree<O>& other) const;
 
  protected:
 	void rotateRight(NodePtr<T> node);
@@ -170,7 +159,6 @@ class RBTree : ISet<T>
 	std::shared_ptr<Node<T>> root_;
 	friend class RBIterator<T>;
 	size_t size_;
-
 
 };
 

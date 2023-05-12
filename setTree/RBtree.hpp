@@ -461,6 +461,30 @@ bool RBTree<T>::add(const O& data)
 }
 
 template<ValidNodeData T>
+template<ValidNodeData O>
+requires Convertible<O, T>
+bool RBTree<T>::add(O&& data)
+{
+	if (contains(data))
+		return false;
+	try
+	{
+		NodePtr<T> node = Node<T>::create(data);
+		root_ = insertBin(root_, node);
+		//RBTreeFixInsert(node);
+	}
+	catch (std::bad_alloc)
+	{
+		time_t timer = time(nullptr);
+		throw MemoryException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
+	}
+
+	++size_;
+
+	return true;
+}
+
+template<ValidNodeData T>
 NodePtr<T> RBTree<T>::removeBin(NodePtr<T> root, const T& key)
 {
 	if (root == nullptr)
@@ -494,6 +518,10 @@ bool RBTree<T>::remove(const O& data)
 	RBTreeFixRemove(node);
 	return true;
 }
+
+
+
+
 
 template<ValidNodeData T>
 NodePtr<T> RBTree<T>::find(NodePtr<T> root, const T& key) const

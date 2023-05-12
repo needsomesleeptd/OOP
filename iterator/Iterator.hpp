@@ -218,7 +218,7 @@ T& RBIterator<T>::operator*()
 	if (cur_node.expired())
 	{
 		time_t timer = time(nullptr);
-		throw InvalidIteratorException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
+		throw InvalidIteratorAccessException(__FILE__, __LINE__, "NodePtr<T>", ctime(&timer));
 	}
 	return this->cur_node.lock()->data();
 }
