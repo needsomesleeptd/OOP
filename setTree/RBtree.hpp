@@ -5,6 +5,7 @@
 #include <compare>
 #include <type_traits>
 #include "tree.h"
+#include "concepts.h"
 
 template<ValidNodeData T>
 NodeColor getColor(NodePtr<T> node)
@@ -438,7 +439,7 @@ void RBTree<T>::RBTreeFixRemove(NodePtr<T> node)
 
 template<ValidNodeData T>
 template<ValidNodeData O>
-requires Convertible<O, T>
+requires Convertible<O, T> && std::copy_constructible<T>
 bool RBTree<T>::add(const O& data)
 {
 	if (contains(data))
@@ -462,7 +463,7 @@ bool RBTree<T>::add(const O& data)
 
 template<ValidNodeData T>
 template<ValidNodeData O>
-requires Convertible<O, T>
+requires Convertible<O, T> && std::move_constructible<T>
 bool RBTree<T>::add(O&& data)
 {
 	if (contains(data))

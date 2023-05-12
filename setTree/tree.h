@@ -36,11 +36,11 @@ class RBTree : ISet<T>
 	~RBTree() override;
 
 	template<ValidNodeData O>
-	requires Convertible<O, T>
+	requires Convertible<O, T> && std::copy_constructible<T>
 	bool add(const O& data);
 
 	template<ValidNodeData O>
-	requires Convertible<O, T>
+	requires Convertible<O, T>  && std::move_constructible<T>
 	bool add(O&& data);
 
 	template<ValidNodeData O>
@@ -159,6 +159,7 @@ class RBTree : ISet<T>
 	std::shared_ptr<Node<T>> root_;
 	friend class RBIterator<T>;
 	size_t size_;
+
 
 };
 
