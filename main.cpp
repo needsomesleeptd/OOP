@@ -83,11 +83,11 @@ int main()
 	std::cout << "\n";
 
 	auto bl = (t < tr);
-	std::cout << "f < s " << bl << "\n";
+	std::cout << "s < f " << bl << "\n";
 	std::cout << "f == f " << (t == t) << "\n";
 	std::cout << "f == s " << (t == tr) << "\n";
 	std::cout << "f != s " << (t != tr) << "\n";
-	std::cout << "s >= f " << (tr >= t) << "\n";
+	std::cout << "f >= s " << (tr >= t) << "\n";
 	std::cout << "f > f " << (t > t) << "\n";
 	std::cout << "f != empty tree " << (t != tree) << "\n";
 

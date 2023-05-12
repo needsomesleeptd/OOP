@@ -755,4 +755,20 @@ void RBTree<T>::operator-=(const ContainerType& other)
 	*this = this->setDifference(other);
 }
 
+
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+RBTree<T> RBTree<T>::operator+(const ContainerType& other) const
+{
+	return this->setUnion(other);
+}
+template<ValidNodeData T>
+template<Container ContainerType>
+requires Convertible<typename ContainerType::value_type, T>
+void RBTree<T>::operator+=(const ContainerType& other)
+{
+	*this = this->setUnion(other);
+}
+
 #endif //TREE_HPP_

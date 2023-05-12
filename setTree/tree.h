@@ -67,6 +67,14 @@ class RBTree : ISet<T>
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
+	RBTree operator +(const  ContainerType &other) const;
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	void operator +=(const  ContainerType &other);
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
 	RBTree setUnion(const ContainerType& container) const;
 
 
