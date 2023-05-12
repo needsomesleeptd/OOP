@@ -128,10 +128,10 @@ class RBTree : ISet<T>
 
 	template<ValidNodeData O>
 	requires Convertible<O, T>
-	std::partial_ordering operator <=>(const RBTree<O>& other) const;
+	std::strong_ordering operator <=>(const RBTree<O>& other) const;
 
 
-	std::partial_ordering operator <=>(const RBTree<T>& other) const;
+	std::strong_ordering operator <=>(const RBTree<T>& other) const;
 
 
 	template<ValidNodeData O>

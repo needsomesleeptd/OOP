@@ -447,15 +447,13 @@ bool RBTree<T>::add(const O& data)
 	{
 		NodePtr<T> node = Node<T>::create(data);
 		root_ = insertBin(root_, node);
-		RBTreeFixInsert(node);
+		//RBTreeFixInsert(node);
 	}
 	catch (std::bad_alloc)
 	{
 		time_t timer = time(nullptr);
 		throw MemoryException(__FILE__, __LINE__, "RBtree<T>", ctime(&timer));
 	}
-
-
 
 	++size_;
 
@@ -490,6 +488,8 @@ bool RBTree<T>::remove(const O& data)
 	if (!contains(data))
 		return false;
 	NodePtr<T> node = removeBin(root_, data);
+
+
 	--size_;
 	RBTreeFixRemove(node);
 	return true;
@@ -633,15 +633,10 @@ RBTree<T>& RBTree<T>::operator=(RBTree<O>&& other) noexcept
 	this->size_ = std::move(other.size_);
 }
 
-
-
-
-
-
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
-bool RBTree<T>::is_subset(const RBTree<O> &other) const
+bool RBTree<T>::is_subset(const RBTree<O>& other) const
 {
 	for (auto it = begin(); it != end(); it++)
 		if (!other.contains(*it))
@@ -652,7 +647,7 @@ bool RBTree<T>::is_subset(const RBTree<O> &other) const
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
-bool RBTree<T>::is_upperset(const RBTree<O> &other) const
+bool RBTree<T>::is_upperset(const RBTree<O>& other) const
 {
 	if (!other.is_subset(*this))
 		return false;
@@ -669,7 +664,6 @@ bool RBTree<T>::operator<(const RBTree<O>& other)
 	return false;
 }
 
-
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
@@ -679,7 +673,6 @@ bool RBTree<T>::operator==(const RBTree<O>& other) const
 		return true;
 	return false;
 }
-
 
 template<ValidNodeData T>
 bool RBTree<T>::operator<(const RBTree<T>& other)
@@ -692,33 +685,29 @@ bool RBTree<T>::operator<(const RBTree<T>& other)
 template<ValidNodeData T>
 template<ValidNodeData O>
 requires Convertible<O, T>
-std::partial_ordering  RBTree<T>::operator <=>(const RBTree<O>& other) const
+std::strong_ordering RBTree<T>::operator<=>(const RBTree<O>& other) const
 {
 	bool is_upper = other.is_subset(*this);
 	bool is_subset = other.is_upperset(*this);
 	if (is_upper && is_subset)
-		return std::partial_ordering::equivalent;
+		return std::strong_ordering::equivalent;
 	else if (is_upper)
-		return std::partial_ordering::greater;
-	else if (is_subset)
-		return std::partial_ordering::less;
+		return std::strong_ordering::greater;
 	else
-		return std::partial_ordering::unordered;
+		return std::strong_ordering::less;
 }
 
 template<ValidNodeData T>
-std::partial_ordering  RBTree<T>::operator <=>(const RBTree<T>& other) const
+std::strong_ordering RBTree<T>::operator<=>(const RBTree<T>& other) const
 {
 	bool is_upper = other.is_subset(*this);
 	bool is_subset = other.is_upperset(*this);
 	if (is_upper && is_subset)
-		return std::partial_ordering::equivalent;
+		return std::strong_ordering::equivalent;
 	else if (is_upper)
-		return std::partial_ordering::greater;
-	else if (is_subset)
-		return std::partial_ordering::less;
+		return std::strong_ordering::greater;
 	else
-		return std::partial_ordering::unordered;
+		return std::strong_ordering::less;
 }
 template<ValidNodeData T>
 template<Container ContainerType>
@@ -742,7 +731,6 @@ RBTree<T> RBTree<T>::operator&(const ContainerType& other) const
 {
 	return this->setIntersection(other);
 }
-
 
 template<ValidNodeData T>
 template<Container ContainerType>
