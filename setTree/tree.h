@@ -54,9 +54,7 @@ class RBTree : ISet<T>
 	RBIterator<T> begin() const noexcept;
 	RBIterator<T> end() const noexcept;
 
-	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setUnion(const ContainerType& container) const;
+
 
 
 	template<Container ContainerType>
@@ -69,7 +67,9 @@ class RBTree : ISet<T>
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setDifference(const ContainerType& container) const;
+	RBTree setUnion(const ContainerType& container) const;
+
+
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
@@ -79,6 +79,11 @@ class RBTree : ISet<T>
 	requires Convertible<typename ContainerType::value_type, T>
 	void operator &=(const  ContainerType &other);
 
+
+	template<Container ContainerType>
+	requires Convertible<typename ContainerType::value_type, T>
+	RBTree setIntersection(const ContainerType& container) const;
+
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
 	RBTree operator -(const  ContainerType &other) const;
@@ -87,11 +92,12 @@ class RBTree : ISet<T>
 	requires Convertible<typename ContainerType::value_type, T>
 	void operator -=(const  ContainerType &other);
 
-
-
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
-	RBTree setIntersection(const ContainerType& container) const;
+	RBTree setDifference(const ContainerType& container) const;
+
+
+
 
 	template<Container ContainerType>
 	requires Convertible<typename ContainerType::value_type, T>
