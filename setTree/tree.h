@@ -26,11 +26,11 @@ class RBTree : ISet<T>
 	explicit RBTree(std::initializer_list<T> l);
 
 	template<std::input_iterator IteratorType>
-	requires Convertible<typename IteratorType::value_type, T>
+	requires Convertible<typename IteratorType::value_type, T>  && std::copy_constructible<T>
 	RBTree(IteratorType begin, IteratorType end);
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	explicit RBTree(const ContainerType& container);
 
 	~RBTree() override;
@@ -59,51 +59,51 @@ class RBTree : ISet<T>
 	RBIterator<T> end() const noexcept;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree operator|(const ContainerType& other) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	void operator|=(const ContainerType& other);
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree operator+(const ContainerType& other) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	void operator+=(const ContainerType& other);
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree setUnion(const ContainerType& container) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree operator&(const ContainerType& other) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	void operator&=(const ContainerType& other);
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree setIntersection(const ContainerType& container) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree operator-(const ContainerType& other) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	void operator-=(const ContainerType& other);
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	RBTree setDifference(const ContainerType& container) const;
 
 	template<Container ContainerType>
-	requires Convertible<typename ContainerType::value_type, T>
+	requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 	explicit RBTree(ContainerType&& container) noexcept;
 
 	template<ValidNodeData O>
@@ -116,7 +116,7 @@ class RBTree : ISet<T>
 	RBTree& operator=(RBTree&& other) noexcept; // move
 
 	template<ValidNodeData O>
-	requires Convertible<O, T>
+	requires Convertible<O, T>  && std::copy_constructible<T>
 	RBTree& operator=(RBTree<O>&& other) noexcept; // move
 
 	void print();

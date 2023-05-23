@@ -24,7 +24,7 @@ class RBIterator
 	explicit RBIterator(NodePtr<T> ptr);
 
  public:
-	using iterator_category = std::forward_iterator_tag;
+	using iterator_category = std::bidirectional_iterator_tag;
 	using value_type = T;
 	using pointer = T*;
 	using reference = T&;

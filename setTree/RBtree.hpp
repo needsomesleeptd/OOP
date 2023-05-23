@@ -562,7 +562,7 @@ size_t RBTree<T>::size() const noexcept
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::setUnion(const ContainerType& other) const
 {
 	RBTree<T> result;
@@ -588,7 +588,7 @@ RBTree<T> RBTree<T>::setSymmDifference(const ContainerType& other)
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::setDifference(const ContainerType& other) const
 {
 	RBTree<T> result;
@@ -602,7 +602,7 @@ RBTree<T> RBTree<T>::setDifference(const ContainerType& other) const
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::setIntersection(const ContainerType& other) const
 {
 	RBTree<T> result;
@@ -616,7 +616,7 @@ RBTree<T> RBTree<T>::setIntersection(const ContainerType& other) const
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T>::RBTree(const ContainerType& container)
 {
 	this->size_ = 0;
@@ -626,7 +626,7 @@ RBTree<T>::RBTree(const ContainerType& container)
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T>::RBTree(ContainerType&& container) noexcept
 {
 	this->size_ = 0;
@@ -644,7 +644,7 @@ RBTree<T>::RBTree(std::initializer_list<T> l)
 
 template<ValidNodeData T>
 template<std::input_iterator IteratorType>
-requires Convertible<typename IteratorType::value_type, T>
+requires Convertible<typename IteratorType::value_type, T>  && std::copy_constructible<T>
 RBTree<T>::RBTree(IteratorType begin, IteratorType end)
 {
 	this->size_ = 0;
@@ -654,7 +654,7 @@ RBTree<T>::RBTree(IteratorType begin, IteratorType end)
 
 template<ValidNodeData T>
 template<ValidNodeData O>
-requires Convertible<O, T>
+requires Convertible<O, T>  && std::copy_constructible<T>
 RBTree<T>& RBTree<T>::operator=(RBTree<O>&& other) noexcept
 {
 	this->clear();
@@ -740,14 +740,14 @@ std::strong_ordering RBTree<T>::operator<=>(const RBTree<T>& other) const
 }
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::operator|(const ContainerType& other) const
 {
 	return this->setUnion(other);
 }
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 void RBTree<T>::operator|=(const ContainerType& other)
 {
 	*this = this->setUnion(other);
@@ -755,7 +755,7 @@ void RBTree<T>::operator|=(const ContainerType& other)
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::operator&(const ContainerType& other) const
 {
 	return this->setIntersection(other);
@@ -763,14 +763,14 @@ RBTree<T> RBTree<T>::operator&(const ContainerType& other) const
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 void RBTree<T>::operator&=(const ContainerType& other)
 {
 	*this = this->setIntersection(other);
 }
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::operator-(const ContainerType& other) const
 {
 	return this->setDifference(other);
@@ -778,7 +778,7 @@ RBTree<T> RBTree<T>::operator-(const ContainerType& other) const
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 void RBTree<T>::operator-=(const ContainerType& other)
 {
 	*this = this->setDifference(other);
@@ -787,14 +787,14 @@ void RBTree<T>::operator-=(const ContainerType& other)
 
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 RBTree<T> RBTree<T>::operator+(const ContainerType& other) const
 {
 	return this->setUnion(other);
 }
 template<ValidNodeData T>
 template<Container ContainerType>
-requires Convertible<typename ContainerType::value_type, T>
+requires Convertible<typename ContainerType::value_type, T>  && std::copy_constructible<T>
 void RBTree<T>::operator+=(const ContainerType& other)
 {
 	*this = this->setUnion(other);
