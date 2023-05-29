@@ -1,5 +1,5 @@
 #include "../../inc/camera/camera.h"
-
+#include <iostream>
 void Camera::move_x(const double &dx)
 {
     _position.set_x(_position.get_x() + dx);
@@ -19,10 +19,27 @@ void Camera::transform(const Dot &new_position, const Dot &scale, const Dot &rot
 {
     move_x(new_position.get_x());
     move_y(new_position.get_y());
-	//this->rotate(rotate.get_x(),rotate.get_y());
+	//this->rotate(rotate.get_x(),rotate_cam_view.get_y());
 }
 
-void Camera::rotate(float x_offset, float y_offset)
+void Camera::rotate(const Dot &rotate_val)
+{
+	rotate_cam_view(rotate_val.get_x(), rotate_val.get_y());
+}
+
+void Camera::move(const Dot &move_val)
+{
+	move_x(move_val.get_x());
+	move_y(move_val.get_y());
+}
+
+void Camera::scale(const Dot& scale_val)
+{
+	std::cout<< "Camera cannot be scaled";
+}
+
+
+void Camera::rotate_cam_view(float x_offset, float y_offset)
 {
 	Yaw   += x_offset;
 	Pitch += y_offset;

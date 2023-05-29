@@ -43,3 +43,26 @@ void ModelStructure::transform(const Dot &move, const Dot& scale, const Dot& rot
         dot.rotate(rotate.get_x(), rotate.get_y(), rotate.get_z());
     }
 }
+
+void ModelStructure::move(const Dot &move_val)
+{
+	_center.move(move_val.get_x(), move_val.get_y(), move_val.get_z());
+}
+
+void ModelStructure::scale(const Dot &scale_val)
+{
+	for (auto &dot : _dots)
+	{
+		dot.scale (scale_val.get_x(),  scale_val.get_y(),  scale_val.get_z());
+	}
+}
+
+void ModelStructure::rotate(const Dot &rotate_val)
+{
+	for (auto &dot : _dots)
+	{
+		dot.rotate (rotate_val.get_x(),  rotate_val.get_y(),  rotate_val.get_z());
+	}
+}
+
+

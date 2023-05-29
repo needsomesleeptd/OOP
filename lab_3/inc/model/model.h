@@ -24,6 +24,11 @@ public:
     ~Model() override = default;
 
     void transform(const Dot &move, const Dot &scale, const Dot &rotate) override;
+	void move(const Dot &move_val) override;
+	void rotate(const Dot &rotate_val) override;
+	void scale(const Dot &scale_val) override;
+
+
     void accept(std::shared_ptr<Visitor> visitor) override;
 
 protected:

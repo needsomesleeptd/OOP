@@ -42,6 +42,30 @@ void Composite::transform(const Dot &move, const Dot &scale, const Dot &rotate)
     }
 }
 
+void Composite::rotate(const Dot &rotate_val)
+{
+	for (const auto &element : _elements)
+	{
+		element->rotate(rotate_val);
+	}
+}
+
+void Composite::scale(const Dot &scale_val)
+{
+	for (const auto &element : _elements)
+	{
+		element->scale(scale_val);
+	}
+}
+
+void Composite::move(const Dot &move_val)
+{
+	for (const auto &element : _elements)
+	{
+		element->move(move_val);
+	}
+}
+
 Iterator Composite::begin()
 {
     return _elements.begin();

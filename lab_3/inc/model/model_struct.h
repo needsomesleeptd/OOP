@@ -22,6 +22,9 @@ public:
     void add_dot  (const Dot  &dot);
     void add_link (const Link &link);
     void transform(const Dot  &move, const Dot& scale, const Dot& rotate);
+	void move(const Dot &move_val);
+	void rotate(const Dot &rotate_val);
+	void scale(const Dot &scale_val);
 
 private:
     Dot _center;

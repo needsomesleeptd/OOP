@@ -22,6 +22,9 @@ public:
 
     virtual void accept(std::shared_ptr<Visitor> visitor) = 0;
     virtual void transform(const Dot &move, const Dot &scale, const Dot &rotate) = 0;
+	virtual void rotate(const Dot &rotate_val) = 0;
+	virtual void scale(const Dot &scale_val) = 0;
+	virtual void move(const Dot &move_val) = 0;
 
     virtual bool add(const std::shared_ptr<Object> &) { return false; };
     virtual bool remove(const Iterator &)             { return false; };

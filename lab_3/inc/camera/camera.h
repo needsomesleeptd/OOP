@@ -16,8 +16,13 @@ public:
     ~Camera() override = default;
 
     void transform(const Dot &new_position, const Dot &scale, const Dot &rotate) override;
+	void rotate(const Dot &rotate_val) override;
+	void scale(const Dot &scale_val) override;
+	void move(const Dot &move_val) override;
+
+
     void accept(std::shared_ptr<Visitor> visitor) override;
-	void rotate(float x_offset, float y_offset);
+	void rotate_cam_view(float x_offset, float y_offset);
 
  protected:
 	void updateCameraVectors();
