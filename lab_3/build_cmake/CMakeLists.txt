@@ -104,7 +104,7 @@ add_executable(${PROJECT_NAME}
         ../src/configuration/creator_cfg.cpp
         ../src/configuration/configuration.cpp
         ../inc/configuration/configuration.h
-        ../inc/math/glm_wrapper.h ../src/math/glm_wrapper.cpp ../inc/utils/Rotator.h ../inc/utils/Scaler.h ../inc/utils/Mover.h ../inc/utils/BaseTransformer.h ../src/utils/BaseTransformer.cpp)
+        ../inc/math/glm_wrapper.h ../src/math/glm_wrapper.cpp    ../inc/utils/BaseTransformer.h ../src/utils/BaseTransformer.cpp)
 
 find_library(LIBCONFIGPP_LOCATION libconfig++)
 find_library(LIBCONFIG_LOCATION libconfig)

@@ -22,7 +22,7 @@ public:
 
 protected:
     void accept(std::shared_ptr<Visitor> visitor) override {};
-    void transform(const Mover &move, const Scaler &scale, const Rotator &rotate) override {};
+    void transform(const Dot &move, const Dot &scale, const Dot &rotate) override {};
 
     std::vector<std::shared_ptr<Camera>> _cameras;
     std::shared_ptr<Composite> _models;

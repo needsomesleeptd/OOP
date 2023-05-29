@@ -2,9 +2,9 @@
 
 void TransformManager::move_object(const std::shared_ptr <Object> &object, const double &dx, const double &dy,const double &dz)
 {
-    Mover move(dx, dy,dz);
-    Scaler scale(1, 1, 1);
-    Rotator rotate(0, 0, 0);
+    Dot move(dx, dy,dz);
+    Dot scale(1, 1, 1);
+    Dot rotate(0, 0, 0);
 
     object->transform(move, scale, rotate);
 }

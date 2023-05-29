@@ -20,7 +20,7 @@ public:
     bool add(const std::shared_ptr<Object> &element) override;
     bool remove(const Iterator &iter) override;
 
-    virtual void transform(const Mover &move, const Scaler &scale, const Rotator &rotate) override;
+    virtual void transform(const Dot &move, const Dot &scale, const Dot &rotate) override;
     void accept(std::shared_ptr<Visitor> visitor) override;
 
     Iterator begin() override;

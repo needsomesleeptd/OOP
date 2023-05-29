@@ -11,9 +11,7 @@
 #include "../visitor/visitor.h"
 #include "../managers/draw/draw_manager.h"
 
-#include "../../inc/utils/Scaler.h"
-#include "../../inc/utils/Rotator.h"
-#include "../../inc/utils/Mover.h"
+
 
 class Model : public VisibleObject
 {
@@ -25,7 +23,7 @@ public:
     explicit Model(const std::shared_ptr<ModelStructure> &modelStructure) : _modelStructure(modelStructure) {}
     ~Model() override = default;
 
-    void transform(const Mover &move, const Scaler &scale, const Rotator &rotate) override;
+    void transform(const Dot &move, const Dot &scale, const Dot &rotate) override;
     void accept(std::shared_ptr<Visitor> visitor) override;
 
 protected:

@@ -2,9 +2,7 @@
 #define MODEL_STRUCTURE_H
 
 #include <vector>
-#include "../../inc/utils/Scaler.h"
-#include "../../inc/utils/Rotator.h"
-#include "../../inc/utils/Mover.h"
+
 
 #include "dot.h"
 #include "link.h"
@@ -23,7 +21,7 @@ public:
 
     void add_dot  (const Dot  &dot);
     void add_link (const Link &link);
-    void transform(const Mover  &move, const Scaler& scale, const Rotator& rotate);
+    void transform(const Dot  &move, const Dot& scale, const Dot& rotate);
 
 private:
     Dot _center;

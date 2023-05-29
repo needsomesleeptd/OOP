@@ -33,7 +33,7 @@ void ModelStructure::add_link(const Link &link)
     _links.push_back(link);
 }
 
-void ModelStructure::transform(const Mover &move, const Scaler& scale, const Rotator& rotate)
+void ModelStructure::transform(const Dot &move, const Dot& scale, const Dot& rotate)
 {
     _center.move(move.get_x(), move.get_y(), move.get_z());
 

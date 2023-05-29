@@ -34,7 +34,7 @@ bool Composite::is_composite()
     return true;
 }
 
-void Composite::transform(const Mover &move, const Scaler &scale, const Rotator &rotate)
+void Composite::transform(const Dot &move, const Dot &scale, const Dot &rotate)
 {
     for (const auto &element : _elements)
     {

@@ -3,9 +3,6 @@
 
 #include <memory>
 #include <vector>
-#include "../../inc/utils/Scaler.h"
-#include "../../inc/utils/Rotator.h"
-#include "../../inc/utils/Mover.h"
 
 #include "../visitor/visitor.h"
 #include "../model/dot.h"
@@ -24,7 +21,7 @@ public:
     virtual bool is_composite() { return false; };
 
     virtual void accept(std::shared_ptr<Visitor> visitor) = 0;
-    virtual void transform(const Mover &move, const Scaler &scale, const Rotator &rotate) = 0;
+    virtual void transform(const Dot &move, const Dot &scale, const Dot &rotate) = 0;
 
     virtual bool add(const std::shared_ptr<Object> &) { return false; };
     virtual bool remove(const Iterator &)             { return false; };

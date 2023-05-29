@@ -7,7 +7,7 @@
 #include "abstract_cfg.h"
 #include "../drawer/abstract_drawer.h"
 
-#define CFG_FILE "/home/andrew/temp/bmstu-oop-labs/lab_3/data/config.cfg"
+#define CFG_FILE "/home/andrew/OOP/OOP/lab_3/data/config.cfg"
 
 class Configuration : public AbstractConfig
 {

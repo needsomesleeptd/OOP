@@ -5,7 +5,7 @@ Model::Model(const Model &model)
     _modelStructure = model._modelStructure;
 }
 
-void Model::transform(const Mover &move, const Scaler &scale, const Rotator &rotate)
+void Model::transform(const Dot &move, const Dot &scale, const Dot &rotate)
 {
     _modelStructure->transform(move, scale, rotate);
 }
