@@ -208,15 +208,15 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 		rotate_camera_cmd = RotateCameraCommand(
 			cam_index,
 			0,
-			0,
-			10);
+			-10,
+			0);
 
 	else if (key == Qt::Key_Q)
 		rotate_camera_cmd = RotateCameraCommand(
 			cam_index,
 			0,
-			0,
-			-10);
+			10,
+			0);
 
 	_facade->exec(rotate_camera_cmd);
 

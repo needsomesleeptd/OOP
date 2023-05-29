@@ -39,6 +39,7 @@ void Camera::scale(const Dot& scale_val)
 }
 
 
+
 void Camera::rotate_cam_view(float x_offset, float y_offset)
 {
 	Yaw   += x_offset;
@@ -48,6 +49,8 @@ void Camera::rotate_cam_view(float x_offset, float y_offset)
 	if (Pitch < -89.0f)
 		Pitch = -89.0f;
 	updateCameraVectors();
+	Vector3 position = Vector3{_position.get_x(),_position.get_y(),_position.get_z()};
+	auto view = glm::lookAt(position, position + Front, Up);
 }
 
 void Camera::updateCameraVectors()

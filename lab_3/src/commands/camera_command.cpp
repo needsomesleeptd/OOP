@@ -29,7 +29,7 @@ void AddCameraCommand::exec()
 
     std::shared_ptr<Camera> camera(new Camera);
 
-    camera->transform(camera_place, camera_place, camera_place);
+    camera->move(camera_place);
 
     auto scene_manager = CreatorSceneManager().create_manager();
     scene_manager->get_scene()->add_camera(camera);
@@ -66,5 +66,5 @@ void RotateCameraCommand::exec()
 
 	auto viewer = CreatorSceneManager().create_manager()->get_scene()->get_cameras().at(_camera_num);
 
-	CreatorTransformManager().create_manager()->transform_object(viewer, rotate, rotate, rotate);
+	CreatorTransformManager().create_manager()->spin_object(viewer,_ox,_oy,_oz);
 }

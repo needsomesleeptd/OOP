@@ -27,12 +27,12 @@ public:
  protected:
 	void updateCameraVectors();
 private:
-	Vector3 Front{};
-	Vector3 Up{};
-	Vector3 Right{};
-	Vector3 WorldUp{};
-	float Yaw;
-	float Pitch;
+	Vector3 Front{0.0f, 0.0f, -1.0f};
+	Vector3 Up{0,1,0};
+	Vector3 Right{0,0,1};
+	Vector3 WorldUp{0,1,0};
+	float Yaw = 180;
+	float Pitch = 180;
 	float aspect = 1.0f;
 	float zNear = 0.1f;
 	float zFar = 100.0f;
