@@ -1,6 +1,16 @@
 #include "../../../inc/managers/draw/draw_manager.h"
 #include "../../../inc/model/model.h"
 #include "../../../inc/camera/camera.h"
+#include <glm/ext.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+#include "iostream"
+
+#define GLM_ENABLE_EXPERIMENTAL
+Vector4 dot_to_vec(const Dot dot)
+{
+	return  Vector4(dot.get_x(),dot.get_y(),dot.get_z(),0);
+}
 
 void DrawManager::set_camera(std::shared_ptr<Camera> camera)
 {
@@ -27,10 +37,21 @@ void DrawManager::visit(const Model &model)
     auto dots   = model._modelStructure->get_dots();
     auto links  = model._modelStructure->get_links();
     auto center = model._modelStructure->get_center();
-
+	Matrix4 view_matrix = _camera->get_view_matrix();
+	Matrix4 projection_matrix = _camera->get_projection_matrix();
+	Matrix4 matrix_changes = projection_matrix * (view_matrix * (Matrix4(1)));
+	std::cout<<glm::to_string(view_matrix) << std::endl;
     for (auto link : links)
     {
-        _drawer->draw_line(get_dot_proection(dots.at(link.get_dot1_index())).with_center(center),
-                           get_dot_proection(dots.at(link.get_dot2_index())).with_center(center));
+
+		Vector4 vec_from = matrix_changes  * dot_to_vec(dots.at(link.get_dot1_index()));
+	    Vector4 vec_to = matrix_changes  * dot_to_vec(dots.at(link.get_dot2_index()));
+		Dot dot_from = Dot{vec_from[0],vec_from[1],vec_from[2]}.with_center(center);
+	    Dot dot_to = Dot{vec_to[0],vec_to[1],vec_to[2]}.with_center(center);
+
+
+
+
+        _drawer->draw_line(dot_from,dot_to);
     }
 }

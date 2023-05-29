@@ -22,7 +22,9 @@ public:
 
 
     void accept(std::shared_ptr<Visitor> visitor) override;
-	void rotate_cam_view(float x_offset, float y_offset);
+	Matrix4 get_view_matrix();
+	Matrix4 get_projection_matrix() const;
+	void rotate_camera(float x_offset, float y_offset);
 
  protected:
 	void updateCameraVectors();
@@ -31,8 +33,8 @@ private:
 	Vector3 Up{0,1,0};
 	Vector3 Right{0,0,1};
 	Vector3 WorldUp{0,1,0};
-	float Yaw = 180;
-	float Pitch = 180;
+	float Yaw = -90;
+	float Pitch = 0;
 	float aspect = 1.0f;
 	float zNear = 0.1f;
 	float zFar = 100.0f;

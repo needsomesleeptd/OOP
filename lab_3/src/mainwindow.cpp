@@ -207,20 +207,20 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 	if (key == Qt::Key_E)
 		rotate_camera_cmd = RotateCameraCommand(
 			cam_index,
-			0,
+			12,
 			-10,
 			0);
 
 	else if (key == Qt::Key_Q)
 		rotate_camera_cmd = RotateCameraCommand(
 			cam_index,
-			0,
+			-12,
 			10,
 			0);
 
 	_facade->exec(rotate_camera_cmd);
 
-
+	update_scene();
 
 }
 

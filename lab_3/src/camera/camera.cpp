@@ -19,12 +19,29 @@ void Camera::transform(const Dot &new_position, const Dot &scale, const Dot &rot
 {
     move_x(new_position.get_x());
     move_y(new_position.get_y());
-	//this->rotate(rotate.get_x(),rotate_cam_view.get_y());
+	//this->rotate(rotate.get_x(),get_view_matrix.get_y());
 }
 
 void Camera::rotate(const Dot &rotate_val)
 {
-	rotate_cam_view(rotate_val.get_x(), rotate_val.get_y());
+	rotate_camera(rotate_val.get_x(), rotate_val.get_y());
+}
+
+void Camera::rotate_camera(float x_offset, float y_offset)
+{
+	std::cout<<"YAW " << Yaw<< std::endl;
+	std::cout<<"Pitch " << Pitch<< std::endl;
+	Yaw   += x_offset;
+	Pitch += y_offset;
+	if (Pitch > 89.0f)
+		Pitch = 89.0f;
+	if (Pitch < -89.0f)
+		Pitch = -89.0f;
+	if (Yaw > 89.0f)
+		Yaw = 89.0f;
+	if (Yaw < -89.0f)
+		Yaw = -89.0f;
+	updateCameraVectors();
 }
 
 void Camera::move(const Dot &move_val)
@@ -40,17 +57,17 @@ void Camera::scale(const Dot& scale_val)
 
 
 
-void Camera::rotate_cam_view(float x_offset, float y_offset)
+Matrix4 Camera::get_view_matrix()
 {
-	Yaw   += x_offset;
-	Pitch += y_offset;
-	if (Pitch > 89.0f)
-		Pitch = 89.0f;
-	if (Pitch < -89.0f)
-		Pitch = -89.0f;
-	updateCameraVectors();
+
 	Vector3 position = Vector3{_position.get_x(),_position.get_y(),_position.get_z()};
-	auto view = glm::lookAt(position, position + Front, Up);
+	Matrix4 view = glm::lookAt(position, position + Front, Up);
+	return view;
+}
+
+Matrix4 Camera::get_projection_matrix() const
+{
+	return perspective(glm::radians(90.0f), aspect, zNear, zFar);
 }
 
 void Camera::updateCameraVectors()
