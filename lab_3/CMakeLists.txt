@@ -19,6 +19,20 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 
 
+MACRO(HEADER_DIRECTORIES return_list)
+    FILE(GLOB_RECURSE new_list *.h)
+    SET(dir_list "")
+    FOREACH(file_path ${new_list})
+        GET_FILENAME_COMPONENT(dir_path ${file_path} PATH)
+        SET(dir_list ${dir_list} ${dir_path})
+    ENDFOREACH()
+    LIST(REMOVE_DUPLICATES dir_list)
+    SET(${return_list} ${dir_list})
+ENDMACRO()
+
+
+
+
 add_executable(${PROJECT_NAME}
         ../src/main.cpp
         ../inc/mainwindow.h
@@ -104,14 +118,33 @@ add_executable(${PROJECT_NAME}
         ../src/configuration/creator_cfg.cpp
         ../src/configuration/configuration.cpp
         ../inc/configuration/configuration.h
-        ../inc/math/glm_wrapper.h ../src/math/glm_wrapper.cpp    ../inc/utils/BaseTransformer.h ../src/utils/BaseTransformer.cpp)
+        ../inc/math/glm_wrapper.h
+        ../src/math/glm_wrapper.cpp
+        ../inc/utils/BaseTransformer.h
+        ../src/utils/BaseTransformer.cpp
+        ../inc/loader/camera/base_camera_director.h ../inc/loader/camera/camera_director.h ../inc/loader/camera/camera_load_controller.h ../inc/loader/abstract_load_controller.h ../inc/loader/base_loader.h ../inc/loader/camera/camera_load_controller_creator.h ../src/loader/camera/camera_director.cpp ../src/loader/camera/camera_load_controller.cpp ../src/loader/camera/camera_load_controller_creator.cpp
+        ../inc/loader/model/
+        ../src/loader/model/
+        )
+
+HEADER_DIRECTORIES(header_dir_list)
+
+target_include_directories(
+        ${PROJECT_NAME}
+        PUBLIC
+        ${header_dir_list}
+)
+message(STATUS "[INFO] Found ${header_dir_list_count} header directories.")
+
 
 find_library(LIBCONFIGPP_LOCATION libconfig++)
 find_library(LIBCONFIG_LOCATION libconfig)
 target_link_libraries(3 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets  ${GTEST_LIBRARIES} Threads::Threads glm::glm -L/usr/local/Cellar/libconfig/1.7.2/lib/ -lconfig++)
-#target_link_libraries(3 glm::glm)
-target_include_directories(3 PRIVATE inc/utils)
-#enable_testing()
+
+
+
+
+
 
 set_target_properties(3 PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
