@@ -202,23 +202,50 @@ void MainWindow::on_pushButton_spin_clicked()
 void MainWindow::keyPressEvent(QKeyEvent* e)
 {
 	int key = e->key();
+	try
+	{
+		check_cam_exist();
+		check_models_exist();
+	}
+	catch (const CameraException& error)
+	{
+		QMessageBox::critical(nullptr, "Ошибка", "Не загружено ни одной камеры.");
+		return;
+	}
+	catch (const ModelException& error)
+	{
+		QMessageBox::critical(nullptr, "Ошибка", "Не загружено ни одной модели");
+		return;
+	}
+
 	int cam_index = ui->comboBox_cameras->currentIndex();
+
 	RotateCameraCommand rotate_camera_cmd;
 	if (key == Qt::Key_E)
-		rotate_camera_cmd = RotateCameraCommand(
-			cam_index,
-			12,
-			-10,
-			0);
+	{
+		rotate_camera_cmd = RotateCameraCommand(cam_index, 0, -10, 0);
+		_facade->exec(rotate_camera_cmd);
+	}
 
 	else if (key == Qt::Key_Q)
-		rotate_camera_cmd = RotateCameraCommand(
-			cam_index,
-			-12,
-			10,
-			0);
+	{
+		rotate_camera_cmd = RotateCameraCommand(cam_index, 0, 10, 0);
+		_facade->exec(rotate_camera_cmd);
+	}
+	else if (key == Qt::Key_Z)
+	{
+		rotate_camera_cmd = RotateCameraCommand(cam_index, 10, 0, 0);
+		_facade->exec(rotate_camera_cmd);
+	}
 
-	_facade->exec(rotate_camera_cmd);
+	else if (key == Qt::Key_C)
+	{
+		rotate_camera_cmd = RotateCameraCommand(cam_index, -10, 0, 0);
+		_facade->exec(rotate_camera_cmd);
+	}
+
+
+
 
 	update_scene();
 
