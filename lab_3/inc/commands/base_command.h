@@ -16,7 +16,7 @@ public:
     Command() = default;
     virtual ~Command() = default;
 
-    virtual void exec() = 0;
+    virtual void execute() = 0;
 };
 
 template<typename Reseiver>
@@ -29,9 +29,10 @@ class BaseCommand: public Command
 	Pair call;
 
  public:
-	BaseCommand(shared_ptr<Reseiver> r, Action a) : call(r, a) {};
+	BaseCommand(shared_ptr<Reseiver> r, Action a) : call(r, a) {}
 
-	void exec() override { ((*call.first).*call.second)(); };
+
+	virtual void execute() override { ((*call.first).*call.second)(); };
 };
 
 
@@ -44,7 +45,7 @@ template <typename Receiver>
 class ModelBaseCommand : public BaseCommand<Receiver> { };
 
 template <typename Receiver>
-class TransformBaseCommand : public BaseCommand<Receiver> { };
+class SceneBaseCommand : public BaseCommand<Receiver> { };
 
 
 

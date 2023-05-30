@@ -79,7 +79,7 @@ void MainWindow::setup_scene()
 void MainWindow::check_cam_exist()
 {
 	auto camera_count = std::make_shared<size_t>(0);
-	CountCameraCommand camera_cmd(camera_count);
+	CountCameraCommand camera_cmd(_scene_manager,camera_count);
 
 	_facade->exec(camera_cmd);
 
@@ -316,7 +316,7 @@ void MainWindow::on_pushButton_load_model_clicked()
 	if (file.isNull())
 		return;
 
-	LoadModelCommand load_command(file.toUtf8().data());
+	LoadModelCommand load_command(_load_manager,_scene_manager,file.toUtf8().data());
 
 	try
 	{
