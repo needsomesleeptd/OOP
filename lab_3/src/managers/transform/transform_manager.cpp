@@ -1,4 +1,4 @@
-#include "../../../inc/managers/transform/transform_manager.h"
+#include "transform_manager.h"
 
 void TransformManager::move_object(const std::shared_ptr <Object> &object, const double &dx, const double &dy,const double &dz)
 {

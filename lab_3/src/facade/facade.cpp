@@ -1,4 +1,4 @@
-#include "../../inc/facade/facade.h"
+#include "facade.h"
 
 void Facade::exec(BaseCommand &command)
 {

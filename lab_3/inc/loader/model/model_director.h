@@ -3,7 +3,7 @@
 
 #include "base_model_director.h"
 
-class ModelDirector: public BaseModelLoader {
+class ModelDirector: public BaseModelDirector {
 public:
 	ModelDirector();
 	explicit ModelDirector(std::shared_ptr<std::ifstream> &srcFile);

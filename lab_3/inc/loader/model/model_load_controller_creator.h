@@ -7,7 +7,7 @@ class ModelLoadControllerCreator {
 public:
 	ModelLoadControllerCreator(std::string fileName): name(fileName) {};
 	std::shared_ptr<ModelLoadController> createController();
-	std::shared_ptr<ModelLoadController> createController(const std::shared_ptr<BaseModelLoader> &loader);
+	std::shared_ptr<ModelLoadController> createController(const std::shared_ptr<BaseModelDirector> &loader);
 
 private:
 	void makeInstance();

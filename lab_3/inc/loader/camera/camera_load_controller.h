@@ -7,7 +7,7 @@
 
 
 #include "base_camera_director.h"
-#include "../abstract_load_controller.h"
+#include "abstract_load_controller.h"
 
 class CameraLoadController: public AbstractLoadController {
  public:

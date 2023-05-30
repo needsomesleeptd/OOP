@@ -1,11 +1,11 @@
 #include "model_load_controller.h"
 #include "exceptions.h"
 
-ModelLoadController::ModelLoadController(std::shared_ptr<BaseModelLoader> loader): _builder(new ModelBuilder) {
+ModelLoadController::ModelLoadController(std::shared_ptr<BaseModelDirector> loader): _builder(new BuilderModel) {
 	_loader = loader;
 }
 
-std::shared_ptr<BaseObject> ModelLoadController::load(std::string &fileName) {
+std::shared_ptr<Object> ModelLoadController::load(std::string &fileName) {
 	try {
 		_loader->open(fileName);
 	}
@@ -14,7 +14,7 @@ std::shared_ptr<BaseObject> ModelLoadController::load(std::string &fileName) {
 		throw SourceException(msg);
 	}
 
-	std::shared_ptr<BaseObject> model;
+	std::shared_ptr<Object> model;
 	try {
 		model = _loader->load(_builder);
 	}

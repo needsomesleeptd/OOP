@@ -13,7 +13,7 @@ class Configuration : public AbstractConfig
 {
 public:
     explicit Configuration(std::shared_ptr<std::string> &source);
-    void read_cfg(std::shared_ptr<std::string> source = nullptr) override;
+    void read_cfg(std::shared_ptr<std::string> source) override;
 
     AbstractConfig::frames get_frame() override;
     AbstractConfig::sources get_load_source() override;

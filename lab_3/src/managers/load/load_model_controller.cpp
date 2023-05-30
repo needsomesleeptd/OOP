@@ -1,5 +1,5 @@
-#include "../../../inc/managers/load/load_model_controller.h"
-#include "../../../inc/exceptions.h"
+#include "load_model_controller.h"
+#include "exceptions.h"
 
 
 LoadModelController::LoadModelController(std::shared_ptr<BaseLoaderModel> loader) : _builder(new BuilderModel)

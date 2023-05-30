@@ -19,7 +19,7 @@ void Camera::transform(const Dot &new_position, const Dot &scale, const Dot &rot
 {
     move_x(new_position.get_x());
     move_y(new_position.get_y());
-	//this->rotate(rotate.get_x(),get_view_matrix.get_y());
+	this->rotate(rotate);//TODO::check this
 }
 
 void Camera::rotate(const Dot &rotate_val)

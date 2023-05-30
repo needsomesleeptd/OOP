@@ -1,7 +1,6 @@
-#include "../../../inc/managers/draw/draw_manager.h"
-#include "../../../inc/model/model.h"
-#include "../../../inc/camera/camera.h"
-#include <glm/ext.hpp>
+#include "draw_manager.h"
+#include "model.h"
+#include "camera.h"
 #include <glm/gtx/string_cast.hpp>
 
 #include "iostream"

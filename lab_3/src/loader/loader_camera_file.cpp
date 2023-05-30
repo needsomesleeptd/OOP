@@ -1,4 +1,4 @@
-#include "../../inc/loader/loader_camera_file.h"
+	#include "../../inc/loader/loader_camera_file.h"
 #include "../../inc/exceptions.h"
 
 CameraLoaderFile::CameraLoaderFile()

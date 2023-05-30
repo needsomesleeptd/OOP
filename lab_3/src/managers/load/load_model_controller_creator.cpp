@@ -1,6 +1,6 @@
-#include "../../../inc/managers/load/load_model_controller_creator.h"
-#include "../../../inc/configuration/creator_cfg.h"
-#include "../../../inc/loader/loader_model_file.h"
+#include "load_model_controller_creator.h"
+#include "creator_cfg.h"
+#include "loader_model_file.h"
 
 std::shared_ptr<LoadModelController> LoadModelControllerCreator::create_controller()
 {

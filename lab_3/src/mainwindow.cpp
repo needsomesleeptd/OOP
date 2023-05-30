@@ -59,6 +59,7 @@ MainWindow::~MainWindow()
 void MainWindow::setup_scene()
 {
 	_scene = new QGraphicsScene(this);
+	_scene = new QGraphicsScene(this);
 
 	ui->graphicsView->setScene(_scene);
 	ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);

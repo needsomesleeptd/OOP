@@ -1,8 +1,9 @@
-#include "../../inc/commands/model_command.h"
-#include "../../inc/managers/load/load_manager_creator.h"
-#include "../../inc/managers/load/load_model_controller_creator.h"
-#include "../../inc/managers/scene/scene_manager_creator.h"
-#include "../../inc/managers/transform/transform_manager_creator.h"
+#include "model_command.h"
+#include "load_manager_creator.h"
+#include "load_model_controller_creator.h"
+#include "scene_manager_creator.h"
+#include "transform_manager_creator.h"
+#include <iostream>
 
 MoveModelCommand::MoveModelCommand(const double &dx, const double &dy, const double &dz, const std::size_t model_num) :
     _dx(dx), _dy(dy), _dz(dz), _model_num(model_num) { }
@@ -73,7 +74,7 @@ void CountModelCommand::exec()
     (*_count) = CreatorSceneManager().create_manager()->get_scene()->get_models().size();
 }
 
-#include <iostream>
+
 
 LoadModelCommand::LoadModelCommand(std::string file_name) : _file_name(file_name) { }
 

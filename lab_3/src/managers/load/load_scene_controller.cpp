@@ -1,5 +1,5 @@
-#include "../../../inc/managers/load/load_scene_controller.h"
-#include "../../../inc/exceptions.h"
+#include "load_scene_controller.h"
+#include "exceptions.h"
 
 LoadSceneController::LoadSceneController(std::shared_ptr<BaseLoaderScene> loader) : _builder(new BuilderScene)
 {

@@ -11,7 +11,7 @@ std::shared_ptr<ModelLoadController> ModelLoadControllerCreator::createControlle
 	return _controller;
 }
 
-std::shared_ptr<ModelLoadController> ModelLoadControllerCreator::createController(const std::shared_ptr<BaseModelLoader> &loader) {
+std::shared_ptr<ModelLoadController> ModelLoadControllerCreator::createController(const std::shared_ptr<BaseModelDirector> &loader) {
 	if (_controller == nullptr) {
 		makeInstance();
 	}
@@ -22,18 +22,18 @@ std::shared_ptr<ModelLoadController> ModelLoadControllerCreator::createControlle
 void ModelLoadControllerCreator::makeInstance() {
 	static std::shared_ptr<ModelLoadController> controller;
 	if (!controller) {
-		std::shared_ptr<BaseModelLoader> loader;
+		std::shared_ptr<BaseModelDirector> loader;
 		if (name != "") {
 //			GraphLibConfig cr (this->name);
 //			cr.readConfig();
 //			if (cr.getLoadSource() == "file")
-//				loader = std::shared_ptr<BaseModelLoader>(new ModelDirector);
+//				loader = std::shared_ptr<BaseModelDirector>(new ModelDirector);
 //			else
 //			{
 //				string em = "Error : config file";
 //				throw FileError(em);
 //			}
-			loader = std::shared_ptr<BaseModelLoader>(new ModelDirector);
+			loader = std::shared_ptr<BaseModelDirector>(new ModelDirector);
 		}
 		else {
 			std::string msg = "Некорректный конфиг.";

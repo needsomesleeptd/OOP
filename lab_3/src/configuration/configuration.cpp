@@ -1,7 +1,7 @@
 #include <sstream>
 
-#include "../../inc/configuration/configuration.h"
-#include "../../inc/exceptions.h"
+#include "configuration.h"
+#include "exceptions.h"
 #include <libconfig.h++>
 
 Configuration::Configuration(std::shared_ptr<std::string> &source) : AbstractConfig(source) { }

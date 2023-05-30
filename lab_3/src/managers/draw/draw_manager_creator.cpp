@@ -1,4 +1,4 @@
-#include "../../../inc/managers/draw/draw_manager_creator.h"
+#include "draw_manager_creator.h"
 
 std::shared_ptr<DrawManager> CreatorDrawManager::create_manager()
 {
