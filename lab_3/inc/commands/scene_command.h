@@ -40,4 +40,16 @@ private:
     std::string _file_name;
 };
 
+
+class SetDrawerCommand : public SceneBaseCommand
+{
+ public:
+	ExportSceneCommand(DrawManager &manager,DrawManager::set_drawer &func,std::shared_ptr<AbstractDrawer> drawer);
+
+	virtual void exec() override;
+
+ private:
+	AbstractDrawer _drawer;
+};
+
 #endif

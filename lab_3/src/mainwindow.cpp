@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget* parent)
 	setup_scene();
 
 	_facade = std::make_shared<Facade>(Facade());
+	_transform_manager = CreatorTransformManager().create_manager();
+	_load_manager = CreatorLoadManager().create_manager();
+	_scene_manager = CreatorSceneManager().create_manager();
+
 
 	connect(ui->pushButton_load_model, &QPushButton::clicked, this, &MainWindow::on_pushButton_load_model_clicked);
 	connect(ui->pushButton_del_model_cur,

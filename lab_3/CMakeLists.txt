@@ -122,10 +122,9 @@ add_executable(${PROJECT_NAME}
         ../src/math/glm_wrapper.cpp
         ../inc/utils/BaseTransformer.h
         ../src/utils/BaseTransformer.cpp
-        ../inc/loader/camera/base_camera_director.h ../inc/loader/camera/camera_director.h ../inc/loader/camera/camera_load_controller.h ../inc/loader/abstract_load_controller.h ../inc/loader/base_loader.h ../inc/loader/camera/camera_load_controller_creator.h ../src/loader/camera/camera_director.cpp ../src/loader/camera/camera_load_controller.cpp ../src/loader/camera/camera_load_controller_creator.cpp
-        ../inc/loader/model/
-        ../src/loader/model/
-        )
+
+
+        inc/commands/compound_command.h src/commands/compound_command.cpp)
 
 HEADER_DIRECTORIES(header_dir_list)
 

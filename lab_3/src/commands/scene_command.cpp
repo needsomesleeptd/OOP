@@ -1,8 +1,22 @@
-#include "../../inc/commands/scene_command.h"
-#include "../../inc/managers/draw/draw_manager_creator.h"
-#include "../../inc/managers/load/load_manager_creator.h"
-#include "../../inc/managers/scene/scene_manager_creator.h"
-#include "../../inc/managers/load/load_scene_controller_creator.h"
+#include "scene_command.h"
+#include "draw_manager_creator.h"
+#include "load_manager_creator.h"
+#include "scene_manager_creator.h"
+#include "load_scene_controller_creator.h"
+
+
+
+
+SetDrawerCommand::SetDrawerCommand(DrawManager &manager,&DrawManager::set_drawer func,std::shared_ptr<AbstractDrawer> drawer) {
+	Pair = make_pair(manager,func);
+	_drawer = drawer;
+
+}
+
+void SetDrawerCommand::exec()
+{
+	((*call.first).*call.second)(_drawer);
+}
 
 DrawSceneCommand::DrawSceneCommand(std::shared_ptr<AbstractDrawer> drawer) : _drawer(drawer) { }
 

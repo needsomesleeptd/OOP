@@ -15,6 +15,12 @@
 #include "drawer/abstract_drawer_factory.h"
 #include "drawer/drawer_qt_factory.h"
 #include "facade/facade.h"
+#include "draw_manager_creator.h"
+#include "load_manager_creator.h"
+#include "transform_manager_creator.h"
+#include "scene_manager_creator.h"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -57,6 +63,10 @@ private:
 
     QGraphicsScene *_scene;
     std::shared_ptr<Facade> _facade;
+	std::shared_ptr<DrawManager> _draw_manager;
+	std::shared_ptr<LoadManager> _load_manager;
+	std::shared_ptr<TransformManager> _transform_manager;
+	std::shared_ptr<SceneManager> _scene_manager;
     std::shared_ptr<AbstractDrawer> _drawer;
 };
 #endif

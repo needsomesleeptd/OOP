@@ -62,7 +62,7 @@ void CountCameraCommand::exec()
 
 void RotateCameraCommand::exec()
 {
-	Dot rotate(_ox, _oy, _oz);
+
 
 	auto viewer = CreatorSceneManager().create_manager()->get_scene()->get_cameras().at(_camera_num);
 

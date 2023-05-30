@@ -1,6 +1,6 @@
-#include "../../../inc/managers/load/load_manager.h"
-#include "../../../inc/managers/load/load_scene_controller_creator.h"
-#include "../../../inc/managers/load/load_model_controller.h"
+#include "load_manager.h"
+#include "load_scene_controller_creator.h"
+#include "load/load_model_controller.h"
 
 LoadManager::LoadManager()
 {
