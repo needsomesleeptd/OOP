@@ -11,7 +11,13 @@
 
 class TransformParams {
  public:
-	TransformParams() = default;
+	TransformParams()
+	{
+		_moveParams = Dot{0,0,0};
+		_scaleParams = Dot{1,1,1};
+		_rotateParams = Dot{0,0,0};
+
+	}
 	TransformParams(const Dot &moveParams, const Dot &scaleParams, const Dot &rotateParams)
 		: _moveParams(moveParams), _scaleParams(scaleParams), _rotateParams(rotateParams) {};
 	TransformParams(const TransformParams &transform) = default;

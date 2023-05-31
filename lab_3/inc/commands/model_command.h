@@ -47,7 +47,7 @@ class TransformModelCommand : public ModelBaseCommand
  public:
 	TransformModelCommand(std::shared_ptr<SceneManager>& scene_manager,
 		size_t model_id,
-		std::shared_ptr<Visitor>& visitor) : _visitor(visitor)
+		std::shared_ptr<Visitor> visitor) : _visitor(visitor)
 	{
 		Action act = &Object::accept;
 		auto Model = scene_manager->get_scene()->get_models().at(model_id);
@@ -77,7 +77,7 @@ class AddModelCommand: public ModelBaseCommand {
 		auto scene = manager->get_scene();
 		Action act = &Scene::add_model;
 		call = std::make_pair(scene, act);
-		_model = model
+		_model = model;
 	};
 
 	void execute() override {

@@ -15,7 +15,7 @@
 
 class Model : public VisibleObject
 {
-    friend void DrawManager::visit(const Model &model);
+    friend void DrawManager::visit(Model &model);
 
 public:
     Model() : _modelStructure(new ModelStructure) { }

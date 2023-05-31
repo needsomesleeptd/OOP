@@ -3,7 +3,7 @@
 //
 #include "compound_command.h"
 
-CompoundCommand::CompoundCommand(initializer_list<shared_ptr<Command>> lt)
+CompoundCommand::CompoundCommand(initializer_list<shared_ptr<BaseCommand>> lt)
 {
 	for (auto&& elem : lt)
 		vec.push_back(elem);
@@ -12,5 +12,5 @@ CompoundCommand::CompoundCommand(initializer_list<shared_ptr<Command>> lt)
 void CompoundCommand::execute()
 {
 	for (auto com : vec)
-		com->exec();
+		com->execute();
 }

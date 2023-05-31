@@ -6,13 +6,18 @@
 void TransformVisitor::visit(Model& model)
 {
 
-	model.transform(transform_params);
+	model.transform(_transform_params);
 }
 void TransformVisitor::visit(Camera& viewer)
 {
-	viewer.transform(transform_params);
+	viewer.transform(_transform_params);
 }
 void TransformVisitor::visit(Composite& composite)
 {
 
+}
+
+void TransformVisitor::set_params(TransformParams transform_params)
+{
+	_transform_params = transform_params;
 }

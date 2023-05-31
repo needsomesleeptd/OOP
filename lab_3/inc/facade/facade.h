@@ -7,7 +7,7 @@
 class Facade
 {
 public:
-    void exec(Command &command);
+    void execute(BaseCommand &command);
 };
 
 #endif

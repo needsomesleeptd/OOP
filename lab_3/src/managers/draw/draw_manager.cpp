@@ -31,7 +31,7 @@ Dot DrawManager::get_dot_proection(const Dot &dot)
     return proection;
 }
 
-void DrawManager::visit(const Model &model)
+void DrawManager::visit(Model &model)
 {
     auto dots   = model._modelStructure->get_dots();
     auto links  = model._modelStructure->get_links();

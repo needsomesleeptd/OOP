@@ -22,9 +22,9 @@ public:
     void set_camera(std::shared_ptr<Camera> viewer);
     void set_drawer(std::shared_ptr<AbstractDrawer> drawer);
 
-    void visit(const Model &model) override;
-    void visit(const Camera &camera) override {};
-    void visit(const Composite &composite) override {};
+    void visit(Model &model) override;
+    void visit(Camera &camera) override {};
+    void visit(Composite &composite) override {};
 
     Dot get_dot_proection(const Dot &dot);
 

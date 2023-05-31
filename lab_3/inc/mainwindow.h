@@ -19,6 +19,7 @@
 #include "load_manager_creator.h"
 #include "transform_manager_creator.h"
 #include "scene_manager_creator.h"
+#include "TransformVisitor.h"
 
 
 

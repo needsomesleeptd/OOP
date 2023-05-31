@@ -1,6 +1,6 @@
 #include "facade.h"
 
-void Facade::exec(Command &command)
+void Facade::execute(BaseCommand& command)
 {
     command.execute();
 }

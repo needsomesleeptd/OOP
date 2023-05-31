@@ -15,17 +15,17 @@ class Model;
 class Camera;
 class Composite;
 
-class TransformVisitor : Visitor
+class TransformVisitor : public Visitor
 {
  public:
 	TransformVisitor() = default;
 	~TransformVisitor() = default;
-
+	void set_params(TransformParams transform_params);
 	virtual void visit(Model& model) override;
 	virtual void visit(Camera& viewer) override;
 	virtual void visit(Composite& composite) override;
  private:
-	TransformParams transform_params;
+	TransformParams _transform_params;
 
 };
 #endif //INC_3_INC_VISITOR_TRANSFORMVISITOR_H_
