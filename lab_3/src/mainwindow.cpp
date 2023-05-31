@@ -448,7 +448,7 @@ void MainWindow::on_pushButton_del_camera_cur_clicked()
 		return;
 	}
 
-	RemoveCameraCommand remove_command(ui->comboBox_cameras->currentIndex());
+	AddCameraCommand remove_command(ui->comboBox_cameras->currentIndex());
 	_facade->exec(remove_command);
 
 	ui->comboBox_cameras->removeItem(ui->comboBox_cameras->currentIndex());

@@ -6,7 +6,7 @@
 AddCameraCommand::AddCameraCommand(const double x, const double y, const double z)
     : _x(x), _y(y), _z(z) {}
 
-RemoveCameraCommand::RemoveCameraCommand(const size_t &camera_num) : 
+AddCameraCommand::AddCameraCommand(const size_t &camera_num) :
     _camera_num(camera_num) { }
 
 MoveCameraCommand::MoveCameraCommand(const std::size_t &camera_num, const double &dx, const double &dy) :
@@ -36,7 +36,7 @@ void AddCameraCommand::exec()
     scene_manager->set_camera(scene_manager->get_scene()->get_cameras().size() - 1);
 };
 
-void RemoveCameraCommand::exec()
+void AddCameraCommand::exec()
 {
     CreatorSceneManager().create_manager()->get_scene()->remove_camera(_camera_num);
 }

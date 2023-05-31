@@ -45,13 +45,14 @@ class TransformModelCommand : public ModelBaseCommand
 	using Pair = std::pair<std::shared_ptr<Object>, Action>;
 
  public:
-	TransformModelCommand(std::shared_ptr<TransformManager>& manager,
-		std::shared_ptr<Object>& model,
+	TransformModelCommand(std::shared_ptr<SceneManager>& scene_manager,
+		size_t model_id,
 		std::shared_ptr<Visitor>& visitor) : _visitor(visitor)
 	{
 		Action act = &Object::accept;
-		call = std::make_pair(model, act);
-		_transformManager = manager;
+		auto Model = scene_manager->get_scene()->get_models().at(model_id);
+		call = std::make_pair(Model, act);
+
 	};
 
 	void execute() override
@@ -62,7 +63,6 @@ class TransformModelCommand : public ModelBaseCommand
  private:
 	Pair call;
 	std::shared_ptr<Visitor> _visitor;
-	std::shared_ptr<TransformManager> _transformManager;
 
 };
 
