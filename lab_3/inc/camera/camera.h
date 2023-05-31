@@ -15,16 +15,12 @@ public:
     explicit Camera(const Dot &position) : _position(position) { };
     ~Camera() override = default;
 
-    void transform(const Dot &new_position, const Dot &scale, const Dot &rotate) override;
-	void rotate(const Dot &rotate_val) override;
-	void scale(const Dot &scale_val) override;
-	void move(const Dot &move_val) override;
+    void transform(const TransformParams& transform_params) override;
 
-
-    void accept(std::shared_ptr<Visitor> visitor) override;
+	void accept(std::shared_ptr<Visitor> visitor) override;
 	Matrix4 get_view_matrix();
 	Matrix4 get_projection_matrix() const;
-	void rotate_camera(float x_offset, float y_offset);
+
 
  protected:
 	void updateCameraVectors();
@@ -41,6 +37,8 @@ private:
     void move_x(const double &dx);
     void move_y(const double &dy);
     void move_z(const double &dz);
+	void rotate_camera(float x_offset, float y_offset);
+	void move_camera(const Dot& move_params);
 
 
 

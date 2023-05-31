@@ -1,31 +1,14 @@
 #include "../../inc/model/model.h"
-
+#include "transform.h"
 Model::Model(const Model &model)
 {
     _modelStructure = model._modelStructure;
 }
 
-void Model::transform(const Dot &move, const Dot &scale, const Dot &rotate)
+void Model::transform(const TransformParams& transform_params)
 {
-    _modelStructure->transform(move, scale, rotate);
+    _modelStructure->transform(transform_params.getMoveParams(), transform_params.getScaleParams(),transform_params.getRotateParams());
 }
-
-void Model::move(const Dot &move_val)
-{
-	_modelStructure->move(move_val);
-}
-
-void Model::rotate(const Dot &rotate_val)
-{
-	_modelStructure->rotate(rotate_val);
-}
-
-void Model::scale(const Dot &scale_val)
-{
-	_modelStructure->scale(scale_val);
-}
-
-
 
 void Model::accept(std::shared_ptr<Visitor> visitor)
 {

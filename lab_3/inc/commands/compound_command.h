@@ -7,18 +7,19 @@
 
 #include "base_command.h"
 #include "vector"
+#include "memory"
 
 using namespace std;
 
-class CompoundCommand : public Command
+class CompoundCommand : public BaseCommand
 {
-	using VectorCommand = vector<shared_ptr<Command>>;
+	using VectorCommand = vector<shared_ptr<BaseCommand>>;
 
  private:
 	VectorCommand vec;
 
  public:
-	CompoundCommand(initializer_list<shared_ptr<Command>> lt);
+	CompoundCommand(initializer_list<shared_ptr<BaseCommand>> lt);
 
 	virtual void execute() override;
 };

@@ -7,30 +7,31 @@
 #include "camera.h"
 #include "scene_manager.h"
 
-class AddCameraCommand: public CameraBaseCommand {
+class AddCameraCommand : public CameraBaseCommand
+{
  public:
-	AddCameraCommand(SceneManager& sceneManager,const double x, const double y, const double z);
+	AddCameraCommand(SceneManager& sceneManager, const double x, const double y, const double z);
 	virtual void execute() override;
 
  private:
 	double _x, _y, _z;
-	SceneManager _sceneManager
+	SceneManager _sceneManager;
 };
 
-
-class RemoveCameraCommand: public CameraBaseCommand {
+class RemoveCameraCommand : public CameraBaseCommand
+{
  public:
-	RemoveCameraCommand(const std::size_t &cameraIndex);
+	RemoveCameraCommand(const std::size_t& cameraIndex);
 	virtual void execute() override;
 
  private:
 	std::size_t _cameraIndex;
 };
 
-
-class MoveCameraCommand: public CameraBaseCommand {
+class MoveCameraCommand : public CameraBaseCommand
+{
  public:
-	MoveCameraCommand(const std::size_t &cameraIndex, const double &dx, const double &dy);
+	MoveCameraCommand(const std::size_t& cameraIndex, const double& dx, const double& dy);
 	virtual void execute() override;
 
  private:
@@ -38,72 +39,78 @@ class MoveCameraCommand: public CameraBaseCommand {
 	std::size_t _cameraIndex;
 };
 
-
-class SetCameraCommand: public CameraBaseCommand {
+class SetCameraCommand : public CameraBaseCommand
+{
  public:
-	SetCameraCommand(const std::size_t &cameraIndex);
+	SetCameraCommand(const std::size_t& cameraIndex);
 	virtual void execute() override;
 
  private:
 	std::size_t _cameraIndex;
 };
 
-class CountCameraCommand: public CameraBaseCommand
+class CountCameraCommand : public CameraBaseCommand
 {
  public:
-	CountCameraCommand(const std::shared_ptr<size_t> &count);
+	CountCameraCommand(const std::shared_ptr<size_t>& count);
 	virtual void execute() override;
 
  private:
 	std::shared_ptr<size_t> _count;
 };
 
-Dot
+AddCameraCommand::AddCameraCommand(SceneManager& sceneManager, const double x, const double y, const double z)
+	: _x(x), _y(y), _z(z)
+{
+}
 
-AddCameraCommand::AddCameraCommand(SceneManager& sceneManager,const double x, const double y, const double z)
-	: _x(x), _y(y), _z(z) {}
-
-void AddCameraCommand::execute() {
+void AddCameraCommand::execute()
+{
 	Dot cameraPosition(_x, _y, _z);
 	std::shared_ptr<Camera> camera(new Camera);
-	Dot scale(1, 1, 1);
-	Dot rotate(0, 0, 0);
-	TransformParams transformParams(cameraPosition, scale, rotate);
-	camera->transform(transformParams);
+	camera->move_camera(cameraPosition);
 	_sceneManager->getScene()->addCamera(camera);
 	_sceneManager->setCamera(_sceneManager->getScene()->getCameras().size() - 1);
 };
 
-RemoveCameraCommand::RemoveCameraCommand(const size_t &cameraIndex)
-	: _cameraIndex(cameraIndex) {}
+RemoveCameraCommand::RemoveCameraCommand(const size_t& cameraIndex)
+	: _cameraIndex(cameraIndex)
+{
+}
 
-void RemoveCameraCommand::execute() {
+void RemoveCameraCommand::execute()
+{
 	SceneManagerCreator().createManager()->getScene()->removeCamera(_cameraIndex);
 }
 
-MoveCameraCommand::MoveCameraCommand(const size_t &cameraIndex, const double &dx, const double &dy)
-	: _dx(dx), _dy(dy), _cameraIndex(cameraIndex) {}
-
-void MoveCameraCommand::execute() {
-	Dot move(_dx, _dy, 0);
-	Dot scale(1, 1, 1);
-	Dot rotate(0, 0, 0);
-	TransformParams transformParams(move, scale, rotate);
-	auto camera = SceneManagerCreator().createManager()->getScene()->getCameras().at(_cameraIndex);
-	TransformManagerCreator().createManager()->transformObject(camera, transformParams);
+MoveCameraCommand::MoveCameraCommand(const size_t& cameraIndex, const double& dx, const double& dy)
+	: _dx(dx), _dy(dy), _cameraIndex(cameraIndex)
+{
 }
 
-SetCameraCommand::SetCameraCommand(const size_t &cameraIndex)
-	: _cameraIndex(cameraIndex) {}
+void MoveCameraCommand::execute()
+{
+	auto camera = SceneManagerCreator().createManager()->getScene()->getCameras().at(_cameraIndex);
+	TransformManagerCreator().createManager()->move_object(camera, _dx, _dy, 0);
+}
 
-void SetCameraCommand::execute() {
+SetCameraCommand::SetCameraCommand(const size_t& cameraIndex)
+	: _cameraIndex(cameraIndex)
+{
+}
+
+void SetCameraCommand::execute()
+{
 	SceneManagerCreator().createManager()->setCamera(_cameraIndex);
 }
 
-CountCameraCommand::CountCameraCommand(const std::shared_ptr<size_t> &count)
-	: _count(count) { }
+CountCameraCommand::CountCameraCommand(const std::shared_ptr<size_t>& count)
+	: _count(count)
+{
+}
 
-void CountCameraCommand::execute() {
+void CountCameraCommand::execute()
+{
 	(*_count) = SceneManagerCreator().createManager()->getScene()->getCameras().size();
 }
 

@@ -1,5 +1,6 @@
 #include "../../inc/object/composite.h"
 
+
 Composite::Composite(std::shared_ptr<Object> &element)
 {
     _elements.push_back(element);
@@ -34,36 +35,12 @@ bool Composite::is_composite()
     return true;
 }
 
-void Composite::transform(const Dot &move, const Dot &scale, const Dot &rotate)
+void Composite::transform(const TransformParams& transform_params)
 {
     for (const auto &element : _elements)
     {
-        element->transform(move, scale, rotate);
+        element->transform(transform_params);
     }
-}
-
-void Composite::rotate(const Dot &rotate_val)
-{
-	for (const auto &element : _elements)
-	{
-		element->rotate(rotate_val);
-	}
-}
-
-void Composite::scale(const Dot &scale_val)
-{
-	for (const auto &element : _elements)
-	{
-		element->scale(scale_val);
-	}
-}
-
-void Composite::move(const Dot &move_val)
-{
-	for (const auto &element : _elements)
-	{
-		element->move(move_val);
-	}
 }
 
 Iterator Composite::begin()

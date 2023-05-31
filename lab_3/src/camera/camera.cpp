@@ -1,4 +1,5 @@
 #include "../../inc/camera/camera.h"
+#include "transform.h"
 #include <iostream>
 void Camera::move_x(const double &dx)
 {
@@ -15,16 +16,22 @@ void Camera::move_z(const double &dz)
     _position.set_z(_position.get_z() + dz);
 }
 
-void Camera::transform(const Dot &new_position, const Dot &scale, const Dot &rotate)
+void Camera::move_camera(const Dot& move_params)
 {
-    move_x(new_position.get_x());
-    move_y(new_position.get_y());
-	this->rotate(rotate);//TODO::check this
+	move_x(move_params.get_x());
+	move_y(move_params.get_y());
+	move_z(move_params.get_z());
+
 }
 
-void Camera::rotate(const Dot &rotate_val)
+void Camera::transform(const TransformParams& transform_params)
 {
-	rotate_camera(rotate_val.get_x(), rotate_val.get_y());
+
+	auto rotate_params = transform_params.getRotateParams();
+	this->rotate_camera(rotate_params.get_x(),rotate_params.get_y());
+
+	auto move_params = transform_params.getMoveParams();
+	move_camera(transform_params.getMoveParams());
 }
 
 void Camera::rotate_camera(float x_offset, float y_offset)
@@ -43,19 +50,6 @@ void Camera::rotate_camera(float x_offset, float y_offset)
 		Yaw = -89.0f;
 	updateCameraVectors();
 }
-
-void Camera::move(const Dot &move_val)
-{
-	move_x(move_val.get_x());
-	move_y(move_val.get_y());
-}
-
-void Camera::scale(const Dot& scale_val)
-{
-	std::cout<< "Camera cannot be scaled";
-}
-
-
 
 Matrix4 Camera::get_view_matrix()
 {
