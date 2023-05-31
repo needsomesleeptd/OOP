@@ -27,8 +27,7 @@ void TransformManager::spin_object(const std::shared_ptr <Object> &object, const
 	object->transform(params);
 }
 
-void TransformManager::transform_object(const std::shared_ptr<Object> &object, const Dot &move, const Dot &scale, const Dot &rotate)
+void TransformManager::transform_object(const std::shared_ptr <Object> &object,const TransformParams& transform_params)
 {
-	TransformParams params(move, scale, rotate);
-    object->transform(params);
+    object->transform(transform_params);
 }

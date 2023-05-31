@@ -20,7 +20,8 @@ public:
     static void spin_object(const std::shared_ptr<Object> &object, const double &ox, const double &oy, const double &oz);
 
 
-    static void transform_object(const std::shared_ptr<Object> &object, const Dot &move, const Dot &scale, const Dot &spin);
+    static void transform_object(const std::shared_ptr <Object> &object,const TransformParams& transform_params);
+
 };
 
 

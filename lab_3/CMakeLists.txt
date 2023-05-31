@@ -124,7 +124,7 @@ add_executable(${PROJECT_NAME}
         ../src/utils/BaseTransformer.cpp
 
 
-        inc/commands/compound_command.h src/commands/compound_command.cpp)
+        inc/commands/compound_command.h src/commands/compound_command.cpp inc/visitor/TransformVisitor.h src/visitor/TransformVisitor.cpp)
 
 HEADER_DIRECTORIES(header_dir_list)
 

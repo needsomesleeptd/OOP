@@ -39,7 +39,7 @@ void DrawManager::visit(const Model &model)
 	Matrix4 view_matrix = _camera->get_view_matrix();
 	Matrix4 projection_matrix = _camera->get_projection_matrix();
 	Matrix4 matrix_changes = projection_matrix * (view_matrix * (Matrix4(1)));
-	std::cout<<glm::to_string(view_matrix) << std::endl;
+	//std::cout<<glm::to_string(view_matrix) << std::endl;
     for (auto link : links)
     {
 

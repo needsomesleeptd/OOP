@@ -11,9 +11,9 @@ public:
     Visitor() = default;
     ~Visitor() = default;
 
-    virtual void visit(const Model &model) = 0;
-    virtual void visit(const Camera &viewer) = 0;
-    virtual void visit(const Composite &composite) = 0;
+    virtual void visit(Model &model) = 0;
+    virtual void visit(Camera &viewer) = 0;
+    virtual void visit(Composite &composite) = 0;
 };
 
 #endif
