@@ -20,11 +20,11 @@ class LoadModelCommand : public ModelBaseCommand
 	using Pair = std::pair<std::shared_ptr<LoadManager>, Action>;
 
  public:
-	LoadModelCommand(std::shared_ptr<LoadManager>& manager, std::string fileName, std::shared_ptr<Scene>& scene)
+	LoadModelCommand(std::shared_ptr<LoadManager>& manager, std::string fileName, std::shared_ptr<Scene> scene)
 	{
 		Action act = &LoadManager::load;
 		call = std::make_pair(manager, act);
-		_fileName = fileName;
+		_fileName = std::move(fileName);
 		_scene = scene;
 	};
 

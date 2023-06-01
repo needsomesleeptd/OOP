@@ -30,11 +30,13 @@ void LoadModelControllerCreator::create_instance()
 
     if (!controller)
     {
+
         std::shared_ptr<BaseLoaderModel> loader;
 
-        switch (CreatorConfig().get_config()->get_load_source())
+        switch (CreatorConfig().get_config(_path_to_config)->get_load_source())
         {
             case AbstractConfig::FILE:
+
 
             default:
                 loader = std::shared_ptr<BaseLoaderModel>(new ModelLoaderFile);

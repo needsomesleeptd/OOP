@@ -1,17 +1,26 @@
 #include "../inc/mainwindow.h"
 #include "ui_mainwindow.h"
+#include "drawer_qt_factory.h"
+#include "load_scene_controller_creator.h"
+#include "load_model_controller_creator.h"
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
 
-	setup_scene(); //TODO::add ManagerSolution
+	setup_scene();
 
+	std::string config ="/home/andrew/OOP/OOP/lab_3/data/config.cfg";
+	auto moderator = LoadModelControllerCreator(config).create_controller();
 	_facade = std::make_shared<Facade>(Facade());
 	_transform_manager = CreatorTransformManager().create_manager();
-	_load_manager = CreatorLoadManager().create_manager();
+
+	_load_manager = CreatorLoadManager().create_manager(moderator);
 	_scene_manager = CreatorSceneManager().create_manager();
+	_draw_manager = CreatorDrawManager().create_manager();
+	std::shared_ptr<AbstractDrawerFactory> factory(new DrawerQtFactory(_scene));
+	_drawer = factory->graphic_create();
 
 	connect(ui->pushButton_load_model, &QPushButton::clicked, this, &MainWindow::on_pushButton_load_model_clicked);
 	connect(ui->pushButton_del_model_cur,
@@ -259,31 +268,43 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 	TransformVisitor visitor;
 	visitor.set_params(transform_params);
 
-	auto ref_to_vis = std::make_shared<TransformVisitor>(visitor);
 
-
-	TransformCameraCommand rotate_camera_cmd(_scene_manager,cam_index,ref_to_vis);
 	if (key == Qt::Key_E)
 	{
-		transform_params.setRotateParams(Dot{0,-10,0});
-		ref_to_vis->set_params()
+		Dot rotation = Dot{0,-10,0};
+		transform_params.setRotateParams(rotation);
+		visitor.set_params(transform_params);
+		std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+		TransformCameraCommand rotate_camera_cmd(_scene_manager,cam_index,ref_to_vis);
 		_facade->execute(rotate_camera_cmd);
 	}
 
 	else if (key == Qt::Key_Q)
 	{
-		rotate_camera_cmd = RotateCameraCommand(cam_index, 0, 10, 0);
+		Dot rotation = Dot{0,10,0};
+		transform_params.setRotateParams(rotation);
+		visitor.set_params(transform_params);
+		std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+		TransformCameraCommand rotate_camera_cmd(_scene_manager,cam_index,ref_to_vis);
 		_facade->execute(rotate_camera_cmd);
 	}
 	else if (key == Qt::Key_Z)
 	{
-		rotate_camera_cmd = RotateCameraCommand(cam_index, 10, 0, 0);
+		Dot rotation = Dot{10,0,0};
+		transform_params.setRotateParams(rotation);
+		visitor.set_params(transform_params);
+		std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+		TransformCameraCommand rotate_camera_cmd(_scene_manager,cam_index,ref_to_vis);
 		_facade->execute(rotate_camera_cmd);
 	}
 
 	else if (key == Qt::Key_C)
 	{
-		rotate_camera_cmd = RotateCameraCommand(cam_index, -10, 0, 0);
+		Dot rotation = Dot{-10,0,0};
+		transform_params.setRotateParams(rotation);
+		visitor.set_params(transform_params);
+		std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+		TransformCameraCommand rotate_camera_cmd(_scene_manager,cam_index,ref_to_vis);
 		_facade->execute(rotate_camera_cmd);
 	}
 
@@ -303,7 +324,7 @@ void MainWindow::on_pushButton_del_model_cur_clicked()
 		return;
 	}
 
-	RemoveModelCommand remove_command(ui->comboBox_models->currentIndex());
+	RemoveModelCommand remove_command(_scene_manager,ui->comboBox_models->currentIndex());
 	_facade->execute(remove_command);
 
 	ui->comboBox_models->removeItem(ui->comboBox_models->currentIndex());
@@ -325,7 +346,7 @@ void MainWindow::on_pushButton_del_model_all_clicked()
 
 	for (int i = ui->comboBox_models->count() - 1; i >= 0; --i)
 	{
-		RemoveModelCommand remove_command(i);
+		RemoveModelCommand remove_command(_scene_manager,i);
 		_facade->execute(remove_command);
 
 		ui->comboBox_models->removeItem(i);
@@ -351,7 +372,7 @@ void MainWindow::on_pushButton_load_model_clicked()
 	if (file.isNull())
 		return;
 
-	LoadModelCommand load_command(_load_manager, _scene_manager, file.toUtf8().data());
+	LoadModelCommand load_command(_load_manager,  file.toUtf8().data(),_scene_manager->get_scene());
 
 	try
 	{
@@ -386,9 +407,17 @@ void MainWindow::on_pushButton_camera_move_up_clicked()
 		QMessageBox::critical(nullptr, "Ошибка", "Не загружено ни одной модели");
 		return;
 	}
+	TransformVisitor visitor;
+	TransformParams transform_params;
+	Dot move = Dot{0,10,0};
+	transform_params.setMoveParams(move);
+	visitor.set_params(transform_params);
+	std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
 
-	MoveCameraCommand camera_command(ui->comboBox_cameras->currentIndex(), 0, 10);
-	_facade->execute(camera_command);
+	std::size_t cam_index = ui->comboBox_cameras->currentIndex();
+	TransformCameraCommand move_camera_cmd(_scene_manager,cam_index,ref_to_vis);
+	_facade->execute(move_camera_cmd);
+
 	update_scene();
 }
 
@@ -410,8 +439,16 @@ void MainWindow::on_pushButton_camera_move_left_clicked()
 		return;
 	}
 
-	MoveCameraCommand camera_command(ui->comboBox_cameras->currentIndex(), 10, 0);
-	_facade->execute(camera_command);
+	TransformVisitor visitor;
+	TransformParams transform_params;
+	Dot move = Dot{-10,0,0};
+	transform_params.setMoveParams(move);
+	visitor.set_params(transform_params);
+	std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+
+	std::size_t cam_index = ui->comboBox_cameras->currentIndex();
+	TransformCameraCommand move_camera_cmd(_scene_manager,cam_index,ref_to_vis);
+	_facade->execute(move_camera_cmd);
 	update_scene();
 }
 
@@ -433,8 +470,16 @@ void MainWindow::on_pushButton_camera_move_down_clicked()
 		return;
 	}
 
-	MoveCameraCommand camera_command(ui->comboBox_cameras->currentIndex(), 0, -10);
-	_facade->execute(camera_command);
+	TransformVisitor visitor;
+	TransformParams transform_params;
+	Dot move = Dot{0,10,0};
+	transform_params.setMoveParams(move);
+	visitor.set_params(transform_params);
+	std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+
+	std::size_t cam_index = ui->comboBox_cameras->currentIndex();
+	TransformCameraCommand move_camera_cmd(_scene_manager,cam_index,ref_to_vis);
+	_facade->execute(move_camera_cmd);
 	update_scene();
 }
 
@@ -456,8 +501,16 @@ void MainWindow::on_pushButton_camera_move_right_clicked()
 		return;
 	}
 
-	MoveCameraCommand camera_command(ui->comboBox_cameras->currentIndex(), -10, 0);
-	_facade->execute(camera_command);
+	TransformVisitor visitor;
+	TransformParams transform_params;
+	Dot move = Dot{10,0,0};
+	transform_params.setMoveParams(move);
+	visitor.set_params(transform_params);
+	std::shared_ptr<Visitor> ref_to_vis = std::make_shared<TransformVisitor>(visitor);
+
+	std::size_t cam_index = ui->comboBox_cameras->currentIndex();
+	TransformCameraCommand move_camera_cmd(_scene_manager,cam_index,ref_to_vis);
+	_facade->execute(move_camera_cmd);
 	update_scene();
 }
 
@@ -483,7 +536,7 @@ void MainWindow::on_pushButton_del_camera_cur_clicked()
 		return;
 	}
 
-	AddCameraCommand remove_command(ui->comboBox_cameras->currentIndex());
+	RemoveCameraCommand remove_command(_scene_manager,ui->comboBox_cameras->currentIndex());
 	_facade->execute(remove_command);
 
 	ui->comboBox_cameras->removeItem(ui->comboBox_cameras->currentIndex());
@@ -503,7 +556,8 @@ void MainWindow::on_pushButton_del_camera_cur_clicked()
 void MainWindow::on_pushButton_add_camera_clicked()
 {
 	auto cont = ui->graphicsView->contentsRect();
-	AddCameraCommand camera_command(cont.width() / 2.0, cont.height() / 2.0, 0.0);
+	Dot position{cont.width() / 2.0, cont.height() / 2.0, 0.};
+	AddCameraCommand camera_command(position,_scene_manager);
 	_facade->execute(camera_command);
 
 	update_scene();
@@ -520,7 +574,7 @@ void MainWindow::on_pushButton_add_camera_clicked()
 
 void MainWindow::update_scene()
 {
-	DrawSceneCommand draw_command(_drawer);
+	DrawSceneCommand draw_command(_scene_manager,_draw_manager,_drawer);
 	_facade->execute(draw_command);
 }
 
@@ -535,7 +589,7 @@ void MainWindow::change_cam()
 		return;
 	}
 
-	SetCameraCommand camera_command(ui->comboBox_cameras->currentIndex());
+	SetCameraCommand camera_command(_scene_manager,ui->comboBox_cameras->currentIndex());
 	_facade->execute(camera_command);
 	update_scene();
 }

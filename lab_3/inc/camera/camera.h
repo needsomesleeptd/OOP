@@ -4,11 +4,13 @@
 #include "../object/object.h"
 #include "../managers/draw/draw_manager.h"
 #include "../math/glm_wrapper.h"
+#include "transform_manager.h"
 
 
 class Camera : public InvisibleObject
 {
     friend Dot DrawManager::get_dot_proection(const Dot &dot);
+
 
 public:
     Camera() = default;

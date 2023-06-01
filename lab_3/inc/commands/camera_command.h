@@ -20,7 +20,7 @@ class AddCameraCommand : public CameraBaseCommand
 	{
 
 		std::shared_ptr<Camera> camera(new Camera); // TODO::create factory here
-		TransformParams params{};
+		TransformParams params;
 		params.setMoveParams(_camera_position);
 		camera->transform(params);
 
@@ -74,7 +74,7 @@ class TransformCameraCommand : public CameraBaseCommand
 
  private:
 	Pair call;
-	std::shared_ptr<Visitor> _visitor;
+	std::shared_ptr<Visitor> &_visitor;
 
 };
 

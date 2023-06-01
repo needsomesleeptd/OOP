@@ -18,8 +18,7 @@ class Composite;
 class TransformVisitor : public Visitor
 {
  public:
-	TransformVisitor() = default;
-	~TransformVisitor() = default;
+
 	void set_params(TransformParams transform_params);
 	virtual void visit(Model& model) override;
 	virtual void visit(Camera& viewer) override;

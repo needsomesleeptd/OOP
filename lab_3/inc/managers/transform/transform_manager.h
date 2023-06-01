@@ -22,6 +22,11 @@ public:
 
     static void transform_object(const std::shared_ptr <Object> &object,const TransformParams& transform_params);
 
+
+
+
+ private:
+	TransformParams _transformParams;
 };
 
 

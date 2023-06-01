@@ -8,14 +8,16 @@
 #include "dot.h"
 #include "link.h"
 #include "model_struct.h"
-#include "../visitor/visitor.h"
-#include "../managers/draw/draw_manager.h"
+#include "visitor.h"
+#include "draw_manager.h"
+#include "transform_manager.h"
 
 
 
 class Model : public VisibleObject
 {
     friend void DrawManager::visit(Model &model);
+
 
 public:
     Model() : _modelStructure(new ModelStructure) { }
