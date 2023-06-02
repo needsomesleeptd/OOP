@@ -50,8 +50,8 @@ class TransformModelCommand : public ModelBaseCommand
 		std::shared_ptr<Visitor> visitor) : _visitor(visitor)
 	{
 		Action act = &Object::accept;
-		auto Model = scene_manager->get_scene()->get_models().at(model_id);
-		call = std::make_pair(Model, act);
+		auto model = scene_manager->get_scene()->get_models().at(model_id);
+		call = std::make_pair(model, act);
 
 	};
 

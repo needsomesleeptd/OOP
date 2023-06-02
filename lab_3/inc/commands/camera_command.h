@@ -19,7 +19,7 @@ class AddCameraCommand : public CameraBaseCommand
 	virtual void execute() override
 	{
 
-		std::shared_ptr<Camera> camera(new Camera); // TODO::create factory here
+		std::shared_ptr<Camera> camera(new Camera);
 		TransformParams params;
 		params.setMoveParams(_camera_position);
 		camera->transform(params);
